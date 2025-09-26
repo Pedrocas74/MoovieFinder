@@ -1,13 +1,14 @@
-import styles from '../styles/MovieList.module.css';
+import styles from "../styles/MovieList.module.css";
 import MovieCard from "./MovieCard.jsx";
+
 
 export default function MovieList({ movies }) {
   return (
-    <div 
+    <div
       className={styles.movieGrid}
       style={{
         display: "grid",
-        gridTemplateColumns: `repeat(${movies.length}, 1fr)`
+        gridTemplateColumns: `repeat(${movies.length}, 1fr)`,
       }}
     >
       {movies.map((movie) => (

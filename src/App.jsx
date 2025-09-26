@@ -11,21 +11,24 @@ export default function App() {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const searched = movies.length > 0;
 
   return (
     <div className="app-flex">
       <Header />
+    
       <SearchBar
         setMovies={setMovies}
         setLoading={setLoading}
         setError={setError}
       />
-      
+
       {/* {loading && <Loading />} */}
       
       {/* {error && <Error message={error} />} */}
-
-      <MovieList movies={movies} />
+    {searched && (
+        <MovieList movies={movies} />
+    )}  
     </div>
   );
 }

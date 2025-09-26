@@ -1,7 +1,8 @@
 .movieGrid {
-    gap: 0.6em;
-    border: 2px solid green;
+    gap: 1em;
+    background-color: #8f1919;
     position: relative;
-    top: 25vh;
+    top: 20vh;
     overflow-x: scroll;
+    padding: 1em 0.4em;
 }
