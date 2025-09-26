@@ -1,6 +1,11 @@
 import "./App.css";
 
+import { useState } from "react";
 
+import Header from "./components/Header.jsx";
+import SearchBar from "./components/SearchBar.jsx";
+import MovieList from "./components/MovieList.jsx";
+import MovieCard from "./components/MovieCard.jsx";
 
 export default function App() {
   const [movies, setMovies] = useState([]);
@@ -9,17 +14,18 @@ export default function App() {
 
   return (
     <div>
-      {/* <Header /> */}
-      {/* <SearchBar
+      <Header />
+      <SearchBar
         setMovies={setMovies}
         setLoading={setLoading}
         setError={setError}
-      /> */}
+      />
+      
       {/* {loading && <Loading />} */}
       
       {/* {error && <Error message={error} />} */}
 
-      {/* <MovieList movies={movies} /> */}
+      <MovieList movies={movies} />
     </div>
   );
 }
