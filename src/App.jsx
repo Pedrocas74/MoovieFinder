@@ -13,7 +13,7 @@ export default function App() {
   const [error, setError] = useState(null);
 
   return (
-    <div>
+    <div className="app-flex">
       <Header />
       <SearchBar
         setMovies={setMovies}

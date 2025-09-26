@@ -4,3 +4,11 @@
   box-sizing: border-box;
   margin: 0;
 }
+
+.app-flex {
+  display: flex;
+  flex-direction: column;
+  border: 3px solid blue;
+  min-height: 100dvh;
+  
+}

@@ -1,3 +1,4 @@
+import styles from '../styles/SearchBar.module.css';
 import { useState } from "react";
 
 export default function SearchBar({ setMovies, setLoading, setError }) {
@@ -35,7 +36,7 @@ export default function SearchBar({ setMovies, setLoading, setError }) {
   };
 
   return (
-    <form onSubmit={searchMovies}>
+    <form className={styles.searchForm} onSubmit={searchMovies}>
       <label htmlFor="search">
         <input
           type="text"
