@@ -2,7 +2,7 @@ import styles from "../styles/MovieList.module.css";
 import MovieCard from "./MovieCard.jsx";
 
 
-export default function MovieList({ movies, onMovieClick }) {
+export default function MovieList({ movies, onMovieClick, toggleFavorite, favorites }) {
   return (
     <div
       className={styles.movieGrid}
@@ -12,7 +12,13 @@ export default function MovieList({ movies, onMovieClick }) {
       }}
     >
       {movies.map((movie) => (
-        <MovieCard key={movie.id} movie={movie} onClick={() => onMovieClick(movie)} />
+        <MovieCard 
+          key={movie.id} 
+          movie={movie} 
+          onClick={() => onMovieClick(movie)} 
+          toggleFavorite={toggleFavorite}
+          isFavorite={Array.isArray(favorites) && favorites.some((fav) => fav.id === movie.id)}
+        />
       ))}
     </div>
   );

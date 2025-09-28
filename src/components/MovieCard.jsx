@@ -1,7 +1,7 @@
 import styles from "../styles/MovieCard.module.css";
 import placeholderImg from "/assets/placeholder_movie.webp";
 
-export default function MovieCard({ movie, onClick }) {
+export default function MovieCard({ movie, onClick, toggleFavorite, isFavorite }) {
   const posterUrl = movie.poster_path
     ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
     : placeholderImg;
@@ -18,6 +18,10 @@ export default function MovieCard({ movie, onClick }) {
           <p className={styles.rating}>
             ⭐ {Number(movie.vote_average).toFixed(1)}
           </p>
+
+          <button onClick={() => toggleFavorite(movie)}>
+            {isFavorite ? "💔 Remove" : "❤️ Favorite"}
+          </button>
         </div>
       </div>
     </div>
