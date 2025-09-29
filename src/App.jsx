@@ -55,8 +55,12 @@ export default function App() {
         setError={setError}
       />
 
-      {/* {loading && <Loading />}
-      {error && <Error message={error} />} */}
+      {/* {loading && <Loading />} */}
+      
+      {error && <p>{error}</p>}
+  {/* ✅ Movies found → show results.
+      ❌ No results → “No movies found” message.
+      🚨 API/network issue → “Unable to fetch.” */}
 
       {showFavorites && (
         <>

@@ -3,6 +3,10 @@ import MovieCard from "./MovieCard.jsx";
 
 
 export default function MovieList({ movies, onMovieClick, toggleFavorite, favorites }) {
+  if (!movies || movies.length === 0) {
+    return <p>No movies found. Try another search.</p>;
+  }
+  
   return (
     <div
       className={styles.movieGrid}
