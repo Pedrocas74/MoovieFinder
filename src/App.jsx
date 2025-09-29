@@ -13,13 +13,13 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [selectedMovie, setSelectedMovie] = useState(null);
-  
   const [favorites, setFavorites] = useState(() => {
     const saved = localStorage.getItem("favorites");
     return saved ? JSON.parse(saved) : [];
-});
- 
-const searched = movies.length > 0;
+  });
+  const [showFavorites, setShowFavorites] = useState(false);
+
+  const searched = movies.length > 0;
 
   // Load favorites from localStorage on mount
   useEffect(() => {
@@ -46,7 +46,7 @@ const searched = movies.length > 0;
   return (
     <div className="app-flex">
       {/* logo + dark mode toogle */}
-      <Header /> 
+      <Header toggleFavorites={() => setShowFavorites((prev) => !prev)} />
 
       {/* search text input from user strictly equall */}
       <SearchBar
@@ -57,20 +57,29 @@ const searched = movies.length > 0;
 
       {/* {loading && <Loading />}
       {error && <Error message={error} />} */}
-      
-      <h2>Favorites ❤️</h2>
-      <MovieList 
-        movies={favorites} 
-        onMovieClick={setSelectedMovie} 
-        toggleFavorite={toggleFavorite} 
-        favorites={favorites || []} />
 
-      {searched && <MovieList movies={movies} onMovieClick={setSelectedMovie} />}
-
-      {selectedMovie && (
-        <MovieSummary movie={selectedMovie} onClose={() => setSelectedMovie(null)} />
+      {showFavorites && (
+        <>
+          <h2>My Favorites ❤️</h2>
+          <MovieList
+            movies={favorites}
+            onMovieClick={setSelectedMovie}
+            toggleFavorite={toggleFavorite}
+            favorites={favorites}
+          />
+        </>
       )}
 
+      {searched && (
+        <MovieList movies={movies} onMovieClick={setSelectedMovie} />
+      )}
+
+      {selectedMovie && (
+        <MovieSummary
+          movie={selectedMovie}
+          onClose={() => setSelectedMovie(null)}
+        />
+      )}
     </div>
   );
 }
