@@ -33,7 +33,7 @@ export default function SearchBar({ setMovies, setLoading, setError }) {
       setError("Unable to fetch.");
       setMovies([]);
     } finally {
-      setLoading(false);
+      setQuery("");
     }
   };
 

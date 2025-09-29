@@ -32,6 +32,13 @@ export default function App() {
     localStorage.setItem("favorites", JSON.stringify(favorites));
   }, [favorites]);
 
+  // ✅ Hide loader only after React has rendered new movies or error
+  useEffect(() => {
+    if (searched || error) {
+      setLoading(false);
+    }
+  }, [movies, error]);
+
   const toggleFavorite = (movie) => {
     setFavorites((prev) => {
       const exists = prev.find((m) => m.id === movie.id);
@@ -55,10 +62,14 @@ export default function App() {
         setError={setError}
       />
 
-      {/* {loading && <Loading />} */}
+      {loading && (
+        <p className="loading-animation">
+          SEARCHING...
+        </p>
+      )}
 
       {error && <p>{error}</p>}
-  {/* ✅ Movies found → show results.
+      {/* ✅ Movies found → show results.
       ❌ No results → “No movies found” message.
       🚨 API/network issue → “Unable to fetch.” */}
 
@@ -74,7 +85,7 @@ export default function App() {
         </>
       )}
 
-      {searched && (
+      {!loading && searched && (
         <MovieList movies={movies} onMovieClick={setSelectedMovie} />
       )}
 
