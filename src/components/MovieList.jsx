@@ -1,27 +1,28 @@
 import styles from "../styles/MovieList.module.css";
 import MovieCard from "./MovieCard.jsx";
 
-
-export default function MovieList({ movies, onMovieClick, toggleFavorite, favorites }) {
+export default function MovieList({
+  movies,
+  onMovieClick,
+  toggleFavorite,
+  favorites,
+}) {
   if (!movies || movies.length === 0) {
     return <p>No movies found. Try another search.</p>;
   }
-  
+
   return (
-    <div
-      className={styles.movieGrid}
-      style={{
-        display: "grid",
-        gridTemplateColumns: `repeat(${movies.length}, 1fr)`,
-      }}
-    >
+    <div className={styles.movieGrid}>
       {movies.map((movie) => (
-        <MovieCard 
-          key={movie.id} 
-          movie={movie} 
-          onClick={() => onMovieClick(movie)} 
+        <MovieCard
+          key={movie.id}
+          movie={movie}
+          onClick={() => onMovieClick(movie)}
           toggleFavorite={toggleFavorite}
-          isFavorite={Array.isArray(favorites) && favorites.some((fav) => fav.id === movie.id)}
+          isFavorite={
+            Array.isArray(favorites) &&
+            favorites.some((fav) => fav.id === movie.id)
+          }
         />
       ))}
     </div>

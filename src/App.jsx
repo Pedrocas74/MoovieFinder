@@ -74,7 +74,7 @@ export default function App() {
       🚨 API/network issue → “Unable to fetch.” */}
 
       {showFavorites && (
-        <>
+        <section className="favorites-section">
           <h2>My Favorites ❤️</h2>
           <MovieList
             movies={favorites}
@@ -82,11 +82,15 @@ export default function App() {
             toggleFavorite={toggleFavorite}
             favorites={favorites}
           />
-        </>
+        </section>
       )}
 
       {!loading && searched && (
-        <MovieList movies={movies} onMovieClick={setSelectedMovie} />
+        <MovieList 
+          movies={movies} 
+          onMovieClick={setSelectedMovie}
+          toggleFavorite={toggleFavorite}
+        />
       )}
 
       {selectedMovie && (

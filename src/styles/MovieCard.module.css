@@ -5,6 +5,7 @@
     height: 15em;
     padding: 0.3em;
     border-radius: 5px;
+    position: relative;
 }
 .movieCard img {
   width: 100%;
@@ -38,3 +39,26 @@
     font-size: 0.7rem;
 }
 
+.feedback {
+     position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  animation: floatUp 1s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes floatUp {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 0) scale(0.8);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -80px) scale(1.5);
+  }
+}

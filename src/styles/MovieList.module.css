@@ -3,6 +3,14 @@
     background-color: #8f1919;
     position: relative;
     top: 40vh;
-    overflow-x: scroll;
+    display: flex;
+    /* grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); */
+    overflow-x: auto;
     padding: 1em 0.4em;
+    scroll-behavior: smooth;
+}
+
+.movieGrid > * {
+    flex: 0 0 clamp(130px, 20vw, 220px);
+    height: clamp(230px, 30vw, 390px);
 }
