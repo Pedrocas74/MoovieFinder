@@ -1,11 +1,10 @@
-import styles from '../styles/SearchBar.module.css';
+import styles from "../styles/SearchBar.module.css";
 import { useState } from "react";
 
 export default function SearchBar({ setMovies, setLoading, setError }) {
   const [query, setQuery] = useState("");
 
-  const searchMovies = async (e) => {
-    e.preventDefault();
+  const searchMoviesByQuery = async (query) => {
     if (!query) return;
     setLoading(true);
     setError(null);
@@ -24,15 +23,24 @@ export default function SearchBar({ setMovies, setLoading, setError }) {
         `https://api.themoviedb.org/3/search/movie?include_adult=false&language=en-US&page=1&query=${query}`,
         options
       );
-
       const data = await res.json();
+
       if (data.results.length > 0) setMovies(data.results);
+      else if (query.length > 1)
+        searchMoviesByQuery(query.slice(0, -1)); //retry with last char removed
       else setError("No movies found!");
     } catch {
       setError("Unable to fetch.");
+      setMovies([]);
     } finally {
       setLoading(false);
     }
+  };
+
+  // Form submit handler
+  const searchMovies = (e) => {
+    e.preventDefault();
+    searchMoviesByQuery(query);
   };
 
   return (

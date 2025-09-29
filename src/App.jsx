@@ -56,7 +56,7 @@ export default function App() {
       />
 
       {/* {loading && <Loading />} */}
-      
+
       {error && <p>{error}</p>}
   {/* ✅ Movies found → show results.
       ❌ No results → “No movies found” message.
