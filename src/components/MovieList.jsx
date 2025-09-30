@@ -12,7 +12,7 @@ export default function MovieList({
   }
 
   return (
-    <div className={styles.movieGrid}>
+    <div className={styles.movieRow}>
       {movies.map((movie) => (
         <MovieCard
           key={movie.id}

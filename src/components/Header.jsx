@@ -1,4 +1,6 @@
 import styles from "../styles/Header.module.css";
+import ThemeToggle from "./ThemeToggle.jsx";
+
 
 export default function Header({ toggleFavorites }) {
   return (
@@ -6,7 +8,7 @@ export default function Header({ toggleFavorites }) {
       <h1>Logo</h1>
       <div className={styles.buttons}>
         <button onClick={toggleFavorites} >❤️</button>
-        <button>Dark</button>
+        <ThemeToggle />
       </div>
     </header>
   );

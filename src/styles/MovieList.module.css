@@ -1,16 +1,19 @@
-.movieGrid {
+.movieRow {
     gap: 1em;
     background-color: #8f1919;
     position: relative;
-    top: 40vh;
+    top: 30vh;
     display: flex;
     /* grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); */
     overflow-x: auto;
     padding: 1em 0.4em;
     scroll-behavior: smooth;
+    scroll-snap-type: x proximity;
+    
 }
 
-.movieGrid > * {
+.movieRow > * {
     flex: 0 0 clamp(130px, 20vw, 220px);
     height: clamp(230px, 30vw, 390px);
+    scroll-snap-align: center;
 }
