@@ -1,17 +1,24 @@
+import { a } from "framer-motion/client";
 import styles from "../styles/MovieCard.module.css";
 import placeholderImg from "/assets/placeholder_movie.webp";
 import { useState } from "react";
 
-export default function MovieCard({ movie, onClick, toggleFavorite, isFavorite }) {
+export default function MovieCard({
+  movie,
+  onClick,
+  toggleFavorite,
+  isFavorite,
+}) {
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
   const [showFeedback, setShowFeedback] = useState(false);
-  
+
   const posterUrl = movie.poster_path
     ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
     : placeholderImg;
 
-  const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+  const isTouchDevice =
+    "ontouchstart" in window || navigator.maxTouchPoints > 0;
 
   // Handle swipe
   const handleTouchStart = (e) => {
@@ -39,28 +46,28 @@ export default function MovieCard({ movie, onClick, toggleFavorite, isFavorite }
     setTouchEnd(null);
   };
 
-
   return (
-    <div 
-      className={styles.movieCard} 
+    <div
+      className={styles.movieCard}
       onClick={onClick}
       onTouchStart={isTouchDevice ? handleTouchStart : undefined}
       onTouchMove={isTouchDevice ? handleTouchMove : undefined}
       onTouchEnd={isTouchDevice ? handleTouchEnd : undefined}
-
     >
-      <img src={posterUrl} alt={movie.title} />  
+      <img src={posterUrl} alt={movie.title} />
       <div className={styles.movieText}>
         <h3>{movie.title}</h3>
         <div className={styles.dateAndRate}>
           <p className={styles.releaseDate}>
-            {movie.release_date?.split("-")[0]}
+            {movie.release_date
+              ? movie.release_date.split("-").reverse().join("-")
+              : "N/A"}
           </p>
           <p className={styles.rating}>
             ⭐ {Number(movie.vote_average).toFixed(1)}
           </p>
 
-         {!isTouchDevice && (
+          {!isTouchDevice && (
             <button
               onClick={(e) => {
                 e.stopPropagation();
@@ -73,11 +80,9 @@ export default function MovieCard({ movie, onClick, toggleFavorite, isFavorite }
         </div>
       </div>
 
-       {/* ❤️ feedback animation */}
+      {/* ❤️ feedback animation */}
       {showFeedback && (
-        <div className={styles.feedback}>
-          {isFavorite ? "💔" : "❤️"}
-        </div>
+        <div className={styles.feedback}>{isFavorite ? "💔" : "❤️"}</div>
       )}
     </div>
   );

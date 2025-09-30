@@ -73,8 +73,8 @@ export default function App() {
       ❌ No results → “No movies found” message.
       🚨 API/network issue → “Unable to fetch.” */}
 
-      {showFavorites && (
-        <section className="favorites-section">
+      {showFavorites && ( //movieList from FAVORITES
+        <section className="favorites-section"> 
           <h2>My Favorites ❤️</h2>
           <MovieList
             movies={favorites}
@@ -85,7 +85,7 @@ export default function App() {
         </section>
       )}
 
-      {!loading && searched && (
+      {!loading && searched && ( //movieList from SEARCH
         <MovieList 
           movies={movies} 
           onMovieClick={setSelectedMovie}

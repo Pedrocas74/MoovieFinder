@@ -1,38 +1,113 @@
-.modal_overlay {
+.summary_overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.7);
+  background: #8f1919 ;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow-y: scroll;
+  scroll-behavior: smooth;
+  color: #1d1814 ;
+  scrollbar-color: none; 
 }
 
-.modal {
-  background: white;
-  border-radius: 8px;
-  padding: 1.5rem;
-  max-width: 500px;
-  width: 90%;
-  text-align: center;
-  position: relative;
+.summary {
+  display: grid;
+  grid-template-rows: auto auto auto auto 1fr;
+  grid-template-areas:
+    "img"
+    "title"
+    "rating"
+    "release"
+    "overview";
+  align-items: start;
+  width: 95%;
+  min-height: 100vh;
+  background: #f5f5e9;
+  padding: 1.5em;
 }
 
-.modal img {
-  width: 100%;
-  border-radius: 8px;
-  
+.summary img {
+  grid-area: img;
+  width: 250px;      
+  max-height: 180px;     
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  margin: 0 auto;
 }
 
-.modal button {
-  position: absolute;
+.summary button {
+  position: fixed;
   z-index: 100;
-  top: 75px;
-  right: 10px;
-  border: 5px solid red;
-  font-size: 1.2rem;
+  top: 25px;
+  right: 25px;
+  width: clamp(2.9em, 3em, 5em);
   cursor: pointer;
+  background-color: #f5f5e9;
+  border: 2px solid #1d1814;
+  color: #1d1814;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+}
+.summary button:hover {
+  background-color: #8f1919;
+  border-color: #8f1919;
+  color: #f5f5e9;
+  scale: 1.15;
+}
+.summary button:active {
+  scale: 0.9;
+}
+
+.summary h2 {
+  grid-area: title;
+  margin-top: 0.5em;
+  width: 100%;
+  text-align: center;
+  max-height: fit-content;
+}
+
+.releaseDate,
+.rating,
+.overview {
+  /* border: 1px solid rgb(6, 100, 30); */
+  width: 100%;
+  padding: 0.3em 0;
+  display: flex;
+  align-items: center;
+}
+
+.rating {
+  grid-area: rating;
+  margin-top: 0.7em;
+}
+
+.releaseDate {
+  grid-area: release;
+}
+
+.overview {
+  grid-area: overview;
+  text-align: justify;
+
+}
+
+
+
+/* Style scrollbar for .summary_overlay */
+.summary_overlay::-webkit-scrollbar {
+  width: 0;             
+}
+.summary_overlay::-webkit-scrollbar-thumb {
+  background: #1d1814;      
+  border-radius: 6px;
+}
+.summary_overlay::-webkit-scrollbar-track {
+  background: #8f1919;      
 }
