@@ -1,7 +1,29 @@
 .searchForm {
-    border: 1px solid red;
     margin: 0 auto;
     position: relative;
     top: 15vh;
 }
 
+.searchForm label {
+    display: flex;
+    align-items: center;
+}
+
+.searchForm button {
+    background: none;
+    border: none;
+    position: absolute;
+    right: 0;
+}
+.searchForm input {
+    height: 35px;
+    padding: 0.5em 2.2em 0.5em 1em;
+    border: 2px solid rgb(180, 29, 29);
+    border-radius: 20px;
+}
+
+.searchIcon {
+    width: 17px;
+    opacity: 0.5;
+    margin-right: 0.3em;
+}

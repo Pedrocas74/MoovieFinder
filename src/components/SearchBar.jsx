@@ -1,5 +1,6 @@
 import styles from "../styles/SearchBar.module.css";
 import { useState } from "react";
+import { Search } from "lucide-react";
 
 export default function SearchBar({ setMovies, setLoading, setError }) {
   const [query, setQuery] = useState("");
@@ -54,8 +55,9 @@ export default function SearchBar({ setMovies, setLoading, setError }) {
           placeholder="Search movies"
           required
         />
+        <button type="submit"><Search className={styles.searchIcon} /></button>
       </label>
-      <button type="submit">Search</button>
+      
     </form>
   );
 }
