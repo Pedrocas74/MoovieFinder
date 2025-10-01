@@ -22,7 +22,7 @@
 }
 .movieText h3 {
     font-size: 0.9rem;
-    min-height: 2.5em;
+    max-height: 2.5em;
     border: 1px solid red;
     overflow: hidden;
 }
@@ -33,7 +33,7 @@
     justify-content: space-between;
 }
 .releaseDate {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
 }
 .rating {
     font-size: 0.7rem;

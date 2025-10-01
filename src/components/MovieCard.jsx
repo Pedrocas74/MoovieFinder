@@ -1,4 +1,3 @@
-import { a } from "framer-motion/client";
 import styles from "../styles/MovieCard.module.css";
 import placeholderImg from "/assets/placeholder_movie.webp";
 import { useState } from "react";

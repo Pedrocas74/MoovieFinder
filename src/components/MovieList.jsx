@@ -6,8 +6,9 @@ export default function MovieList({
   onMovieClick,
   toggleFavorite,
   favorites,
+  showFavorites
 }) {
-  if (!movies || movies.length === 0) {
+  if ((!movies || movies.length === 0) && !showFavorites) {
     return <p>No movies found. Try another search.</p>;
   }
 

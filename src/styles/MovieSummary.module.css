@@ -2,9 +2,9 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 101vw;
   height: 100%;
-  background: #8f1919 ;
+  background: #8f1919f1 ;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,6 +12,7 @@
   scroll-behavior: smooth;
   color: #1d1814 ;
   scrollbar-color: none; 
+  z-index: 20;
 }
 
 .summary {
@@ -23,29 +24,95 @@
     "rating"
     "release"
     "overview";
-  align-items: start;
-  width: 95%;
+  align-items: stretch;
+  width: 85%;
   min-height: 100vh;
   background: #f5f5e9;
-  padding: 1.5em;
+  padding: 0.5em 0;
+  
 }
 
 .summary img {
   grid-area: img;
-  width: 250px;      
+  width: 280px;      
   max-height: 180px;     
   object-fit: cover;
   object-position: center;
-  display: block;
   margin: 0 auto;
+  padding-top: 50px;
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+  border-bottom: 3px solid #1d1814;
+  
+}
+
+
+.summary h2 {
+  grid-area: title;
+  word-spacing: -4px;
+  width: 75%;
+  text-align: center;
+  max-height: fit-content;
+  margin: 0 auto;
+}
+
+.releaseDate,
+.rating {
+  /* border: 1px solid rgb(6, 100, 30); */
+  width: 100%;
+  padding: 0.5em 0;
+  display: flex;
+  align-items: center;
+}
+
+.rating {
+  grid-area: rating;
+  margin-top: 2em;
+  font-size: 0.9rem;
+  padding-left: 0.7em;
+}
+
+.releaseDate {
+  grid-area: release;
+  font-size: 0.9rem;
+  padding-left: 0.7em;
+}
+
+.overviewContainer {
+  grid-area: overview;
+  text-align: justify;
+  font-size: clamp(1rem, 1.5vw, 1.7rem);
+  padding: 0 0.7em 1em 0.7em;
+  margin-top: 2.2em;
+}
+.overviewContainer h4 {
+  font-weight: 900;
+}
+
+.overview {
+  margin-top: 5px;
+}
+
+
+
+/* Style scrollbar for .summary_overlay */
+.summary_overlay::-webkit-scrollbar {
+  width: 0;             
+}
+.summary_overlay::-webkit-scrollbar-thumb {
+  background: #1d1814;      
+  border-radius: 6px;
+}
+.summary_overlay::-webkit-scrollbar-track {
+  background: #8f1919;      
 }
 
 .summary button {
   position: fixed;
   z-index: 100;
-  top: 25px;
-  right: 25px;
-  width: clamp(2.9em, 3em, 5em);
+  top: 20px;
+  right: 12px;
+  width: clamp(2.3em, 2.8em, 5em);
   cursor: pointer;
   background-color: #f5f5e9;
   border: 2px solid #1d1814;
@@ -63,51 +130,4 @@
 }
 .summary button:active {
   scale: 0.9;
-}
-
-.summary h2 {
-  grid-area: title;
-  margin-top: 0.5em;
-  width: 100%;
-  text-align: center;
-  max-height: fit-content;
-}
-
-.releaseDate,
-.rating,
-.overview {
-  /* border: 1px solid rgb(6, 100, 30); */
-  width: 100%;
-  padding: 0.3em 0;
-  display: flex;
-  align-items: center;
-}
-
-.rating {
-  grid-area: rating;
-  margin-top: 0.7em;
-}
-
-.releaseDate {
-  grid-area: release;
-}
-
-.overview {
-  grid-area: overview;
-  text-align: justify;
-
-}
-
-
-
-/* Style scrollbar for .summary_overlay */
-.summary_overlay::-webkit-scrollbar {
-  width: 0;             
-}
-.summary_overlay::-webkit-scrollbar-thumb {
-  background: #1d1814;      
-  border-radius: 6px;
-}
-.summary_overlay::-webkit-scrollbar-track {
-  background: #8f1919;      
 }

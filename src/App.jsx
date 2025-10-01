@@ -5,8 +5,10 @@ import { useState, useEffect } from "react";
 import Header from "./components/Header.jsx";
 import SearchBar from "./components/SearchBar.jsx";
 import MovieList from "./components/MovieList.jsx";
-// import MovieCard from "./components/MovieCard.jsx";
 import MovieSummary from "./components/MovieSummary.jsx";
+import Footer from "./components/Footer.jsx";
+
+import { X } from "lucide-react";
 
 export default function App() {
   const [movies, setMovies] = useState([]);
@@ -62,11 +64,7 @@ export default function App() {
         setError={setError}
       />
 
-      {loading && (
-        <p className="loading-animation">
-          SEARCHING...
-        </p>
-      )}
+      {loading && <p className="loading-animation">Loading...</p>}
 
       {error && <p>{error}</p>}
       {/* ✅ Movies found → show results.
@@ -74,31 +72,36 @@ export default function App() {
       🚨 API/network issue → “Unable to fetch.” */}
 
       {showFavorites && ( //movieList from FAVORITES
-        <section className="favorites-section"> 
+        <section className="favorites-section">
           <h2>My Favorites ❤️</h2>
           <MovieList
             movies={favorites}
             onMovieClick={setSelectedMovie}
             toggleFavorite={toggleFavorite}
             favorites={favorites}
+            showFavorites={showFavorites}
           />
+          <button onClick={() => setShowFavorites(false)}><X style={{ scale: 0.9, strokeWidth: 4 }}/></button>
         </section>
       )}
 
-      {!loading && searched && ( //movieList from SEARCH
-        <MovieList 
-          movies={movies} 
-          onMovieClick={setSelectedMovie}
-          toggleFavorite={toggleFavorite}
-        />
-      )}
+      {!loading &&
+        searched && ( //movieList from SEARCH
+          <MovieList
+            movies={movies}
+            onMovieClick={setSelectedMovie}
+            toggleFavorite={toggleFavorite}
+          />
+        )}
 
-      {selectedMovie && (
+      {selectedMovie && ( //after a click in one movie
         <MovieSummary
           movie={selectedMovie}
           onClose={() => setSelectedMovie(null)}
         />
       )}
+
+      <Footer />
     </div>
   );
 }

@@ -20,7 +20,7 @@ export default function MovieSummary({ movie, onClose }) {
             style={{
               scale: 0.7,
               color: "#1d1814 ",
-              strokeWidth: 2,
+              strokeWidth: 3,
               marginRight: 5,
             }}
           />{" "}
@@ -31,7 +31,7 @@ export default function MovieSummary({ movie, onClose }) {
             style={{
               scale: 0.7,
               color: "#1d1814 ",
-              strokeWidth: 2,
+              strokeWidth: 3,
               marginRight: 5,
             }}
           />
@@ -39,7 +39,10 @@ export default function MovieSummary({ movie, onClose }) {
             ? movie.release_date.split("-").reverse().join("-")
             : "N/A"}
         </p>
-        <p className={styles.overview}>{movie.overview}</p>
+        <div className={styles.overviewContainer}>
+          <h4>Overview:</h4>
+          <p className={styles.overview}>{movie.overview ? movie.overview : 'N/A'}</p>
+        </div>
       </div>
     </div>
   );
