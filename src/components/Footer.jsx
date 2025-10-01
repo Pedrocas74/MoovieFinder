@@ -2,9 +2,11 @@ import styles from "../styles/Footer.module.css";
 import gitHubIcon from "/icons/github-mark-white.png";
 import linkedinIcon from "/icons/InBug-White.png";
 
-export default function Footer() {
+export default function Footer({ darkMode }) {
   return (
-    <footer>
+    <footer style={{
+      background: darkMode ? "#b032eb " : "#8f1919"
+    }}>
       <span>
         Powered by{" "}
         <a

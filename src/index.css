@@ -15,7 +15,7 @@
     src: url(../public/fonts/Mitr-Medium.ttf);
 }
 
-body h2 {
+h2, h3 {
   font-family: "Mitr", sans-serif;
 }
 
@@ -26,3 +26,5 @@ body {
 /* body h3 {
     font-family: "Mitr", sans-serif;
 } */
+
+

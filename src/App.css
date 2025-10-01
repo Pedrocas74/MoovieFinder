@@ -40,7 +40,6 @@
 .favorites-page {
   position: fixed;
   z-index: 10;  /*summary -> 20 zIndex */
-  background-color: #f5f5e9;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
@@ -86,4 +85,34 @@
   text-shadow: 0px 12px 2px #8f1919;
   width: 100%;
   text-align: center;
+}
+
+
+/* --------DARK MODE------------ */
+
+html.dark .app-flex {
+    background-color: #1d1814 ;
+}
+
+html.dark .introduction, 
+html.dark .guide {
+  color: #f5f5e9;
+  text-shadow: 0px 12px 2px #b032eb ;
+} 
+
+html.dark .favorites-section button {
+  background-color: #1d1814;
+  border: 2px solid #f5f5e9;
+  color: #f5f5e9;
+}
+
+html.dark .favorites-section h2,
+html.dark .favorites-section p,
+html.dark .favorites-section span {
+  color: #f5f5e9;
+}
+
+html.dark .favorites-section p,
+html.dark .favorites-section span {
+  text-shadow: 0px 12px 2px #b032eb ;
 }

@@ -4,13 +4,13 @@
   left: 0;
   width: 101vw;
   height: 100%;
-  background: #8f1919f1 ;
+  background: #8f1919f1;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow-y: scroll;
   scroll-behavior: smooth;
-  color: #1d1814 ;
+  color: #1d1814;
   scrollbar-color: none; 
   z-index: 20;
   background-image: 
@@ -133,4 +133,16 @@
 }
 .summary button:active {
   scale: 0.9;
+}
+
+/* DARK MODE */
+
+html.dark .summary_overlay {
+  background: #b032eb;
+  color: #f5f5e9;
+}
+
+html.dark .summary {
+  background-color: #1d1814;
+  
 }

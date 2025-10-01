@@ -21,9 +21,22 @@ export default function App() {
     return saved ? JSON.parse(saved) : [];
   });
   const [showFavorites, setShowFavorites] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
   const searched = movies.length > 0;
   const isTouchDevice =
     "ontouchstart" in window || navigator.maxTouchPoints > 0;
+
+
+  // DARK MODE TOGGLE
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [darkMode]);
+
+
 
   // Load favorites from localStorage on mount
   useEffect(() => {
@@ -57,7 +70,7 @@ export default function App() {
   return (
     <div className="app-flex">
       {/* logo + dark mode toogle */}
-      <Header toggleFavorites={() => setShowFavorites((prev) => !prev)} />
+      <Header darkMode={darkMode} setDarkMode={setDarkMode} toggleFavorites={() => setShowFavorites((prev) => !prev)} />
 
       {!searched && (
         <p className="introduction">
@@ -70,8 +83,9 @@ export default function App() {
         setMovies={setMovies}
         setLoading={setLoading}
         setError={setError}
+        darkMode={darkMode}
       />
-      <div className="loading-animation">{loading && <LoadingSVG />}</div>
+      <div className="loading-animation">{loading && <LoadingSVG darkMode={darkMode} />}</div>
 
       {error && <p>{error}</p>}
       {/*Movies found -> show results
@@ -79,7 +93,7 @@ export default function App() {
          API/network issue -> “Unable to fetch” */}
 
       {showFavorites && ( //movieList from FAVORITES
-        <div className="favorites-page">
+        <div className="favorites-page" style={{backgroundColor: darkMode ? "#1d1814" : "#f5f5e9" }}>
           <section className="favorites-section">
             <h2>My Favorites ❤️</h2>
             {favorites.length !== 0 && (
@@ -90,6 +104,7 @@ export default function App() {
                 favorites={favorites}
                 showFavorites={showFavorites}
                 isTouchDevice={isTouchDevice}
+                darkMode={darkMode}
               />
             )}
             {isTouchDevice && (
@@ -119,6 +134,7 @@ export default function App() {
             onMovieClick={setSelectedMovie}
             toggleFavorite={toggleFavorite}
             isTouchDevice={isTouchDevice}
+            darkMode={darkMode}
           />
           <p className="guide">To add a movie to favorites, <strong>swipe up the card.</strong></p>
           </>
@@ -128,10 +144,11 @@ export default function App() {
         <MovieSummary
           movie={selectedMovie}
           onClose={() => setSelectedMovie(null)}
+          darkMode={darkMode}
         />
       )}
 
-      <Footer />
+      <Footer darkMode={darkMode} />
     </div>
   );
 }

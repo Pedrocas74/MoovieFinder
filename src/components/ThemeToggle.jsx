@@ -1,19 +1,8 @@
 import styles from '../styles/ThemeToggle.module.css';
-import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sun, Moon } from "lucide-react"; // icons
 
-export default function ThemeToggle() {
-  const [darkMode, setDarkMode] = useState(false);
-
-  // Apply theme to <html> element
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [darkMode]);
+export default function ThemeToggle({ darkMode, setDarkMode }) {
 
   return (
     <button
@@ -29,7 +18,7 @@ export default function ThemeToggle() {
             exit={{ rotate: 90, opacity: 0, scale: 0.5 }}
             transition={{ duration: 0.4 }}
           >
-            <Moon size={15} color="#ce2121ff" />
+            <Moon size={15} color="#b032eb" />
           </motion.span>
         ) : (
           <motion.span
@@ -39,7 +28,7 @@ export default function ThemeToggle() {
             exit={{ rotate: -90, opacity: 0, scale: 0.5 }}
             transition={{ duration: 0.4 }}
           >
-            <Sun size={15} color="#ce2121ff" />
+            <Sun size={15} color="#8f1919" />
           </motion.span>
         )}
       </AnimatePresence>

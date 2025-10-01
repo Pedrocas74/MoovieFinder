@@ -1,9 +1,8 @@
 .movieRow {
     gap: 1em;
-    background-color: #8f1919;
     background-image: 
-    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.03) 0 1px, transparent 10px 4px),
-    repeating-linear-gradient(-45deg, rgba(255,255,255,0.03) 0 1px, transparent 10px 8px);
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.1) 0 1px, transparent 9px 8px),
+    repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.1) 0 1px, transparent 0px 7px);
     position: relative;
     top: 20vh;
     display: flex;
@@ -21,4 +20,3 @@
     height: clamp(230px, 30vw, 390px);
     scroll-snap-align: center;
 }
-

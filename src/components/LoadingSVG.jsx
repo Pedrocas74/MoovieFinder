@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-export default function LoadingSVG() {
+export default function LoadingSVG({ darkMode }) {
   const containerStyle = {
     display: "flex",
     justifyContent: "center",
@@ -12,7 +12,7 @@ export default function LoadingSVG() {
   const dotStyle = {
     width: "12px",
     height: "12px",
-    backgroundColor: "#8f1919",
+    backgroundColor: darkMode ? "#b032eb" : "#8f1919",
     borderRadius: "50%",
   };
 

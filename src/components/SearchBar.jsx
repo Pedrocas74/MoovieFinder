@@ -2,7 +2,12 @@ import styles from "../styles/SearchBar.module.css";
 import { useState } from "react";
 import { Search } from "lucide-react";
 
-export default function SearchBar({ setMovies, setLoading, setError }) {
+export default function SearchBar({
+  setMovies,
+  setLoading,
+  setError,
+  darkMode,
+}) {
   const [query, setQuery] = useState("");
 
   const searchMoviesByQuery = async (query) => {
@@ -54,8 +59,13 @@ export default function SearchBar({ setMovies, setLoading, setError }) {
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search movies"
           required
+          style={{
+            border: darkMode ? "2.5px solid #b032eb" : "2.5px solid #8f1919",
+          }}
         />
-        <button type="submit"><Search className={styles.searchIcon} /></button>
+        <button type="submit">
+          <Search className={styles.searchIcon} />
+        </button>
       </label>
     </form>
   );
