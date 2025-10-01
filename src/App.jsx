@@ -99,7 +99,7 @@ export default function App() {
                 ) : (
                   <>
                     To remove a movie from favorites,{" "}
-                    <strong>swipe up the card</strong>.
+                    <strong>swipe up the card.</strong>
                   </>
                 )}
               </p>
@@ -113,12 +113,15 @@ export default function App() {
 
       {!loading &&
         searched && ( //movieList from SEARCH
+          <>
           <MovieList
             movies={movies}
             onMovieClick={setSelectedMovie}
             toggleFavorite={toggleFavorite}
             isTouchDevice={isTouchDevice}
           />
+          <p className="guide">To add a movie to favorites, <strong>swipe up the card.</strong></p>
+          </>
         )}
 
       {selectedMovie && ( //after a click in one movie
