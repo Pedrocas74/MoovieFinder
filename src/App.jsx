@@ -7,8 +7,10 @@ import SearchBar from "./components/SearchBar.jsx";
 import MovieList from "./components/MovieList.jsx";
 import MovieSummary from "./components/MovieSummary.jsx";
 import Footer from "./components/Footer.jsx";
+import LoadingSVG from "./components/LoadingSVG.jsx";
 
 import { X } from "lucide-react";
+import { p } from "framer-motion/client";
 
 export default function App() {
   const [movies, setMovies] = useState([]);
@@ -20,8 +22,9 @@ export default function App() {
     return saved ? JSON.parse(saved) : [];
   });
   const [showFavorites, setShowFavorites] = useState(false);
-
   const searched = movies.length > 0;
+  const isTouchDevice =
+    "ontouchstart" in window || navigator.maxTouchPoints > 0;
 
   // Load favorites from localStorage on mount
   useEffect(() => {
@@ -34,7 +37,7 @@ export default function App() {
     localStorage.setItem("favorites", JSON.stringify(favorites));
   }, [favorites]);
 
-  // ✅ Hide loader only after React has rendered new movies or error
+  // Hide loader only after React has rendered new movies or error
   useEffect(() => {
     if (searched || error) {
       setLoading(false);
@@ -57,37 +60,52 @@ export default function App() {
       {/* logo + dark mode toogle */}
       <Header toggleFavorites={() => setShowFavorites((prev) => !prev)} />
 
+      {!searched && (
+        <p className="introduction">
+          Type a title, find a movie — <strong>it’s that simple.</strong>
+        </p>
+      )}
+
       {/* search text input from user strictly equall */}
       <SearchBar
         setMovies={setMovies}
         setLoading={setLoading}
         setError={setError}
       />
-
-      {loading && <p className="loading-animation">Loading...</p>}
+      <div className="loading-animation">{loading && <LoadingSVG />}</div>
 
       {error && <p>{error}</p>}
-      {/* ✅ Movies found → show results.
-      ❌ No results → “No movies found” message.
-      🚨 API/network issue → “Unable to fetch.” */}
+      {/*Movies found -> show results
+         No results -> “No movies found” message
+         API/network issue -> “Unable to fetch” */}
 
       {showFavorites && ( //movieList from FAVORITES
-      <div className="favorites-page">
-        <section className="favorites-section">
-          <section className="favorites-text">
+        <div className="favorites-page">
+          <section className="favorites-section">
             <h2>My Favorites ❤️</h2>
-            <p>The movies that were added to the list: </p> 
-          </section>    
-          <MovieList
-            movies={favorites}
-            onMovieClick={setSelectedMovie}
-            toggleFavorite={toggleFavorite}
-            favorites={favorites}
-            showFavorites={showFavorites}
-          />
-          <button onClick={() => setShowFavorites(false)}><X style={{ scale: 0.9, strokeWidth: 4 }}/></button>
-        </section>
-      </div>
+
+            <MovieList
+              movies={favorites}
+              onMovieClick={setSelectedMovie}
+              toggleFavorite={toggleFavorite}
+              favorites={favorites}
+              showFavorites={showFavorites}
+              isTouchDevice={isTouchDevice}
+            />
+            {isTouchDevice && (
+              <p className="favorites-guide">
+                {(favorites.length === 0) ? 
+                  "Search for movies and add them to your Favorites."  
+                  : "To remove a movie from favorites, swipe up the card." 
+                }
+                
+              </p>
+            )}
+            <button onClick={() => setShowFavorites(false)}>
+              <X style={{ scale: 0.9, strokeWidth: 4 }} />
+            </button>
+          </section>
+        </div>
       )}
 
       {!loading &&
@@ -96,16 +114,16 @@ export default function App() {
             movies={movies}
             onMovieClick={setSelectedMovie}
             toggleFavorite={toggleFavorite}
+            isTouchDevice={isTouchDevice}
           />
         )}
-      
+
       {selectedMovie && ( //after a click in one movie
         <MovieSummary
           movie={selectedMovie}
           onClose={() => setSelectedMovie(null)}
         />
       )}
-
 
       <Footer />
     </div>

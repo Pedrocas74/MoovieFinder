@@ -13,6 +13,9 @@
   color: #1d1814 ;
   scrollbar-color: none; 
   z-index: 20;
+  background-image: 
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.03) 0 1px, transparent 10px 4px),
+    repeating-linear-gradient(-45deg, rgba(255,255,255,0.03) 0 1px, transparent 10px 8px);
 }
 
 .summary {

@@ -6,7 +6,8 @@ export default function MovieList({
   onMovieClick,
   toggleFavorite,
   favorites,
-  showFavorites
+  showFavorites,
+  isTouchDevice,
 }) {
   if ((!movies || movies.length === 0) && !showFavorites) {
     return <p>No movies found. Try another search.</p>;
@@ -24,6 +25,7 @@ export default function MovieList({
             Array.isArray(favorites) &&
             favorites.some((fav) => fav.id === movie.id)
           }
+          isTouchDevice={isTouchDevice}
         />
       ))}
     </div>

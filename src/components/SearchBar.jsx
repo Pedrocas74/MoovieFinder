@@ -57,7 +57,6 @@ export default function SearchBar({ setMovies, setLoading, setError }) {
         />
         <button type="submit"><Search className={styles.searchIcon} /></button>
       </label>
-      
     </form>
   );
 }

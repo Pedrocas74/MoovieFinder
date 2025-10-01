@@ -7,6 +7,7 @@ export default function MovieCard({
   onClick,
   toggleFavorite,
   isFavorite,
+  isTouchDevice,
 }) {
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
@@ -15,9 +16,6 @@ export default function MovieCard({
   const posterUrl = movie.poster_path
     ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
     : placeholderImg;
-
-  const isTouchDevice =
-    "ontouchstart" in window || navigator.maxTouchPoints > 0;
 
   // Handle swipe
   const handleTouchStart = (e) => {
@@ -31,8 +29,7 @@ export default function MovieCard({
   const handleTouchEnd = () => {
     if (!touchStart || !touchEnd) return;
     const distance = touchStart - touchEnd;
-
-    if (distance > 50) {
+    if (distance > 100) {
       // swipe up
       toggleFavorite(movie);
       setShowFeedback(true);
@@ -58,9 +55,7 @@ export default function MovieCard({
         <h3>{movie.title}</h3>
         <div className={styles.dateAndRate}>
           <p className={styles.releaseDate}>
-            {movie.release_date
-              ? movie.release_date.split("-")[0]
-              : "N/A"}
+            {movie.release_date ? movie.release_date.split("-")[0] : "N/A"}
           </p>
           <p className={styles.rating}>
             ⭐ {Number(movie.vote_average).toFixed(1)}
@@ -79,7 +74,7 @@ export default function MovieCard({
         </div>
       </div>
 
-      {/* ❤️ feedback animation */}
+      {/* feedback animation */}
       {showFeedback && (
         <div className={styles.feedback}>{isFavorite ? "💔" : "❤️"}</div>
       )}

@@ -12,6 +12,22 @@
   background-color: #f5f5e9;
 }
 
+.introduction {
+  /* border: 1px solid; */
+  margin: 0 auto;
+  position: relative;
+  top: 8vh;
+  opacity: 0.8;
+  text-shadow: 0px 12px 2px #8f1919;
+}
+
+.loading-animation {
+  position: relative;
+  top: 20vh;
+}
+
+/*-------------- FAVORITE PAGE ---------- */
+
 .favorites-page {
   position: fixed;
   z-index: 10;  /*summary -> 20 zIndex */
@@ -20,22 +36,12 @@
   height: 100vh;
   overflow: hidden;
 }
-.favorites-text {
+
+.favorites-section h2 {
+  padding-left: 0.3em;
+  font-size: 1.4rem;
   position: relative;
   top: 20vh;
- 
-}
-.favorites-text h2 {
-  font-size: 1.4rem;
-  
-}
-.favorites-text p {
-  margin-top: 0.7em;
-
-}
-.favorites-text h2, 
-.favorites-text p {
-  padding-left: 0.3em;
 }
 .favorites-section button {
   position: fixed;
@@ -62,3 +68,13 @@
   scale: 0.9;
 }
 
+/* ------------TOUCH DEVICE ---------- */
+.favorites-guide {
+  font-size: 0.9rem;
+  position: relative;
+  top: 30vh;
+  opacity: 0.8;
+  text-shadow: 0px 12px 2px #8f1919;
+  width: 100%;
+  text-align: center;
+}

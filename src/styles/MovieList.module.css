@@ -2,8 +2,8 @@
     gap: 1em;
     background-color: #8f1919;
     background-image: 
-    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.034) 0 1px, transparent 2px 2px),
-    repeating-linear-gradient(-45deg, rgba(255,255,255,0.05) 0 1px, transparent 2px 2px);
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.03) 0 1px, transparent 10px 4px),
+    repeating-linear-gradient(-45deg, rgba(255,255,255,0.03) 0 1px, transparent 10px 8px);
 
     position: relative;
     top: 25vh;
