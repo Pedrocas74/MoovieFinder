@@ -10,7 +10,6 @@ import Footer from "./components/Footer.jsx";
 import LoadingSVG from "./components/LoadingSVG.jsx";
 
 import { X } from "lucide-react";
-import { p } from "framer-motion/client";
 
 export default function App() {
   const [movies, setMovies] = useState([]);
@@ -83,22 +82,26 @@ export default function App() {
         <div className="favorites-page">
           <section className="favorites-section">
             <h2>My Favorites ❤️</h2>
-
-            <MovieList
-              movies={favorites}
-              onMovieClick={setSelectedMovie}
-              toggleFavorite={toggleFavorite}
-              favorites={favorites}
-              showFavorites={showFavorites}
-              isTouchDevice={isTouchDevice}
-            />
+            {favorites.length !== 0 && (
+              <MovieList
+                movies={favorites}
+                onMovieClick={setSelectedMovie}
+                toggleFavorite={toggleFavorite}
+                favorites={favorites}
+                showFavorites={showFavorites}
+                isTouchDevice={isTouchDevice}
+              />
+            )}
             {isTouchDevice && (
               <p className="favorites-guide">
-                {(favorites.length === 0) ? 
-                  "Search for movies and add them to your Favorites."  
-                  : "To remove a movie from favorites, swipe up the card." 
-                }
-                
+                {favorites.length === 0 ? (
+                  "Search for movies and add them to your Favorites."
+                ) : (
+                  <>
+                    To remove a movie from favorites,{" "}
+                    <strong>swipe up the card</strong>.
+                  </>
+                )}
               </p>
             )}
             <button onClick={() => setShowFavorites(false)}>

@@ -1,6 +1,7 @@
 .movieCard  {
     min-width: 8em;
-    border: 1px outset #1d1814;
+    border-right: 1.5px solid;
+    border-bottom: 2px solid;
     background-color: #f5f5e9;
     height: 15em;
     padding: 0.3em;

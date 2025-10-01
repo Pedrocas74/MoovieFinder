@@ -1,3 +1,4 @@
+import { motion, useAnimation } from "framer-motion";
 import styles from "../styles/MovieCard.module.css";
 import placeholderImg from "/assets/placeholder_movie.webp";
 import { useState } from "react";
@@ -9,46 +10,29 @@ export default function MovieCard({
   isFavorite,
   isTouchDevice,
 }) {
-  const [touchStart, setTouchStart] = useState(null);
-  const [touchEnd, setTouchEnd] = useState(null);
+  const controls = useAnimation();
   const [showFeedback, setShowFeedback] = useState(false);
 
   const posterUrl = movie.poster_path
     ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
     : placeholderImg;
 
-  // Handle swipe
-  const handleTouchStart = (e) => {
-    setTouchStart(e.targetTouches[0].clientY);
-  };
-
-  const handleTouchMove = (e) => {
-    setTouchEnd(e.targetTouches[0].clientY);
-  };
-
-  const handleTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-    const distance = touchStart - touchEnd;
-    if (distance > 100) {
-      // swipe up
-      toggleFavorite(movie);
-      setShowFeedback(true);
-
-      // hide after 1s
-      setTimeout(() => setShowFeedback(false), 1000);
-    }
-
-    setTouchStart(null);
-    setTouchEnd(null);
-  };
-
   return (
-    <div
+    <motion.div
       className={styles.movieCard}
       onClick={onClick}
-      onTouchStart={isTouchDevice ? handleTouchStart : undefined}
-      onTouchMove={isTouchDevice ? handleTouchMove : undefined}
-      onTouchEnd={isTouchDevice ? handleTouchEnd : undefined}
+      drag={isTouchDevice ? "y" : false}          // allow vertical drag on touch
+      dragConstraints={{ top: -50, bottom: 0 }}   // can only drag up to -50px
+      dragElastic={0.05}  // slight elasticity
+      animate={controls}                       
+      onDragEnd={(e, info) => {
+        if (info.offset.y < -50) { // if dragged up more than 50px
+          toggleFavorite(movie);
+          setShowFeedback(true);
+          setTimeout(() => setShowFeedback(false), 1000);
+        }
+        controls.start({ y: 0, transition: { type: "spring", stiffness: 400, damping: 20 } });
+      }}  
     >
       <img src={posterUrl} alt={movie.title} />
       <div className={styles.movieText}>
@@ -61,7 +45,7 @@ export default function MovieCard({
             ⭐ {Number(movie.vote_average).toFixed(1)}
           </p>
 
-          {!isTouchDevice && (
+          {!isTouchDevice && ( //COMPUTER
             <button
               onClick={(e) => {
                 e.stopPropagation();
@@ -78,6 +62,6 @@ export default function MovieCard({
       {showFeedback && (
         <div className={styles.feedback}>{isFavorite ? "💔" : "❤️"}</div>
       )}
-    </div>
+    </motion.div>
   );
 }
