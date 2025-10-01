@@ -46,14 +46,14 @@
   
 }
 
-
 .summary h2 {
   grid-area: title;
-  word-spacing: -4px;
-  width: 75%;
+  width: 80%;
   text-align: center;
   max-height: fit-content;
   margin: 0 auto;
+  padding-top: 0.5em;
+  font-size: 1.4rem;
 }
 
 .releaseDate,
@@ -63,37 +63,37 @@
   padding: 0.5em 0;
   display: flex;
   align-items: center;
+  padding-left: 1em;
 }
 
 .rating {
   grid-area: rating;
   margin-top: 2em;
   font-size: 0.9rem;
-  padding-left: 0.7em;
 }
 
 .releaseDate {
   grid-area: release;
   font-size: 0.9rem;
-  padding-left: 0.7em;
+  
 }
 
 .overviewContainer {
   grid-area: overview;
   text-align: justify;
   font-size: clamp(1rem, 1.5vw, 1.7rem);
-  padding: 0 0.7em 1em 0.7em;
+  padding: 0 1.2em 1em 1.1em;
   margin-top: 2.2em;
+  
 }
 .overviewContainer h4 {
   font-weight: 900;
+  
 }
 
 .overview {
   margin-top: 5px;
 }
-
-
 
 /* Style scrollbar for .summary_overlay */
 .summary_overlay::-webkit-scrollbar {

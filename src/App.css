@@ -12,18 +12,30 @@
   background-color: #f5f5e9;
 }
 
-.favorites-section {
-  position: absolute;
+.favorites-page {
+  position: fixed;
   z-index: 10;  /*summary -> 20 zIndex */
   background-color: #f5f5e9;
-  width: 100dvw;
-  height: 100dvh;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 }
-.favorites-section h2 {
-  text-align: center;
-  margin-top: 22vh;
-  position: absolute;
-  left: 5vw;
+.favorites-text {
+  position: relative;
+  top: 20vh;
+ 
+}
+.favorites-text h2 {
+  font-size: 1.4rem;
+  
+}
+.favorites-text p {
+  margin-top: 0.7em;
+
+}
+.favorites-text h2, 
+.favorites-text p {
+  padding-left: 0.3em;
 }
 .favorites-section button {
   position: fixed;

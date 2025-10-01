@@ -59,7 +59,7 @@ export default function MovieCard({
         <div className={styles.dateAndRate}>
           <p className={styles.releaseDate}>
             {movie.release_date
-              ? movie.release_date.split("-").reverse().join("-")
+              ? movie.release_date.split("-")[0]
               : "N/A"}
           </p>
           <p className={styles.rating}>

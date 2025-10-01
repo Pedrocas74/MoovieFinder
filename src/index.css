@@ -10,10 +10,19 @@
 
 }
 
+@font-face {
+    font-family: "Mitr", sans-serif;
+    src: url(../public/fonts/Mitr-Medium.ttf);
+}
+
 body h2 {
-  font-family: "IBM Plex Mono", monospace, sans-serif;
+  font-family: "Mitr", sans-serif;
 }
 
 body {
     font-family: "IBM Plex Sans JP", sans-serif;
 }
+
+/* body h3 {
+    font-family: "Mitr", sans-serif;
+} */

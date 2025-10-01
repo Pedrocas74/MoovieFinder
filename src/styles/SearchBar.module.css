@@ -16,10 +16,12 @@
     right: 0;
 }
 .searchForm input {
-    height: 35px;
+    height: 45px;
     padding: 0.5em 2.2em 0.5em 1em;
     border: 2px solid rgb(180, 29, 29);
     border-radius: 20px;
+    width: 70vw;
+    font-size: 1.1rem;
 }
 
 .searchIcon {

@@ -72,8 +72,12 @@ export default function App() {
       🚨 API/network issue → “Unable to fetch.” */}
 
       {showFavorites && ( //movieList from FAVORITES
+      <div className="favorites-page">
         <section className="favorites-section">
-          <h2>My Favorites ❤️</h2>
+          <section className="favorites-text">
+            <h2>My Favorites ❤️</h2>
+            <p>The movies that were added to the list: </p> 
+          </section>    
           <MovieList
             movies={favorites}
             onMovieClick={setSelectedMovie}
@@ -83,6 +87,7 @@ export default function App() {
           />
           <button onClick={() => setShowFavorites(false)}><X style={{ scale: 0.9, strokeWidth: 4 }}/></button>
         </section>
+      </div>
       )}
 
       {!loading &&
@@ -93,13 +98,14 @@ export default function App() {
             toggleFavorite={toggleFavorite}
           />
         )}
-
+      
       {selectedMovie && ( //after a click in one movie
         <MovieSummary
           movie={selectedMovie}
           onClose={() => setSelectedMovie(null)}
         />
       )}
+
 
       <Footer />
     </div>

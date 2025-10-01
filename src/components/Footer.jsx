@@ -15,6 +15,7 @@ export default function Footer() {
           TMBd API
         </a>
       </span>
+      <span>Pedro Magalhães</span>
       <div className={styles.socials}>
         <a
           href="https://github.com/Pedrocas74"
@@ -23,8 +24,17 @@ export default function Footer() {
         >
           <img src={gitHubIcon} alt="GitHub Link" width={20} />
         </a>
-        <a href="https://www.linkedin.com/in/pedro-magalh%C3%A3es-1a3651334/" target="_blank" rel="noopener noreferrer">
-          <img src={linkedinIcon} alt="Linkedin Link" width={20} style={{marginLeft: 10}}/>
+        <a
+          href="https://www.linkedin.com/in/pedro-magalh%C3%A3es-1a3651334/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img
+            src={linkedinIcon}
+            alt="Linkedin Link"
+            width={20}
+            style={{ marginLeft: 10 }}
+          />
         </a>
       </div>
     </footer>

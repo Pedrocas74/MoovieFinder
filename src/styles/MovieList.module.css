@@ -9,7 +9,8 @@
     padding: 1em 0.4em;
     scroll-behavior: smooth;
     scroll-snap-type: x proximity;
-    
+    width: 100vw
+
 }
 
 .movieRow > * {
@@ -17,3 +18,4 @@
     height: clamp(230px, 30vw, 390px);
     scroll-snap-align: center;
 }
+
