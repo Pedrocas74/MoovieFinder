@@ -1,11 +1,17 @@
 .header {
-    border-bottom: 2px solid black;
     display: flex;
     justify-content: space-between;
-    background-color: rgb(218, 218, 218);
+    border-bottom: 3px inset;
+    align-items: center;
+    padding: 0.7em 0.3em;
     
 }
 
 .header button {
-    height: 100%;
+    border-radius: 20px;
+    border: none;
+    background: none;
+    font-size: 1.2rem;
+    margin-right: 10px;
 }
+
