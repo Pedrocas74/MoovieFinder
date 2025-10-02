@@ -4,14 +4,13 @@
     border-bottom: 3px inset;
     align-items: center;
     padding: 0.7em 0.3em;
-    
 }
 
 .header button {
     border-radius: 20px;
     border: none;
     background: none;
-    font-size: 1.4rem;
+    font-size: clamp(1.3rem, 1.4rem, 1.6rem);
     margin-right: 10px;
 }
 

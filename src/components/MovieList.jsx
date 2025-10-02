@@ -28,6 +28,7 @@ export default function MovieList({
           }
           isTouchDevice={isTouchDevice}
           darkMode={darkMode}
+          showFavorites={showFavorites}
         />
       ))}
     </div>

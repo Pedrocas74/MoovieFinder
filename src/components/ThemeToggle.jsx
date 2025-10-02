@@ -16,7 +16,7 @@ export default function ThemeToggle({ darkMode, setDarkMode }) {
             initial={{ rotate: -90, opacity: 0, scale: 0.5 }}
             animate={{ rotate: 0, opacity: 1, scale: 1 }}
             exit={{ rotate: 90, opacity: 0, scale: 0.5 }}
-            transition={{ duration: 0.4 }}
+            transition={{ duration: 0.3 }}
           >
             <Moon size={20} color="#b032eb" />
           </motion.span>
@@ -26,7 +26,7 @@ export default function ThemeToggle({ darkMode, setDarkMode }) {
             initial={{ rotate: 90, opacity: 0, scale: 0.5 }}
             animate={{ rotate: 0, opacity: 1, scale: 1 }}
             exit={{ rotate: -90, opacity: 0, scale: 0.5 }}
-            transition={{ duration: 0.4 }}
+            transition={{ duration: 0.3 }}
           >
             <Sun size={20} color="#8f1919" />
           </motion.span>
