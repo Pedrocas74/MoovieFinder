@@ -27,6 +27,7 @@ export default function MovieList({
             favorites.some((fav) => fav.id === movie.id)
           }
           isTouchDevice={isTouchDevice}
+          darkMode={darkMode}
         />
       ))}
     </div>

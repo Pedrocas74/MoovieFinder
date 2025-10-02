@@ -9,6 +9,7 @@ export default function MovieCard({
   toggleFavorite,
   isFavorite,
   isTouchDevice,
+  darkMode
 }) {
   const controls = useAnimation();
   const [showFeedback, setShowFeedback] = useState(false);
@@ -59,8 +60,11 @@ export default function MovieCard({
       </div>
 
       {/* feedback animation */}
-      {showFeedback && (
+      {showFeedback && !darkMode && (
         <div className={styles.feedback}>{isFavorite ? "💔" : "❤️"}</div>
+      )}
+      {showFeedback && darkMode && (
+        <div className={styles.feedback}>{isFavorite ? "💔" : "🤍"}</div>
       )}
     </motion.div>
   );

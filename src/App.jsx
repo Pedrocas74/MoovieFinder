@@ -95,7 +95,7 @@ export default function App() {
       {showFavorites && ( //movieList from FAVORITES
         <div className="favorites-page" style={{backgroundColor: darkMode ? "#1d1814" : "#f5f5e9" }}>
           <section className="favorites-section">
-            <h2>My Favorites ❤️</h2>
+            <h2>{darkMode ? "My Favorites 🤍" : "My Favorites ❤️"}</h2>
             {favorites.length !== 0 && (
               <MovieList
                 movies={favorites}

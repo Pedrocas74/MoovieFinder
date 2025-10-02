@@ -18,7 +18,7 @@ export default function ThemeToggle({ darkMode, setDarkMode }) {
             exit={{ rotate: 90, opacity: 0, scale: 0.5 }}
             transition={{ duration: 0.4 }}
           >
-            <Moon size={15} color="#b032eb" />
+            <Moon size={20} color="#b032eb" />
           </motion.span>
         ) : (
           <motion.span
@@ -28,7 +28,7 @@ export default function ThemeToggle({ darkMode, setDarkMode }) {
             exit={{ rotate: -90, opacity: 0, scale: 0.5 }}
             transition={{ duration: 0.4 }}
           >
-            <Sun size={15} color="#8f1919" />
+            <Sun size={20} color="#8f1919" />
           </motion.span>
         )}
       </AnimatePresence>
