@@ -8,14 +8,19 @@ export default function MovieList({
   favorites,
   showFavorites,
   isTouchDevice,
-  darkMode
+  darkMode,
 }) {
   if ((!movies || movies.length === 0) && !showFavorites) {
     return <p>No movies found. Try another search.</p>;
   }
 
   return (
-    <div className={styles.movieRow} style={{ backgroundColor: darkMode ? "#b032eb" : "#8f1919 " }}>
+    <div
+      className={styles.movieRow}
+      style={{ backgroundColor: darkMode ? "#b032eb" : "#8f1919",
+        scrollbarColor: darkMode ? "#b032eb #1d1814" : "#8f1919 #f5f5e9"
+       }}
+    >
       {movies.map((movie) => (
         <MovieCard
           key={movie.id}

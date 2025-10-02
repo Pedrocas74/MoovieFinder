@@ -11,6 +11,7 @@
   scroll-behavior: smooth;
   scrollbar-color: none; 
   z-index: 20;
+  
 }
 
 .summary {
@@ -25,12 +26,12 @@
   align-items: stretch;
   width: 85%;
   min-height: 100vh;
-  padding: 0.5em 0;
+  padding: 0.5em 7vw;
 }
 
 .summary img {
   grid-area: img;
-  width: 280px;      
+  width: 74%; 
   max-height: 180px;     
   object-fit: cover;
   object-position: center;
@@ -42,12 +43,12 @@
 
 .summary h2 {
   grid-area: title;
-  width: 80%;
+  width: 70%;
   text-align: center;
   max-height: fit-content;
   margin: 0 auto;
   padding-top: 0.5em;
-  font-size: 1.4rem;
+  font-size: clamp(1.4rem, 3vw, 1.6rem);
 }
 
 .releaseDate,
@@ -58,18 +59,16 @@
   display: flex;
   align-items: center;
   padding-left: 1em;
+  font-size: clamp(0.9rem, 2vw, 1.2rem);
 }
 
 .rating {
   grid-area: rating;
   margin-top: 2em;
-  font-size: 0.9rem;
 }
 
 .releaseDate {
-  grid-area: release;
-  font-size: 0.9rem;
-  
+  grid-area: release; 
 }
 
 .overviewContainer {
@@ -78,34 +77,20 @@
   font-size: clamp(1rem, 1.5vw, 1.7rem);
   padding: 0 1.2em 1em 1.1em;
   margin-top: 2.2em;
-  
 }
 .overviewContainer h4 {
   font-weight: 900;
-  
 }
 
 .overview {
   margin-top: 5px;
 }
 
-/* Style scrollbar for .summary_overlay */
-.summary_overlay::-webkit-scrollbar {
-  width: 0;             
-}
-.summary_overlay::-webkit-scrollbar-thumb {
-  background: #1d1814;      
-  border-radius: 6px;
-}
-.summary_overlay::-webkit-scrollbar-track {
-  background: #8f1919;      
-}
-
 .summary button {
   position: fixed;
   z-index: 100;
-  top: 20px;
-  right: 12px;
+  top: 5vh;
+  right: 7vw;
   width: clamp(2.3em, 2.8em, 5em);
   cursor: pointer;
   background-color: #f5f5e9;
@@ -120,9 +105,20 @@
   background-color: #8f1919;
   border-color: #8f1919;
   color: #f5f5e9;
-  scale: 1.15;
+  scale: 1.1;
 }
 .summary button:active {
   scale: 0.9;
 }
 
+@media (width >= 1024px) {
+  .summary {
+    padding: 0.7em 15vw;
+  }
+}
+
+@media (width >= 1800px) {
+  .summary {
+    padding: 1em 20vw;
+  }
+}

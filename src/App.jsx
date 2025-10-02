@@ -12,7 +12,6 @@ import LoadingSVG from "./components/LoadingSVG.jsx";
 //icons
 import { X } from "lucide-react";
 
-
 export default function App() {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -23,10 +22,14 @@ export default function App() {
     return saved ? JSON.parse(saved) : [];
   });
   const [showFavorites, setShowFavorites] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
   const searched = movies.length > 0;
   const isTouchDevice =
     "ontouchstart" in window || navigator.maxTouchPoints > 0;
+
+  const [darkMode, setDarkMode] = useState(() => {
+    const saved = localStorage.getItem("darkMode");
+    return saved ? JSON.parse(saved) : false;
+  });
 
   // DARK MODE TOGGLE
   useEffect(() => {
@@ -35,6 +38,7 @@ export default function App() {
     } else {
       document.documentElement.classList.remove("dark");
     }
+    localStorage.setItem("darkMode", JSON.stringify(darkMode));
   }, [darkMode]);
 
   // Load favorites from localStorage on mount
@@ -106,7 +110,7 @@ export default function App() {
         >
           <section className="favorites-section">
             <h2>{darkMode ? "My Favorites 🤍" : "My Favorites ❤️"}</h2>
-            <div className="fav-container" >
+            <div className="fav-container">
               {favorites.length !== 0 && (
                 <MovieList
                   movies={favorites}
@@ -118,18 +122,24 @@ export default function App() {
                   darkMode={darkMode}
                 />
               )}
-              {isTouchDevice && (
-                <p className="favorites-guide" style={{top: favorites.length === 0 ? "10vh" : null }}>
-                  {favorites.length === 0 ? (
-                    "Search for movies and add them to your Favorites."
-                  ) : (
-                    <>
-                      To remove a movie from favorites,{" "}
-                      <strong>swipe up the card.</strong>
-                    </>
-                  )}
-                </p>
-              )}
+              
+  <p
+    className="favorites-guide"
+    style={{ top: favorites.length === 0 ? "10vh" : null }}
+  >
+    {favorites.length === 0 
+      ? "Search for movies and add them to your Favorites."
+      : (
+        <>
+          To remove a movie from favorites,{" "}
+          <strong>
+            {isTouchDevice ? "swipe up the card." : "tap the heart icon."}
+          </strong>
+        </>
+      )
+    }
+  </p>
+
             </div>
             <button className="buttonX" onClick={() => setShowFavorites(false)}>
               <X style={{ scale: 0.9, strokeWidth: 4 }} />
@@ -147,10 +157,19 @@ export default function App() {
                 toggleFavorite={toggleFavorite}
                 isTouchDevice={isTouchDevice}
                 darkMode={darkMode}
-                
               />
               <p className="guide">
-                To add a movie to favorites, <strong>swipe up the card.</strong>
+                {isTouchDevice ? (
+                  <>
+                    To add a movie to favorites,{" "}
+                    <strong>swipe up the card.</strong>
+                  </>
+                ) : (
+                  <>
+                    To add a movie to favorites,{" "}
+                    <strong>click the heart icon.</strong>
+                  </>
+                )}
               </p>
             </>
           )}

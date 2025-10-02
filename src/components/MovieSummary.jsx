@@ -24,15 +24,36 @@ export default function MovieSummary({ movie, onClose, darkMode }) {
         rgba(255, 255, 255, 0.07) 0 1px,
         transparent 10px 8px
       )
-    `
+    `,
       }}
       onClick={onClose}
     >
-      <div className={styles.summary} style={{background: darkMode ? "#1d1814" : "#f5f5e9"}} onClick={(e) => e.stopPropagation()}>
-        <button onClick={onClose}>
+      <div
+        className={styles.summary}
+        style={{
+          background: darkMode ? "#1d1814" : "#f5f5e9",
+          borderLeft: darkMode ? "7px double #b032eb" : "7px double #8f1919",
+          borderRight: darkMode ? "7px double #b032eb" : "7px double #8f1919",
+        }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          style={{
+            background: darkMode ? "#1d1814" : "#f5f5e9",
+            color: darkMode ? "#f5f5e9" : "#1d1814",
+            borderColor: darkMode ? "#f5f5e9" : "#1d1814",
+          }}
+          onClick={onClose}
+        >
           <X style={{ scale: 0.9, strokeWidth: 4 }} />
         </button>
-        <img style={{borderBottom: darkMode ? "3px solid #f5f5e9" : "3px solid #1d1814"}} src={posterUrl} alt={`Poster of ${movie.title}`} />
+        <img
+          style={{
+            borderBottom: darkMode ? "3px solid #f5f5e9" : "3px solid #1d1814",
+          }}
+          src={posterUrl}
+          alt={`Poster of ${movie.title}`}
+        />
         <h2>{movie.title}</h2>
         <p className={styles.rating}>
           <Star

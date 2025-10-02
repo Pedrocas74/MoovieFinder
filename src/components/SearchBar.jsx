@@ -61,6 +61,8 @@ export default function SearchBar({
           required
           style={{
             border: darkMode ? "2.5px solid #b032eb" : "2.5px solid #8f1919",
+            background: darkMode ? "#1d1814" : "#f5f5e9",
+            color: darkMode ? "#f5f5e9" : " #1d1814",
           }}
         />
         <button type="submit">

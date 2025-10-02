@@ -12,5 +12,11 @@
     background: none;
     font-size: clamp(1.3rem, 1.4rem, 1.6rem);
     margin-right: 10px;
+    cursor: pointer;
 }
-
+.header button:hover {
+    scale: 1.1;
+}
+.header button:active {
+    scale: 0.9;
+}

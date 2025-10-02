@@ -13,20 +13,22 @@
     background: none;
     border: none;
     position: absolute;
-    right: 0;
+    right: 0.8em;
 }
 .searchForm input {
     height: clamp(2em, 2.5em, 3em);
-    padding: 0.5em 2.2em 0.5em 1em;
+    padding: 0.5em 3em 0.5em 1em;
     border-radius: 20px;
-    width: 70vw;
-    font-size: clamp(1rem, 1.1rem, 1.2rem);
+    width: 47vh;
+    font-size: clamp(0.9rem, 1rem, 1.1rem);
 }
 
 .searchIcon {
     width: 1.5em;
     opacity: 0.5;
     margin-right: 0.3em;
+    cursor: pointer;
+    color: rgba(112, 108, 108, 0.918);
 }
 .searchForm {
     position: absolute;

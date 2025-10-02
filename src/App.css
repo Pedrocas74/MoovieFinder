@@ -38,12 +38,10 @@
   padding: 0;
 }
 
-
 .movies-container {
   position: relative;
-  height: 50vh;
-  /* border: 1px solid red; */
-  bottom: 0.3em;
+  height: 53vh;
+  bottom: 2em;
 }
 
 .guide {
@@ -101,7 +99,7 @@
   background-color: #8f1919;
   border-color: #8f1919;
   color: #f5f5e9;
-  scale: 1.15;
+  scale: 1.1;
 }
 .buttonX:active {
   scale: 0.9;
@@ -138,14 +136,21 @@ html.dark .favorites-section button {
 }
 
 html.dark .favorites-section h2,
-html.dark .favorites-section p,
+html.dark .favorites-section .guide,
+html.dark .favorites-section .favorites-guide,
 html.dark .favorites-section span {
   color: #f5f5e9;
 }
 
-html.dark .favorites-section p,
+html.dark .favorites-section .guide,
+html.dark .favorites-section .favorites-guide,
 html.dark .favorites-section span {
   text-shadow: 0px 1em 0.2em #b032eb ;
+}
+
+html.dark .buttonX:hover {
+  background-color: #b032eb;
+  border-color: #b032eb;
 }
 
 /* ----------MEDIA QUERIES----- */

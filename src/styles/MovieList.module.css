@@ -1,20 +1,23 @@
 .movieRow {
-    gap: 1em;
+    gap: 1.3em;
     background-image: 
     repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.1) 0 1px, transparent 9px 8px),
     repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.1) 0 1px, transparent 0px 7px);
     position: absolute;
     display: flex;
-    /* grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); */
     overflow-x: auto;
     padding: 1em 0.4em;
     scroll-behavior: smooth;
     scroll-snap-type: x proximity;
-    width: 100vw
+    width: 100vw;
+    scrollbar-width: thin;
+    justify-content: flex-start;
 }
+
 
 .movieRow > * {
     flex: 0 0 clamp(130px, 20vw, 220px);
     height: clamp(230px, 30vw, 390px);
     scroll-snap-align: center;
 }
+

@@ -10,7 +10,6 @@ export default function MovieCard({
   isFavorite,
   isTouchDevice,
   darkMode,
-  showFavorites,
 }) {
   const controls = useAnimation();
   const [showFeedback, setShowFeedback] = useState(false);
@@ -21,20 +20,28 @@ export default function MovieCard({
 
   return (
     <motion.div
+      style={{
+        background: darkMode ? "#1d1814" : "#f5f5e9",
+        color: darkMode ? "#f5f5e9" : "#1d1814",
+      }}
       className={styles.movieCard}
-      onClick={isTouchDevice ? onClick : null }
-      drag={isTouchDevice ? "y" : false}          // allow vertical drag on touch
-      dragConstraints={{ top: -50, bottom: 0 }}   // can only drag up to -50px
-      dragElastic={0.05}  // slight elasticity
-      animate={controls}                       
+      onClick={isTouchDevice ? onClick : null}
+      drag={isTouchDevice ? "y" : false} // allow vertical drag on touch
+      dragConstraints={{ top: -50, bottom: 0 }} // can only drag up to -50px
+      dragElastic={0.05} // slight elasticity
+      animate={controls}
       onDragEnd={(e, info) => {
-        if (info.offset.y < -50) { // if dragged up more than 50px
+        if (info.offset.y < -50) {
+          // if dragged up more than 50px
           toggleFavorite(movie);
           setShowFeedback(true);
           setTimeout(() => setShowFeedback(false), 1000);
         }
-        controls.start({ y: 0, transition: { type: "spring", stiffness: 400, damping: 20 } });
-      }}  
+        controls.start({
+          y: 0,
+          transition: { type: "spring", stiffness: 400, damping: 20 },
+        });
+      }}
     >
       <img onClick={onClick} src={posterUrl} alt={movie.title} />
       <div className={styles.movieText}>
@@ -49,15 +56,16 @@ export default function MovieCard({
 
           {!isTouchDevice && ( //COMPUTER
             <button
+              className={styles.heartButton}
               onClick={(e) => {
                 e.stopPropagation();
                 toggleFavorite(movie);
                 setShowFeedback(true);
                 setTimeout(() => setShowFeedback(false), 1000);
               }}
-              style={{border: "none",  cursor: "pointer", fontSize: "1rem"}}
+              style={{border: "none"}}
             >
-              {isFavorite ? "💔" : "❤️"}
+              {isFavorite ? "💔" : darkMode ? "🤍" : "❤️"}
             </button>
           )}
         </div>

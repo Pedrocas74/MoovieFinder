@@ -19,7 +19,7 @@ export default function Footer({ darkMode }) {
           TMBd API
         </a>
       </span>
-      <span>
+      <span className={styles.pedro}>
         <a
           href="https://pedromagalhaes.vercel.app/"
           target="_blank"
