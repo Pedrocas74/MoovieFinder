@@ -11,7 +11,7 @@ export default function MovieList({
   darkMode,
 }) {
   if ((!movies || movies.length === 0) && !showFavorites) {
-    return <p>No movies found. Try another search.</p>;
+    return <p role="status" aria-live="polite">No movies found. Try another search.</p>;
   }
 
   return (

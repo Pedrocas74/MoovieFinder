@@ -1,6 +1,6 @@
 //style
 import "./App.css";
-//dependencies
+//hooks
 import { useState, useEffect } from "react";
 //components
 import Header from "./components/Header.jsx";
@@ -11,6 +11,9 @@ import Footer from "./components/Footer.jsx";
 import LoadingSVG from "./components/LoadingSVG.jsx";
 //icons
 import { X } from "lucide-react";
+//animation
+import { color, motion } from "framer-motion";
+import { h1 } from "framer-motion/client";
 
 export default function App() {
   const [movies, setMovies] = useState([]);
@@ -79,9 +82,10 @@ export default function App() {
         setDarkMode={setDarkMode}
         toggleFavorites={() => setShowFavorites((prev) => !prev)}
       />
+
       <div className="search-container">
-        {!searched && (
-          <p className="introduction">
+        {!searched && (   
+          <p className="introduction" role="status" aria-live="polite">
             Type a title, find a movie — <strong>it’s that simple.</strong>
           </p>
         )}
@@ -97,19 +101,26 @@ export default function App() {
           {loading && <LoadingSVG darkMode={darkMode} />}
         </div>
 
-        {error && <p className="error-message">{error}</p>}
+        {error && (
+          <p className="error-message" role="alert">
+            {error}
+          </p>
+        )}
         {/*Movies found -> show results
          No results -> “No movies found” message
          API/network issue -> “Unable to fetch” */}
       </div>
 
       {showFavorites && ( //movieList from FAVORITES
-        <div
+        <aside
           className="favorites-page"
+          aria-labelledby="favorites-title"
           style={{ backgroundColor: darkMode ? "#1d1814" : "#f5f5e9" }}
         >
           <section className="favorites-section">
-            <h2>{darkMode ? "My Favorites 🤍" : "My Favorites ❤️"}</h2>
+            <h2 id="favorites-title">
+              {darkMode ? "My Favorites 🤍" : "My Favorites ❤️"}
+            </h2>
             <div className="fav-container">
               {favorites.length !== 0 && (
                 <MovieList
@@ -122,30 +133,34 @@ export default function App() {
                   darkMode={darkMode}
                 />
               )}
-              
-  <p
-    className="favorites-guide"
-    style={{ top: favorites.length === 0 ? "10vh" : null }}
-  >
-    {favorites.length === 0 
-      ? "Search for movies and add them to your Favorites."
-      : (
-        <>
-          To remove a movie from favorites,{" "}
-          <strong>
-            {isTouchDevice ? "swipe up the card." : "tap the heart icon."}
-          </strong>
-        </>
-      )
-    }
-  </p>
 
+              <p
+                className="favorites-guide"
+                style={{ top: favorites.length === 0 ? "10vh" : null }}
+              >
+                {favorites.length === 0 ? (
+                  "Search for movies and add them to your Favorites."
+                ) : (
+                  <>
+                    To remove a movie from favorites,{" "}
+                    <strong>
+                      {isTouchDevice
+                        ? "swipe up the card."
+                        : "tap the heart icon."}
+                    </strong>
+                  </>
+                )}
+              </p>
             </div>
-            <button className="buttonX" onClick={() => setShowFavorites(false)}>
+            <button
+              className="buttonX"
+              aria-label="Close favorites"
+              onClick={() => setShowFavorites(false)}
+            >
               <X style={{ scale: 0.9, strokeWidth: 4 }} />
             </button>
           </section>
-        </div>
+        </aside>
       )}
       <div className="movies-container">
         {!loading &&

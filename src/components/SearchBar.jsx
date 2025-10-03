@@ -65,7 +65,7 @@ export default function SearchBar({
             color: darkMode ? "#f5f5e9" : " #1d1814",
           }}
         />
-        <button type="submit">
+        <button type="submit" aria-label="Search movies">
           <Search className={styles.searchIcon} />
         </button>
       </label>

@@ -15,8 +15,9 @@ export default function Footer({ darkMode }) {
           href="https://developer.themoviedb.org/docs/getting-started"
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Visit The Movie Database API documentation"
         >
-          TMBd API
+          TMDB API
         </a>
       </span>
       <div className={styles.socials}>
@@ -25,6 +26,7 @@ export default function Footer({ darkMode }) {
           href="https://pedromagalhaes.vercel.app/"
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Visit Pedro Magalhães portfolio website"
         >made by Pedro</a> |
       </span>
       
@@ -32,17 +34,19 @@ export default function Footer({ darkMode }) {
           href="https://github.com/Pedrocas74"
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Pedro Magalhães on GitHub"
         >
-          <img src={gitHubIcon} alt="GitHub Link" width={20} />
+          <img src={gitHubIcon} alt="GitHub Icon" width={20} />
         </a>
         <a
-          href="https://www.linkedin.com/in/pedro-magalh%C3%A3es-1a3651334/"
+          href="https://www.linkedin.com/in/pedro-magalhães-1a3651334/"
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Pedro Magalhães on LinkedIn"
         >
           <img
             src={linkedinIcon}
-            alt="Linkedin Link"
+            alt="Linkedin Icon"
             width={20}
             style={{ marginLeft: 10 }}
           />

@@ -43,7 +43,13 @@ export default function MovieCard({
         });
       }}
     >
-      <img onClick={onClick} src={posterUrl} alt={movie.title} />
+      <img
+        onClick={onClick}
+        src={posterUrl}
+        role="button"
+        aria-label={`View details for ${movie.title}`}
+        alt={`Poster of ${movie.title}`}
+      />
       <div className={styles.movieText}>
         <h3>{movie.title}</h3>
         <div className={styles.dateAndRate}>
@@ -63,7 +69,8 @@ export default function MovieCard({
                 setShowFeedback(true);
                 setTimeout(() => setShowFeedback(false), 1000);
               }}
-              style={{border: "none"}}
+              style={{ border: "none" }}
+              aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
             >
               {isFavorite ? "💔" : darkMode ? "🤍" : "❤️"}
             </button>

@@ -36,8 +36,12 @@ export default function MovieSummary({ movie, onClose, darkMode }) {
           borderRight: darkMode ? "7px double #b032eb" : "7px double #8f1919",
         }}
         onClick={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="movie-title"
       >
         <button
+          aria-label="Close movie details"
           style={{
             background: darkMode ? "#1d1814" : "#f5f5e9",
             color: darkMode ? "#f5f5e9" : "#1d1814",
@@ -54,7 +58,7 @@ export default function MovieSummary({ movie, onClose, darkMode }) {
           src={posterUrl}
           alt={`Poster of ${movie.title}`}
         />
-        <h2>{movie.title}</h2>
+        <h3 id="movie-title">{movie.title}</h3>
         <p className={styles.rating}>
           <Star
             style={{
