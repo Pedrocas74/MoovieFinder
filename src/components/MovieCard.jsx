@@ -70,7 +70,9 @@ export default function MovieCard({
                 setTimeout(() => setShowFeedback(false), 1000);
               }}
               style={{ border: "none" }}
-              aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
+              aria-label={
+                isFavorite ? "Remove from favorites" : "Add to favorites"
+              }
             >
               {isFavorite ? "💔" : darkMode ? "🤍" : "❤️"}
             </button>

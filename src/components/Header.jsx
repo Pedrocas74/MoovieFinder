@@ -9,6 +9,9 @@ export default function Header({ toggleFavorites, darkMode, setDarkMode }) {
       style={{ borderBottom: darkMode ? "3px inset #00000013" : undefined }}
     >
       <Logo darkMode={darkMode} />
+      <h1 style={{ color: darkMode ? "#f5f5e9" : "#1d1814" }}>
+      Search. Find. Save.
+    </h1>
       <div className={styles.buttons}>
         <button aria-label="Toggle favorites list" onClick={toggleFavorites}>
           {darkMode ? "🤍" : "❤️"}

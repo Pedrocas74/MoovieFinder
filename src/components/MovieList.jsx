@@ -11,15 +11,20 @@ export default function MovieList({
   darkMode,
 }) {
   if ((!movies || movies.length === 0) && !showFavorites) {
-    return <p role="status" aria-live="polite">No movies found. Try another search.</p>;
+    return (
+      <p role="status" aria-live="polite">
+        No movies found. Try another search.
+      </p>
+    );
   }
 
   return (
     <div
       className={styles.movieRow}
-      style={{ backgroundColor: darkMode ? "#b032eb" : "#8f1919",
-        scrollbarColor: darkMode ? "#b032eb #1d1814" : "#8f1919 #f5f5e9"
-       }}
+      style={{
+        backgroundColor: darkMode ? "#b032eb" : "#8f1919",
+        scrollbarColor: darkMode ? "#b032eb #1d1814" : "#8f1919 #f5f5e9",
+      }}
     >
       {movies.map((movie) => (
         <MovieCard

@@ -52,7 +52,6 @@
 
 .releaseDate,
 .rating {
-  /* border: 1px solid rgb(6, 100, 30); */
   width: 100%;
   padding: 0.5em 0;
   display: flex;
@@ -109,13 +108,12 @@
 .summary button:active {
   scale: 0.9;
 }
-
+/* ---------- */
 @media (width >= 1024px) {
   .summary {
     padding: 0.7em 15vw;
   }
 }
-
 @media (width >= 1800px) {
   .summary {
     padding: 1em 20vw;

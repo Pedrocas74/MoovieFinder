@@ -32,7 +32,7 @@
     cursor: pointer;
     color: rgba(112, 108, 108, 0.918);
 }
-
+/* ------- */
 @media (width >= 1024px) {
     .searchForm input {
         width: 50vh;

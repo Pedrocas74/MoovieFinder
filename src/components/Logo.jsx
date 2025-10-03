@@ -1,7 +1,13 @@
 export default function Logo({ darkMode }) {
   return (
     <>
-      <svg style={{marginLeft: "3vh"}} width={100} viewBox="0 0 33 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg
+        style={{ marginLeft: "16px" }}
+        width={100}
+        viewBox="0 0 33 15"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
         <path
           d="M9.9 6.5L7.5375 11.275H6.375L4.025 6.5V12H0.8625V11.4625H2.075V3.2625H4.7125L6.9625 8.0625L9.225 3.2625H11.85V11.4625H13.0625V12H9.9V6.5ZM16.2263 11.4625V12H12.9263V11.4625H16.2263ZM19.5222 11.4625V12H16.2222V11.4625H19.5222ZM22.8181 11.4625V12H19.5181V11.4625H22.8181ZM26.114 11.4625V12H22.814V11.4625H26.114ZM29.4099 11.4625V12H26.1099V11.4625H29.4099Z"
           fill={darkMode ? "#b032eb" : "#8F1919"}

@@ -1,9 +1,8 @@
-import styles from '../styles/ThemeToggle.module.css';
+import styles from "../styles/ThemeToggle.module.css";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sun, Moon } from "lucide-react"; // icons
 
 export default function ThemeToggle({ darkMode, setDarkMode }) {
-
   return (
     <button
       onClick={() => setDarkMode(!darkMode)}

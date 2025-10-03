@@ -21,15 +21,17 @@ export default function Footer({ darkMode }) {
         </a>
       </span>
       <div className={styles.socials}>
-      <span className={styles.pedro}>
-        <a
-          href="https://pedromagalhaes.vercel.app/"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Visit Pedro Magalhães portfolio website"
-        >made by Pedro</a> |
-      </span>
-      
+        <span className={styles.pedro}>
+          <a
+            href="https://pedromagalhaes.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Visit Pedro Magalhães portfolio website"
+          >
+            made by Pedro
+          </a>{" "}
+          |
+        </span>
         <a
           href="https://github.com/Pedrocas74"
           target="_blank"

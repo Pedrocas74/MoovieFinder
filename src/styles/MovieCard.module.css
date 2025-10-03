@@ -1,6 +1,6 @@
 .movieCard  {
-    flex: 0 0 auto;      /* prevents the card from growing or shrinking */
-    width: 8em;          /* fixed width */
+    flex: 0 0 auto;     
+    width: 8em;          
     height: 15em; 
     padding: 0.3em;
     border-radius: 5px;
@@ -16,7 +16,6 @@
 }
 
 .movieText {
-    /* border: 1px solid rgb(107, 41, 151); */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
