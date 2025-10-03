@@ -182,7 +182,7 @@ export default function App() {
                 <motion.p
                   initial={{ y: -10, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.6, ease: "easeIn" }}
+                  transition={{ delay: 0.6, ease: "easeIn", }}
                   className="guide"
                 >
                   {isTouchDevice ? (
