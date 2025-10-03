@@ -4,6 +4,7 @@
     border-bottom: 3px inset;
     align-items: center;
     padding: 0.7em 0.3em;
+    max-height: 3em;
 }
 
 .header button {
