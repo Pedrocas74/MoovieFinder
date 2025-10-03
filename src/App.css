@@ -23,7 +23,7 @@
   width: 100%;
   text-align: center;
   position: absolute;
-  top: 2em;
+  top: 5vh;
   opacity: 0.8;
   text-shadow: 0px 1em 0.2em #8f1919;
 }
@@ -55,7 +55,7 @@
 
 .introduction,
 .guide {
-  font-size: clamp(0.9rem, 2vw, 1.2rem);
+  font-size: clamp(0.9rem, 2vw, 1rem);
 }
 
 /*-------------- FAVORITE PAGE ---------- */

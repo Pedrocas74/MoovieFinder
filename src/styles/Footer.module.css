@@ -18,5 +18,9 @@ footer a {
 
 .socials {
     margin-right: 10px;
+    display: flex;
+    align-items: center;
 }
-
+.pedro {
+  margin-right: 0.5em;
+}
