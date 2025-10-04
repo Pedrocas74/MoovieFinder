@@ -6,13 +6,6 @@
     padding: 0.7em 0.3em;
     max-height: 3em;
 }
-.header h1 {
-    font-size: clamp(1rem, 2vw, 1.1rem);
-    position: absolute;
-    top: 4%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
 .header button {
     border-radius: 20px;
     border: none;

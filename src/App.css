@@ -12,8 +12,7 @@
 }
 /* ---------SEARCHBAR-------- */
 .search-container {
-  border: 2px solid blue;
-  height: 33vh;
+  height: 30vh;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -30,23 +29,16 @@
 
 /* ---------MOVIELIST---------- */
 
-/* .movies-section {
-  position: relative;
-  height: 53vh;
-  bottom: 2em;
-} */
-
 .movies-container {
-  border: 2px solid orange;
-  
+  border-top: 1px double #8f1919;
+  border-bottom: 2px double black;
+  flex: 1;
 }
 
 .errorLoading-container {
-  border: 1px solid red;
   height: 5vh;
 }
 .error-message {
-  border: 1px solid green;
   height: 100%;
   display: flex;
   justify-content: center;
@@ -59,11 +51,33 @@
   font-size: clamp(0.9rem, 2vw, 1.1rem);
 }
 
+.title-container {
+  text-align: center;
+  margin-top: 1em;
+}
+.title-container h1 {
+  font-size: clamp(1rem, 1vw, 1.4rem);
+  position: relative;
+  z-index: 11;
+  font-weight: 900;
+  background: linear-gradient(270deg, #b032eb, #f5f5e9);
+  background-size: 600% 600%;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  animation: gradientShift 8s ease infinite;
+
+}
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 /*-------------- FAVORITE PAGE ---------- */
 
 .favorites-page {
   position: fixed;
-  z-index: 10;  /*summary -> 20 zIndex */
+  z-index: 15;  /*summary -> 20 zIndex */
   width: 100vw;
   height: 100vh;
   overflow: hidden;
