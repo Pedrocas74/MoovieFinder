@@ -80,11 +80,10 @@ export default function App() {
           setDarkMode={setDarkMode}
           toggleFavorites={() => setShowFavorites((prev) => !prev)}
         />
-        <div className="search-container">
-          {!searched && (
+        <div className="search-container">         
             <motion.p  /*1ST*/
               initial={{ y: -10, opacity: 0 }}
-              animate={{ y: 0, opacity: 0.7 }}
+              animate={{ y: 0, opacity: searched ? 0 : 0.7 }}
               transition={{ delay: 0.3, ease: "easeIn" }}
               className="introduction"
               role="status"
@@ -92,8 +91,7 @@ export default function App() {
             >
               Type a title, find a movie — <strong>it’s that simple.</strong>
             </motion.p>
-          )}
-
+         
           <SearchBar
             setMovies={setMovies}
             setLoading={setLoading}
@@ -103,7 +101,7 @@ export default function App() {
 
           <motion.p    /*2ND*/
             initial={{ y: -10, opacity: 0 }}
-            animate={{ y: 0, opacity: 0.7 }}
+            animate={{ y: 0, opacity: searched ? 0.7 : 0 }}
             transition={{ delay: 0.6, ease: "easeIn" }}
             className="guide"
           >
