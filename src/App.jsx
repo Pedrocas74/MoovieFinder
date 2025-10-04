@@ -102,6 +102,7 @@ export default function App() {
           <motion.p /*2ND*/
             initial={{ y: -10, opacity: 0 }}
             animate={{ y: 0, opacity: searched ? 0.7 : 0 }}
+            // viewport={{ once: true }}
             transition={{ delay: 0.6, ease: "easeIn" }}
             className="guide"
           >
@@ -138,8 +139,6 @@ export default function App() {
          No results -> “No movies found” message
          API/network issue -> “Unable to fetch” */}
 
-
-        
           {!loading &&
             searched && ( //movieList from SEARCH
               <div className="movies-container">
@@ -153,16 +152,19 @@ export default function App() {
               </div>
             )}
         </div>
-
-        <section className="title-container">
-          <h1 style={{ color: darkMode ? "#f5f5e9" : "#1d1814" }}>
-            Search. Find. Save.
-          </h1>
-        </section>
-
+        
+        {searched && (
+          <section className="title-container">
+            <motion.h1
+              initial={{ y: -10, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.6 }}
+            >
+              Search. Find. Save.
+            </motion.h1>
+          </section>
+        )}
         <Footer darkMode={darkMode} />
-      
-
 
         {showFavorites && ( //movieList from FAVORITES
           <aside
@@ -223,9 +225,6 @@ export default function App() {
             darkMode={darkMode}
           />
         )}
-        
-          
-        
       </div>
     </>
   );
