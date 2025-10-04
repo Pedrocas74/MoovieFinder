@@ -41,14 +41,16 @@
   
 }
 
-.loading-animation, 
+.errorLoading-container {
+  border: 1px solid red;
+  height: 5vh;
+}
 .error-message {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  margin: 0;
-  padding: 0;
+  border: 1px solid green;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .introduction,

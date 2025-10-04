@@ -80,18 +80,18 @@ export default function App() {
           setDarkMode={setDarkMode}
           toggleFavorites={() => setShowFavorites((prev) => !prev)}
         />
-        <div className="search-container">         
-            <motion.p  /*1ST*/
-              initial={{ y: -10, opacity: 0 }}
-              animate={{ y: 0, opacity: searched ? 0 : 0.7 }}
-              transition={{ delay: 0.3, ease: "easeIn" }}
-              className="introduction"
-              role="status"
-              aria-live="polite"
-            >
-              Type a title, find a movie — <strong>it’s that simple.</strong>
-            </motion.p>
-         
+        <div className="search-container">
+          <motion.p /*1ST*/
+            initial={{ y: -10, opacity: 0 }}
+            animate={{ y: 0, opacity: searched ? 0 : 0.7 }}
+            transition={{ delay: 0.3, ease: "easeIn" }}
+            className="introduction"
+            role="status"
+            aria-live="polite"
+          >
+            Type a title, find a movie — <strong>it’s that simple.</strong>
+          </motion.p>
+
           <SearchBar
             setMovies={setMovies}
             setLoading={setLoading}
@@ -99,7 +99,7 @@ export default function App() {
             darkMode={darkMode}
           />
 
-          <motion.p    /*2ND*/
+          <motion.p /*2ND*/
             initial={{ y: -10, opacity: 0 }}
             animate={{ y: 0, opacity: searched ? 0.7 : 0 }}
             transition={{ delay: 0.6, ease: "easeIn" }}
@@ -119,15 +119,21 @@ export default function App() {
         </div>
 
         <div className="movies-section">
-          <div className="loading-animation">
-            {loading && <LoadingSVG darkMode={darkMode} />}
+          <div className="errorLoading-container">
+            {error && (
+              <p
+                style={{ color: darkMode ? "#f5f5e9" : "#1d1814" }}
+                className="error-message"
+                role="alert"
+              >
+                {error}
+              </p>
+            )}
+            <div className="loading-animation">
+              {loading && <LoadingSVG darkMode={darkMode} />}
+            </div>
           </div>
 
-          {error && (
-            <p className="error-message" role="alert">
-              {error}
-            </p>
-          )}
           {/*Movies found -> show results
          No results -> “No movies found” message
          API/network issue -> “Unable to fetch” */}
