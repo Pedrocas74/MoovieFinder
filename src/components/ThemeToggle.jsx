@@ -7,6 +7,7 @@ export default function ThemeToggle({ darkMode, setDarkMode }) {
     <button
       onClick={() => setDarkMode(!darkMode)}
       className={styles.toggleButton}
+      style={{background: darkMode ? "transparent" : "white"}}
     >
       <AnimatePresence mode="wait" initial={false}>
         {darkMode ? (

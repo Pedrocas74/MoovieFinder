@@ -12,7 +12,7 @@ import LoadingSVG from "./components/LoadingSVG.jsx";
 //icons
 import { X } from "lucide-react";
 //animation
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 
 export default function App() {
   const [movies, setMovies] = useState([]);
@@ -81,28 +81,46 @@ export default function App() {
           toggleFavorites={() => setShowFavorites((prev) => !prev)}
         />
         <div className="search-container">
-          <AnimatePresence>
-            {!searched && (
-              <motion.p
-                initial={{ y: -10, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ opacity: 0, y: 10 }}
-                transition={{ delay: 0.3, ease: "easeIn" }}
-                className="introduction"
-                role="status"
-                aria-live="polite"
-              >
-                Type a title, find a movie — <strong>it’s that simple.</strong>
-              </motion.p>
-            )}
-          </AnimatePresence>
-          {/* search text input from user strictly equall */}
+          {!searched && (
+            <motion.p  /*1ST*/
+              initial={{ y: -10, opacity: 0 }}
+              animate={{ y: 0, opacity: 0.7 }}
+              transition={{ delay: 0.3, ease: "easeIn" }}
+              className="introduction"
+              role="status"
+              aria-live="polite"
+            >
+              Type a title, find a movie — <strong>it’s that simple.</strong>
+            </motion.p>
+          )}
+
           <SearchBar
             setMovies={setMovies}
             setLoading={setLoading}
             setError={setError}
             darkMode={darkMode}
           />
+
+          <motion.p    /*2ND*/
+            initial={{ y: -10, opacity: 0 }}
+            animate={{ y: 0, opacity: 0.7 }}
+            transition={{ delay: 0.6, ease: "easeIn" }}
+            className="guide"
+          >
+            {isTouchDevice ? (
+              <>
+                To add a movie to favorites, <strong>swipe up the card.</strong>
+              </>
+            ) : (
+              <>
+                To add a movie to favorites,{" "}
+                <strong>click the heart icon.</strong>
+              </>
+            )}
+          </motion.p>
+        </div>
+
+        <div className="movies-section">
           <div className="loading-animation">
             {loading && <LoadingSVG darkMode={darkMode} />}
           </div>
@@ -115,6 +133,19 @@ export default function App() {
           {/*Movies found -> show results
          No results -> “No movies found” message
          API/network issue -> “Unable to fetch” */}
+
+          {!loading &&
+            searched && ( //movieList from SEARCH
+              <div className="movies-container">
+                <MovieList
+                  movies={movies}
+                  onMovieClick={setSelectedMovie}
+                  toggleFavorite={toggleFavorite}
+                  isTouchDevice={isTouchDevice}
+                  darkMode={darkMode}
+                />
+              </div>
+            )}
         </div>
 
         {showFavorites && ( //movieList from FAVORITES
@@ -168,38 +199,7 @@ export default function App() {
             </section>
           </aside>
         )}
-        <div className="movies-container">
-          {!loading &&
-            searched && ( //movieList from SEARCH
-              <>
-                <MovieList
-                  movies={movies}
-                  onMovieClick={setSelectedMovie}
-                  toggleFavorite={toggleFavorite}
-                  isTouchDevice={isTouchDevice}
-                  darkMode={darkMode}
-                />
-                <motion.p
-                  initial={{ y: -10, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.6, ease: "easeIn", }}
-                  className="guide"
-                >
-                  {isTouchDevice ? (
-                    <>
-                      To add a movie to favorites,{" "}
-                      <strong>swipe up the card.</strong>
-                    </>
-                  ) : (
-                    <>
-                      To add a movie to favorites,{" "}
-                      <strong>click the heart icon.</strong>
-                    </>
-                  )}
-                </motion.p>
-              </>
-            )}
-        </div>
+
         {selectedMovie && ( //after a click in one movie
           <MovieSummary
             movie={selectedMovie}

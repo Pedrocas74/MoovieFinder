@@ -1,7 +1,6 @@
 .toggleButton {
   cursor: pointer;
   border: none;
-  background: transparent;
   padding-top: 5px;
   display: inline-flex;
   align-items: center;

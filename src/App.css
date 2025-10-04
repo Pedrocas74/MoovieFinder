@@ -8,23 +8,39 @@
 .app-flex {
   display: flex;
   flex-direction: column;
-  min-height: 100dvh;
+  max-height: 100vh;
   background-color: #f5f5e9;
+  overflow: hidden;
 }
-
+/* ---------SEARCHBAR-------- */
 .search-container {
+  border: 2px solid blue;
   height: 33vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
   position: relative;
-  top: 0.5em;
 }
 
 .introduction {
-  width: 100%;
-  text-align: center;
-  position: absolute;
-  top: 5vh;
-  opacity: 0.8;
   text-shadow: 0px 1em 0.2em #8f1919;
+}
+.guide {
+  text-shadow: 0px 1em 0.2em #8f1919;
+}
+
+/* ---------MOVIELIST---------- */
+
+/* .movies-section {
+  position: relative;
+  height: 53vh;
+  bottom: 2em;
+} */
+
+.movies-container {
+  border: 2px solid orange;
+  
 }
 
 .loading-animation, 
@@ -37,25 +53,10 @@
   padding: 0;
 }
 
-.movies-container {
-  position: relative;
-  height: 53vh;
-  bottom: 2em;
-}
-
-.guide {
-  position: absolute;
-  bottom: 3vh;
-  width: 100vw;
-  text-align: center;
-  opacity: 0.8;
-  text-shadow: 0px 1em 0.2em #8f1919;
-}
-
 .introduction,
 .guide,
 .favorites-guide {
-  font-size: clamp(0.9rem, 2vw, 1rem);
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
 }
 
 /*-------------- FAVORITE PAGE ---------- */
