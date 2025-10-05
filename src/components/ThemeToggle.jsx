@@ -5,6 +5,7 @@ import { Sun, Moon } from "lucide-react"; // icons
 export default function ThemeToggle({ darkMode, setDarkMode }) {
   return (
     <button
+      aria-label="Toggle dark/light mode"
       onClick={() => setDarkMode(!darkMode)}
       className={styles.toggleButton}
       style={{background: darkMode ? "transparent" : "white"}}

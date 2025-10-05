@@ -38,7 +38,7 @@ export default function Footer({ darkMode }) {
           rel="noopener noreferrer"
           aria-label="Pedro Magalhães on GitHub"
         >
-          <img src={gitHubIcon} alt="GitHub Icon" width={20} />
+          <img src={gitHubIcon} alt="GitHub Icon"  />
         </a>
         <a
           href="https://www.linkedin.com/in/pedro-magalhães-1a3651334/"
@@ -49,8 +49,8 @@ export default function Footer({ darkMode }) {
           <img
             src={linkedinIcon}
             alt="Linkedin Icon"
-            width={20}
-            style={{ marginLeft: 10 }}
+    
+            style={{ marginLeft: 15 }}
           />
         </a>
       </div>

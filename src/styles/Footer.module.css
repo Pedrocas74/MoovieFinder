@@ -17,10 +17,22 @@ footer a {
 }
 
 .socials {
-    margin-right: 10px;
+    margin-right: 2vw;
     display: flex;
     align-items: center;
 }
+.socials img {
+  width: 22px;
+}
 .pedro {
-  margin-right: 10px;
+  margin-right: 3vw;
+}
+
+@media (min-width: 768px) {
+  .socials img {
+    width: 27px;
+  }
+  .pedro {
+    font-size: 0.9rem;
+  }
 }
