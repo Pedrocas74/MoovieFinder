@@ -1,9 +1,12 @@
 export default function Logo({ darkMode }) {
+  const desktop = window.innerWidth >= 1080;
+  const logoWidth = desktop ? 110 : 80;
+
   return (
     <>
       <svg
-        style={{ marginLeft: "16px" }}
-        width={100}
+        style={{ marginLeft: "2vw" }}
+        width={logoWidth}
         viewBox="0 0 33 15"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

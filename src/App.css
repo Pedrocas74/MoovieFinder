@@ -52,10 +52,10 @@
 
 .title-container h1 {
   text-align: center;
-  margin-top: 1em;
+  margin-top: 0.3em;
   font-size: clamp(1rem, 2vw, 1.4rem);
   position: relative;
-  z-index: 11;
+  z-index: 17;
   font-weight: 900;
   background: linear-gradient(270deg, #8f1919, #1d1814);
   background-size: 600% 600%;

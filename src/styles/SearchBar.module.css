@@ -29,6 +29,6 @@
 /* ------- */
 @media (width >= 768px) {
     .searchForm input {
-        width: 40vh;
+        width: 35vw;
     }
 }

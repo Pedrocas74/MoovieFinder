@@ -152,7 +152,7 @@ export default function App() {
               </div>
             )}
         </div>
-        
+
         {searched && (
           <section className="title-container">
             <motion.h1
