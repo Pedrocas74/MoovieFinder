@@ -5,7 +5,7 @@ footer {
   width: 100vw;
   color: #f5f5e9;
   padding: 0.5em;
-  z-index: 10;
+  z-index: 16;
   font-size: clamp(0.8rem, 1vw, 0.9rem);
   display: flex;
   justify-content: space-between;

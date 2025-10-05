@@ -30,8 +30,6 @@
 /* ---------MOVIELIST---------- */
 
 .movies-container {
-  border-top: 1px double #8f1919;
-  border-bottom: 2px double black;
   flex: 1;
 }
 
@@ -48,14 +46,14 @@
 .introduction,
 .guide,
 .favorites-guide {
-  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  font-size: clamp(0.9rem, 2vw, 1.15rem);
 }
 
 
 .title-container h1 {
   text-align: center;
   margin-top: 1em;
-  font-size: clamp(1rem, 1vw, 1.4rem);
+  font-size: clamp(1rem, 2vw, 1.4rem);
   position: relative;
   z-index: 11;
   font-weight: 900;
@@ -65,7 +63,6 @@
   -webkit-text-fill-color: transparent;
   text-shadow: 0 2px 4px rgba(0,0,0,0.2);
   animation: gradientShift 8s ease infinite;
-
 }
 @keyframes gradientShift {
   0% { background-position: 0% 50%; }
@@ -75,6 +72,8 @@
 /*-------------- FAVORITE PAGE ---------- */
 
 .favorites-page {
+  top: 0;
+  left: 0;
   position: fixed;
   z-index: 15;  /*summary -> 20 zIndex */
   width: 100vw;

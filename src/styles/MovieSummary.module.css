@@ -71,10 +71,10 @@
 
 .overviewContainer {
   grid-area: overview;
-  text-align: justify;
+  text-align: left;
   font-size: clamp(1rem, 1.5vw, 1.7rem);
-  padding: 0 1.2em 1em 1.1em;
-  margin-top: 2.2em;
+  padding: 0 1em 1em 1em;
+  margin-top: 1em;
 }
 .overviewContainer h4 {
   font-weight: 900;

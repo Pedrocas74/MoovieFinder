@@ -18,12 +18,22 @@ export default function MovieList({
     );
   }
 
+  const scrollbarColor = isTouchDevice
+  ? darkMode
+    ? "#1d1814 #1d1814"
+    : "#f5f5e9 #f5f5e9"
+  : darkMode
+    ? "#b032eb #1d1814"
+    : "#8f1919 #f5f5e9";
+
   return (
     <div
       className={styles.movieRow}
       style={{
         backgroundColor: darkMode ? "#b032eb" : "#8f1919",
-        scrollbarColor: darkMode ? "#b032eb #1d1814" : "#8f1919 #f5f5e9",
+        scrollbarColor,
+        borderTop: darkMode ? "4px double #1d1814" : "4px double #f5f5e9",
+        borderBottom: darkMode ? "4px double #1d1814" : "4px double #f5f5e9",
       }}
     >
       {movies.map((movie) => (
