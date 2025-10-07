@@ -62,7 +62,7 @@ export default function MovieCard({
           <p className={styles.releaseDate}>
             {movie.release_date ? movie.release_date.split("-")[0] : "N/A"}
           </p>
-          {localFav && <p>{darkMode ? "🤍" : "❤️"}</p>}
+          {localFav && isTouchDevice && <p>{darkMode ? "🤍" : "❤️"}</p>}
           <p className={styles.rating}>
             ⭐ {Number(movie.vote_average).toFixed(1)}
           </p>

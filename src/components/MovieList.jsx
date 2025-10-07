@@ -63,7 +63,7 @@ export default function MovieList({
   return (
     <>
       <div className={styles.filters}>
-        <label for="filters"></label>
+        <label htmlFor="filters"></label>
 
         <select
           name="orders"
@@ -71,6 +71,11 @@ export default function MovieList({
           value={filter}
           onChange={handleFilterChange}
           className={`${styles.dropdown} ${darkMode ? styles.dark : ""}`}
+          aria-label="Choose how to sort the movie list"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") handleFilterChange(e);
+            if (e.key === "ArrowDown" || e.key === "ArrowUp") e.preventDefault(); 
+          }}
         >
           <option value="">--Order--</option>
           <option value="recent">Most recent</option>

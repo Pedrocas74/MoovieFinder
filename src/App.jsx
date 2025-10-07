@@ -12,7 +12,7 @@ import LoadingSVG from "./components/LoadingSVG.jsx";
 //icons
 import { X } from "lucide-react";
 //animation
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function App() {
   const [movies, setMovies] = useState([]);
@@ -81,17 +81,31 @@ export default function App() {
           toggleFavorites={() => setShowFavorites((prev) => !prev)}
         />
         <div className="search-container">
-          <motion.p /*1ST*/
-            initial={{ y: -10, opacity: 0 }}
-            animate={{ y: 0, opacity: searched ? 0 : 0.7 }}
-            transition={{ delay: 0.3, ease: "easeIn" }}
-            className="introduction"
-            role="status"
-            aria-live="polite"
-          >
-            Type a title, find a movie — <strong>it’s that simple.</strong>
-          </motion.p>
-
+          {!searched ? (
+          <AnimatePresence>
+            <motion.p /*1ST*/
+              initial={{ y: -10, opacity: 0 }}
+              animate={{ y: 0, opacity: 0.7 }}
+              exit={{ y: -10, opacity: 0}}
+              transition={{ delay: 0.6, ease: "easeIn" }}
+              className="introduction"
+              role="status"
+              aria-live="polite"
+            >
+              Type a title, find a movie — <strong>it’s that simple.</strong>
+            </motion.p>
+          </AnimatePresence>
+          ) : (
+            <section className="title-container">
+              <motion.h1
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ ease: "easeIn", delay: 1.5 }}
+              >
+                Search. Find. Save.
+              </motion.h1>
+            </section>
+          )}
           <SearchBar
             setMovies={setMovies}
             setLoading={setLoading}
@@ -102,8 +116,8 @@ export default function App() {
           <motion.p /*2ND*/
             initial={{ y: -10, opacity: 0 }}
             animate={{ y: 0, opacity: searched ? 0.7 : 0 }}
-            // viewport={{ once: true }}
-            transition={{ delay: 0.6, ease: "easeIn" }}
+            viewport={{ once: true }}
+            transition={{  ease: "easeIn" }}
             className="guide"
           >
             {isTouchDevice ? (
@@ -153,17 +167,6 @@ export default function App() {
             )}
         </div>
 
-        {searched && (
-          <section className="title-container">
-            <motion.h1
-              initial={{ y: -10, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.6 }}
-            >
-              Search. Find. Save.
-            </motion.h1>
-          </section>
-        )}
         <Footer darkMode={darkMode} />
 
         {showFavorites && ( //movieList from FAVORITES

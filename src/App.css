@@ -47,15 +47,16 @@
 .guide,
 .favorites-guide {
   font-size: clamp(0.9rem, 2vw, 1.15rem);
+  text-align: center;
+  opacity: 0.7;
 }
 
 
 .title-container h1 {
   text-align: center;
-  margin-top: 0.3em;
-  font-size: clamp(1rem, 2vw, 1.4rem);
+  font-size: clamp(1rem, 2vw, 1.1rem);
   position: relative;
-  z-index: 17;
+  z-index: 10;
   font-weight: 900;
   background: linear-gradient(270deg, #8f1919, #1d1814);
   background-size: 600% 600%;
@@ -120,12 +121,8 @@
 
 /* ------------TOUCH DEVICE ---------- */
 .favorites-guide {
-  position: absolute;
-  bottom: 0;
-  opacity: 0.8;
   text-shadow: 0px 1em 0.2em #8f1919;
   width: 100%;
-  text-align: center;
 }
 
 
