@@ -1,7 +1,7 @@
 import { motion, useAnimation } from "framer-motion";
 import styles from "../styles/MovieCard.module.css";
 import placeholderImg from "/assets/placeholder_movie.webp";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function MovieCard({
   movie,
@@ -13,6 +13,11 @@ export default function MovieCard({
 }) {
   const controls = useAnimation();
   const [showFeedback, setShowFeedback] = useState(false);
+  const [localFav, setLocalFav] = useState(isFavorite);
+
+  useEffect(() => {
+    setLocalFav(isFavorite);
+  }, [isFavorite]);
 
   const posterUrl = movie.poster_path
     ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
@@ -33,6 +38,7 @@ export default function MovieCard({
       onDragEnd={(e, info) => {
         if (info.offset.y < -50) {
           // if dragged up more than 50px
+          setLocalFav(!localFav);
           toggleFavorite(movie);
           setShowFeedback(true);
           setTimeout(() => setShowFeedback(false), 1000);
@@ -65,6 +71,7 @@ export default function MovieCard({
               className={styles.heartButton}
               onClick={(e) => {
                 e.stopPropagation();
+                setLocalFav(!localFav);
                 toggleFavorite(movie);
                 setShowFeedback(true);
                 setTimeout(() => setShowFeedback(false), 1000);
@@ -74,7 +81,15 @@ export default function MovieCard({
                 isFavorite ? "Remove from favorites" : "Add to favorites"
               }
             >
-              {isFavorite ? "💔" : darkMode ? "🤍" : "❤️"}
+              {isFavorite
+                ? "💔" // already favorite, show broken heart
+                : localFav
+                ? darkMode
+                  ? "🤍" // just pressed in dark mode
+                  : "❤️" // just pressed in light mode
+                : darkMode
+                ? "🖤" // initially dark mode, black heart
+                : "🖤"}{" "}    
             </button>
           )}
         </div>
