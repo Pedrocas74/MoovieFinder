@@ -72,7 +72,7 @@ export default function MovieList({
           onChange={handleFilterChange}
           className={`${styles.dropdown} ${darkMode ? styles.dark : ""}`}
         >
-          <option value="">--Choose a filter--</option>
+          <option value="">--Order--</option>
           <option value="recent">Most recent</option>
           <option value="oldest">Oldest</option>
           <option value="mostRated">Most rated</option>
