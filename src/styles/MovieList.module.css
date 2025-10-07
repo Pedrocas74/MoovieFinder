@@ -12,10 +12,42 @@
     scrollbar-width: thin;
     justify-content: flex-start;
 }
-
-
 .movieRow > * {
     flex: 0 0 clamp(130px, 20vw, 220px);
     height: clamp(230px, 30vw, 390px);
     scroll-snap-align: center;
+}
+
+.dropdown {
+  padding: 0.2em 0.4em;
+  border-top: 1px solid #8f1919;
+  border-left: 1px solid #8f1919;
+  border-right: 1px solid #8f1919;
+  border-bottom: none;
+  background-color: #f5f5e9;  
+  color: #1d1814; /* text color */
+  font-size: clamp(0.8rem, 2vw, 1rem);
+  cursor: pointer;
+  margin-left: 0.5em;
+}
+.dropdown option {
+    background-color: #8f1919;
+    color: #f5f5e9;
+}
+
+.dropdown.dark {
+  background-color: #1d1814;
+  color: #f5f5e9;
+  border-top: 1px solid #b032eb;
+  border-left: 1px solid #b032eb;
+  border-right: 1px solid #b032eb;
+  border-bottom: none;
+}
+.dropdown.dark option {
+    background-color: #b032eb;
+    color: #f5f5e9;
+}
+
+.dropdown:focus {
+  outline: none;
 }
