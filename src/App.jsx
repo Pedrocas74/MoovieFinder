@@ -81,23 +81,25 @@ export default function App() {
           toggleFavorites={() => setShowFavorites((prev) => !prev)}
         />
         <div className="search-container">
+          <AnimatePresence mode="wait">
           {!searched ? (
-          <AnimatePresence>
             <motion.p /*1ST*/
+              key="intro"
               initial={{ y: -10, opacity: 0 }}
               animate={{ y: 0, opacity: 0.7 }}
-              exit={{ y: -10, opacity: 0}}
-              transition={{ delay: 0.6, ease: "easeIn" }}
+              exit={{ y: 10, opacity: 0}}
+              transition={{ ease: "easeIn" }}
               className="introduction"
               role="status"
               aria-live="polite"
             >
               Type a title, find a movie — <strong>it’s that simple.</strong>
             </motion.p>
-          </AnimatePresence>
+          
           ) : (
             <section className="title-container">
               <motion.h1
+                key="title"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ ease: "easeIn", delay: 1.5 }}
@@ -106,6 +108,8 @@ export default function App() {
               </motion.h1>
             </section>
           )}
+          </AnimatePresence>
+
           <SearchBar
             setMovies={setMovies}
             setLoading={setLoading}
@@ -117,7 +121,7 @@ export default function App() {
             initial={{ y: -10, opacity: 0 }}
             animate={{ y: 0, opacity: searched ? 0.7 : 0 }}
             viewport={{ once: true }}
-            transition={{  ease: "easeIn" }}
+            transition={{ delay: 0.5, ease: "easeIn" }}
             className="guide"
           >
             {isTouchDevice ? (
