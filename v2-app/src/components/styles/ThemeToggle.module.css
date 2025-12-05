@@ -1,0 +1,15 @@
+.toggleButton {
+  cursor: pointer;
+  border: none;
+  padding-top: 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.15);
+  -webkit-tap-highlight-color: transparent;
+}
+.toggleButton:focus {
+  outline: none ;
+}
+
+
