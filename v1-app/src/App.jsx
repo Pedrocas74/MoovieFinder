@@ -33,7 +33,7 @@ export default function App() {
   const isTouchDevice =
     "ontouchstart" in window || navigator.maxTouchPoints > 0;
 
-  // DARK MODE TOGGLE
+  //DARK MODE TOGGLE
   useEffect(() => {
     if (darkMode) {
       document.documentElement.classList.add("dark");
@@ -93,7 +93,7 @@ export default function App() {
               role="status"
               aria-live="polite"
             >
-              Type a title, find a movie — <strong>it’s that simple.</strong>
+              Type a title, find a movie.
             </motion.p>
           
           ) : (
@@ -141,7 +141,6 @@ export default function App() {
           <div className="errorLoading-container">
             {error && (
               <p
-                style={{ color: darkMode ? "#f5f5e9" : "#1d1814" }}
                 className="error-message"
                 role="alert"
               >
@@ -177,7 +176,6 @@ export default function App() {
           <aside
             className="favorites-page"
             aria-labelledby="favorites-title"
-            style={{ backgroundColor: darkMode ? "#1d1814" : "#f5f5e9" }}
           >
             <section className="favorites-section">
               <h2 id="favorites-title">

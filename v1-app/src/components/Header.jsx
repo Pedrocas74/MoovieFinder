@@ -6,8 +6,8 @@ export default function Header({ toggleFavorites, darkMode, setDarkMode }) {
   return (
     <header
       className={styles.header}
-      style={{ borderBottom: darkMode ? "3px inset #00000013" : undefined }}
     >
+      <div className={styles.headerWrapper}>
       <Logo darkMode={darkMode} />
       
       <div className={styles.buttons}>
@@ -19,6 +19,7 @@ export default function Header({ toggleFavorites, darkMode, setDarkMode }) {
           darkMode={darkMode}
           setDarkMode={setDarkMode}
         />
+      </div>
       </div>
     </header>
   );

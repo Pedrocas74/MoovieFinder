@@ -1,0 +1,19 @@
+TMBd key: 
+
+eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2YWVmMzhmYWQ2OTlmNGFkOWEyOWZlNjkzNTAyMWRiYyIsIm5iZiI6MTc1MTI3NzM0OC42MTIsInN1YiI6IjY4NjI1ZjI0YWNiZTZjZDNjYzRkMjJjZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.PYTZP-1wMl_JBxhzK7uZ5_BN5hLEOYZRqs9Jy4ipLxY
+
+
+
+6aef38fad699f4ad9a29fe6935021dbc
+
+
+
+#b6acc4 - cinza
+#b032eb - roxo
+#1d1814 - preto
+#8f1919 - vermelho
+#f5f5e9 - branco
+
+
+fill={darkMode ? "#b032eb" : "#8F1919"}
+fill={darkMode ? "#f5f5e9 " : "#1d1814 "}

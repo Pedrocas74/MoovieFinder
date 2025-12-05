@@ -5,10 +5,9 @@ import linkedinIcon from "/icons/InBug-White.png";
 export default function Footer({ darkMode }) {
   return (
     <footer
-      style={{
-        background: darkMode ? "#b032eb " : "#8f1919",
-      }}
     >
+      <div className={styles.footerWrapper}>
+        <div className={styles.footerLeft}>
       <span>
         Powered by{" "}
         <a
@@ -16,27 +15,30 @@ export default function Footer({ darkMode }) {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Visit The Movie Database API documentation"
+          id="navLinks"
         >
           TMDB API
         </a>
       </span>
-      <div className={styles.socials}>
-        <span className={styles.pedro}>
+      <span className={styles.pedro}>
           <a
             href="https://pedromagalhaes.vercel.app/"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Visit Pedro Magalhães portfolio website"
+            id="navLinks"
           >
             made by Pedro
           </a>{" "}
-          |
         </span>
+        </div>
+      <div className={styles.footerRight}>
         <a
           href="https://github.com/Pedrocas74"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Pedro Magalhães on GitHub"
+          id="navLinks"
         >
           <img src={gitHubIcon} alt="GitHub Icon"  />
         </a>
@@ -45,14 +47,14 @@ export default function Footer({ darkMode }) {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Pedro Magalhães on LinkedIn"
+          id="navLinks"
         >
           <img
             src={linkedinIcon}
             alt="Linkedin Icon"
-    
-            style={{ marginLeft: 15 }}
           />
         </a>
+      </div>
       </div>
     </footer>
   );

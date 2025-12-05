@@ -6,29 +6,27 @@
 }
 
 .app-flex {
-  height: 100vh;
-  background-color: #f5f5e9;
+  max-height: 100vh;
+  background-color: var(--clr-bg);
   overflow: hidden;
+  font-size: var(--fs-md);
+  display: flex;
+  flex-direction: column;
 }
 /* ---------SEARCHBAR-------- */
 .search-container {
-  height: 30vh;
+  width: 90%;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
   position: relative;
+  /* border: 1px solid rgb(43, 122, 19); */
 }
 
-.introduction {
-  text-shadow: 0px 1em 0.2em #8f1919;
-}
-.guide {
-  text-shadow: 0px 1em 0.2em #8f1919;
-}
 
 /* ---------MOVIELIST---------- */
-
 .movies-container {
   flex: 1;
 }
@@ -55,10 +53,8 @@
 .title-container h1 {
   text-align: center;
   font-size: clamp(1rem, 2vw, 1.1rem);
-  position: relative;
-  z-index: 10;
   font-weight: 900;
-  background: linear-gradient(270deg, #8f1919, #1d1814);
+  background: linear-gradient(270deg, var(--clr-primary), var(--clr-text));
   background-size: 600% 600%;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -101,71 +97,28 @@
   right: 20px;
   width: clamp(2.3em, 2.8em, 5em);
   cursor: pointer;
-  background-color: #f5f5e9;
-  border: 2px solid #1d1814;
-  color: #1d1814;
+  background-color: var(--clr-bg);
+  border: 2px solid var(--clr-text);
+  color: var(--clr-text);
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 5px;
 }
 .buttonX:hover {
-  background-color: #8f1919;
-  border-color: #8f1919;
-  color: #f5f5e9;
-  scale: 1.1;
+  background-color: var(--clr-primary);
+  border-color: var(--clr-primary);
+  color: var(--clr-bg);
+  scale: 1.05;
 }
 .buttonX:active {
-  scale: 0.9;
+  scale: 0.95;
 }
 
 /* ------------TOUCH DEVICE ---------- */
 .favorites-guide {
-  text-shadow: 0px 1em 0.2em #8f1919;
+  text-shadow: 0px 1em 0.2em var(--clr-primary);
   width: 100%;
   margin-top: 0.5em;
 }
 
-
-/* --------DARK MODE------------ */
-
-html.dark .app-flex {
-    background-color: #1d1814 ;
-}
-
-html.dark .introduction, 
-html.dark .guide {
-  color: #f5f5e9;
-  text-shadow: 0px 1em 0.2em #b032eb ;
-} 
-
-html.dark .favorites-section button {
-  background-color: #1d1814;
-  border: 2px solid #f5f5e9;
-  color: #f5f5e9;
-}
-
-html.dark .favorites-section h2,
-html.dark .favorites-section .guide,
-html.dark .favorites-section .favorites-guide,
-html.dark .favorites-section span {
-  color: #f5f5e9;
-}
-
-html.dark .favorites-section .guide,
-html.dark .favorites-section .favorites-guide,
-html.dark .favorites-section span {
-  text-shadow: 0px 1em 0.2em #b032eb ;
-}
-
-html.dark .buttonX:hover {
-  background-color: #b032eb;
-  border-color: #b032eb;
-}
-
-html.dark .title-container h1 {
-  background: linear-gradient(270deg, #b032eb, #f5f5e9);
-  background-size: 600% 600%;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}

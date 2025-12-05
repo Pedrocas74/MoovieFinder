@@ -31,13 +31,13 @@ export default function MovieCard({
       }}
       className={styles.movieCard}
       onClick={isTouchDevice ? onClick : null}
-      drag={isTouchDevice ? "y" : false} // allow vertical drag on touch
-      dragConstraints={{ top: -50, bottom: 0 }} // can only drag up to -50px
-      dragElastic={0.05} // slight elasticity
+      drag={isTouchDevice ? "y" : false}
+      dragConstraints={{ top: -50, bottom: 0 }}
+      dragElastic={0.05}
       animate={controls}
       onDragEnd={(e, info) => {
         if (info.offset.y < -50) {
-          // if dragged up more than 50px
+          //if dragged up more than 50px
           setLocalFav(!localFav);
           toggleFavorite(movie);
           setShowFeedback(true);
@@ -49,6 +49,7 @@ export default function MovieCard({
         });
       }}
     >
+      <div className={styles.imageContainer}>
       <img
         onClick={onClick}
         src={posterUrl}
@@ -56,6 +57,7 @@ export default function MovieCard({
         aria-label={`View details for ${movie.title}`}
         alt={`Poster of ${movie.title}`}
       />
+     </div>
       <div className={styles.movieText}>
         <h3>{movie.title}</h3>
         <div className={styles.dateAndRate}>
@@ -83,13 +85,13 @@ export default function MovieCard({
               }
             >
               {isFavorite
-                ? "💔" // already favorite, show broken heart
+                ? "💔" //already favorite, show broken heart
                 : localFav
                 ? darkMode
-                  ? "🤍" // just pressed in dark mode
-                  : "❤️" // just pressed in light mode
+                  ? "🤍" //just pressed in dark mode
+                  : "❤️" //just pressed in light mode
                 : darkMode
-                ? "🖤" // initially dark mode, black heart
+                ? "🖤" //initially dark mode, black heart
                 : "🖤"}{" "}    
             </button>
           )}

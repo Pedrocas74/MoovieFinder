@@ -11,8 +11,6 @@ export default function MovieSummary({ movie, onClose, darkMode }) {
     <div
       className={styles.summary_overlay}
       style={{
-        background: darkMode ? "#b032eb" : "#8f1919",
-        color: darkMode ? "#f5f5e9" : "#1d1814",
         backgroundImage: `
       repeating-linear-gradient(
         45deg,
@@ -30,11 +28,6 @@ export default function MovieSummary({ movie, onClose, darkMode }) {
     >
       <div
         className={styles.summary}
-        style={{
-          background: darkMode ? "#1d1814" : "#f5f5e9",
-          borderLeft: darkMode ? "7px double #b032eb" : "7px double #8f1919",
-          borderRight: darkMode ? "7px double #b032eb" : "7px double #8f1919",
-        }}
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
@@ -42,11 +35,6 @@ export default function MovieSummary({ movie, onClose, darkMode }) {
       >
         <button
           aria-label="Close movie details"
-          style={{
-            background: darkMode ? "#1d1814" : "#f5f5e9",
-            color: darkMode ? "#f5f5e9" : "#1d1814",
-            borderColor: darkMode ? "#f5f5e9" : "#1d1814",
-          }}
           onClick={onClose}
         >
           <X style={{ scale: 0.9, strokeWidth: 4 }} />

@@ -1,6 +1,6 @@
 import styles from "../styles/ThemeToggle.module.css";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sun, Moon } from "lucide-react"; // icons
+import { Sun, Moon } from "lucide-react"; 
 
 export default function ThemeToggle({ darkMode, setDarkMode }) {
   return (
@@ -8,7 +8,6 @@ export default function ThemeToggle({ darkMode, setDarkMode }) {
       aria-label="Toggle dark/light mode"
       onClick={() => setDarkMode(!darkMode)}
       className={styles.toggleButton}
-      style={{background: darkMode ? "transparent" : "white"}}
     >
       <AnimatePresence mode="wait" initial={false}>
         {darkMode ? (
