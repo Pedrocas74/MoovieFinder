@@ -1,0 +1,20 @@
+.movieCard {
+    width: 150px;
+    cursor: pointer;
+}
+
+.movieCard img {
+    width: 100%;
+}
+
+.movieCard h3 {
+    font-size: var(--fs-sm);
+}
+
+.dateAndRate {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    font-size: var(--fs-xs);
+}
+

@@ -1,6 +1,5 @@
-import styles from "../styles/Footer.module.css";
-import gitHubIcon from "/icons/github-mark-white.png";
-import linkedinIcon from "/icons/InBug-White.png";
+import styles from "./Footer.module.css";
+
 
 export default function Footer({ darkMode }) {
   return (
@@ -40,7 +39,7 @@ export default function Footer({ darkMode }) {
           aria-label="Pedro Magalhães on GitHub"
           id="navLinks"
         >
-          <img src={gitHubIcon} alt="GitHub Icon"  />
+          github
         </a>
         <a
           href="https://www.linkedin.com/in/pedro-magalhães-1a3651334/"
@@ -49,10 +48,7 @@ export default function Footer({ darkMode }) {
           aria-label="Pedro Magalhães on LinkedIn"
           id="navLinks"
         >
-          <img
-            src={linkedinIcon}
-            alt="Linkedin Icon"
-          />
+          linkedin
         </a>
       </div>
       </div>

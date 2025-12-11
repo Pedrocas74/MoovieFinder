@@ -33,8 +33,8 @@
     --clr-hover: rgba(121, 121, 121, 0.151);
 
     /* font families */
-    --ff-heading: "Bowlby One", sans-serif;
-    --ff-body: "Science Gothic", serif;
+    --ff-heading: "Notable", sans-serif;
+    --ff-body: "Inter", serif;
     /* font sizes  */
     --fs-xs: clamp(0.75rem, 1vw, 0.85rem);
     --fs-sm: clamp(0.85rem, 1.2vw, 1rem);
