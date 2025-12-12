@@ -1,6 +1,4 @@
-// src/services/tmdb.js
-
-const API_KEY = import.meta.env.VITE_TMDB_API_KEY; // from your .env file
+const API_KEY = import.meta.env.VITE_TMDB_API_KEY; 
 const BASE_URL = "https://api.themoviedb.org/3";
 
 const options = {
@@ -11,7 +9,7 @@ const options = {
   },
 };
 
-// Search movies by query
+//search movies by query
 export async function searchMovies(query) {
   if (!query) return [];
 
@@ -31,7 +29,7 @@ export async function searchMovies(query) {
   }
 }
 
-// Get movie details by ID
+//get movie details by ID
 export async function getMovieDetails(movieId) {
   try {
     const res = await fetch(
@@ -40,9 +38,93 @@ export async function getMovieDetails(movieId) {
     );
     
     const data = await res.json();
-    return data;
+    return data.results || [];
   } catch (err) {
     console.error("TMDB Error:", err);
     throw err;
   }
 }
+
+
+//get Credits (cast/crew) of a movie 
+export async function getCredits(movieId) {
+  try {
+    const res = await fetch(`${BASE_URL}/movie/${movieId}/credits?language=en-US`, options);
+    
+    const data = await res.json();
+    return data.results || [];
+  } catch (err) {
+    console.error("TMDB Error:", err);
+    throw err;
+  }
+} 
+
+
+//get trailer from a movie 
+export async function getTrailer(movieId) {
+  try {
+    const res = await fetch(`${BASE_URL}/movie/${movieId}/videos?language=en-US`, options);
+    
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.error("TMDB Error:", err);
+    throw err;
+  }
+} 
+
+// -------------------------------------------------------------------------------
+//get "Now In Theathers" movies list
+export async function getNowInTheathers() {
+  try {
+    const res = await fetch(`${BASE_URL}/movie/now_playing?language=en-US&page=1`, options);
+    
+    const data = await res.json();
+    return data.results || [];
+  } catch (err) {
+    console.error("TMDB Error:", err);
+    throw err;
+  }
+} 
+
+//get "Popular" movies list
+export async function getPopular() {
+  try {
+    const res = await fetch(`${BASE_URL}/movie/popular?language=en-US&page=1`, options);
+    
+    const data = await res.json();
+    return data.results || []; 
+  } catch (err) {
+    console.error("TMDB Error:", err);
+    throw err;
+  }
+} 
+
+//get "Upcoming" movies list
+export async function getUpcoming() {
+  try {
+    const res = await fetch(`${BASE_URL}/movie/upcoming?language=en-US&page=1`, options);
+    
+    const data = await res.json();
+    return data.results || [];
+  } catch (err) {
+    console.error("TMDB Error:", err);
+    throw err;
+  }
+} 
+
+
+//get "Trending" movies list
+export async function getTrending() {
+  try {
+    const res = await fetch(`${BASE_URL}/trending/movie/day?language=en-US`, options);
+    
+    const data = await res.json();
+    return data.results || [];
+  } catch (err) {
+    console.error("TMDB Error:", err);
+    throw err;
+  }
+} 
+
+

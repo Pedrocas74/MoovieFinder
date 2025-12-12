@@ -3,11 +3,7 @@ import { useState } from "react";
 import { Search } from "lucide-react";
 import { searchMovies } from "../../services/tmdb.js";
 
-export default function SearchBar({
-  setSearchedMovies,
-  setLoading,
-  setError,
-}) {
+export default function SearchBar({ setSearchedMovies, setLoading, setError }) {
   const [query, setQuery] = useState("");
 
   const handleSearch = async (e) => {
@@ -19,7 +15,7 @@ export default function SearchBar({
 
     try {
       const results = await searchMovies(query);
-      
+
       if (results.length > 0) {
         setSearchedMovies(results);
       } else {
@@ -36,15 +32,18 @@ export default function SearchBar({
   };
 
   return (
-    <form onSubmit={handleSearch}>
-      <input
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        placeholder="Search movies..."
-      />
-      <button>
-        <Search />
-      </button>
-    </form>
+    <div className={styles.searchContainer}>
+      <form onSubmit={handleSearch}>
+        <input
+          name="searchMovies"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search movies..."
+        />
+        <button type="submit">
+          <Search size={15} />
+        </button>
+      </form>
+    </div>
   );
 }
