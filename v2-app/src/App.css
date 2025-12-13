@@ -8,8 +8,8 @@
 :root {
     /* colors */
     /* LIGHT MODE  */
-    --bg-l: #e6e6e6;
-    --bg-ll: #f2f2f2;
+    --bg-l: #fcfcfc;
+    --bg-ll: #ffffff;
     --bg-ld: #d9d9d9;
 
     --red: hsl(0, 70%, 33%);
@@ -17,6 +17,7 @@
     --red-dark: hsl(0, 70%, 23%);
 
     --clr-text-l: #1d1814;
+    --muted: #5a5a5a;
 
     /* DARK MODE  */
     --bg-d: hsl(27, 18%, 10%);
@@ -33,7 +34,7 @@
     --clr-hover: rgba(121, 121, 121, 0.151);
 
     /* font families */
-    --ff-heading: "Notable", sans-serif;
+    /* --ff-heading: "Notable", sans-serif; */
     --ff-body: "Inter", serif;
     /* font sizes  */
     --fs-xs: clamp(0.75rem, 1vw, 0.85rem);
@@ -45,22 +46,23 @@
 
     /* padding  */
     --pd-button: 0.5em 0.7em;
+    --pd-movieCard: 0.1em 0.3em;
     
     /* line height  */
-    --lh-small: 1.5;
+    --lh-small: 1.6;
     --lh-big: 1.8;
 
     /* border-radius */
     --radius-small: 4px;
     --radius-button: 8px;
     --radius-large: 20px;
-    --radius-full: 50%;
+    --radius-full: 999px;
 
     /* box shadows */
-    --shadow-button: box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
-    --shadow-card: box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
-    --shadow-card-smooth: box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
-    --shadow-inverse: box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+    --shadow-button: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    --shadow-card: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+    --shadow-card-smooth: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+    --shadow-inverse: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
     
     /* letter spacing  */
     --ls: 0.5px;
@@ -110,6 +112,11 @@ h2 {
   font-family: var(--ff-heading);
 }
 
+p {
+  max-width: 74ch;
+  line-height: var(--lh-small);
+  font-size: var(--fs-md);
+}
 
 button,
 a:not(#navLinks) {

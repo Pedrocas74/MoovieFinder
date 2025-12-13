@@ -1,20 +1,28 @@
 .movieCard {
-    width: 150px;
+    min-width: 120px;
     cursor: pointer;
+    border: 1.5px solid var(--bg-ld);
+    border-radius: var(--radius-small);
+    background: var(--bg-l);
+    /* transition: var(--transition); */
+    box-shadow: var(--shadow-card-smooth);
 }
+/* .movieCard:hover {
+    box-shadow: var(--shadow-inverse);
+} */
 
 .movieCard img {
     width: 100%;
-}
-
-.movieCard h3 {
-    font-size: var(--fs-sm);
+    border-top-left-radius: var(--radius-small);
+    border-top-right-radius: var(--radius-small);
 }
 
 .dateAndRate {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     justify-content: space-between;
     font-size: var(--fs-xs);
+    padding: var(--pd-movieCard);
+    color: var(--muted);
 }
 

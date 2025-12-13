@@ -2,6 +2,126 @@
 
 }
 
-.movieDetailsPage img {
-    width: 100px;
+.backdrop {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.backdropWrapper {
+  position: relative;
+  height: 70vh;
+  min-height: 360px;
+  overflow: hidden;
+}
+
+.backdropWrapper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,.65),
+    rgba(0,0,0,.25),
+    rgba(0,0,0,0)
+  );
+}
+
+.logo {
+  position: absolute;
+  left: 5%;
+  bottom: 10%;
+  max-width: min(60vw, 420px);
+  height: auto;
+  max-height:18vh;
+  object-fit: contain;
+  z-index: 2;
+  filter: drop-shadow(0 10px 24px rgba(0,0,0,.85));
+}
+
+.title {
+  position: absolute;
+  left: 5%;
+  bottom: 10%;
+  color: #fff;
+  z-index: 2;
+  font-size: var(--fs-lg);
+  text-shadow: 0 10px 24px rgba(0,0,0,.75);
+}
+
+.itemsContainer {
+    list-style-type: none;
+    display: flex;
+    /* border: 1px solid blue; */
+    justify-content: space-evenly;
+    padding: 2em 0;
+    font-size: var(--fs-sm);
+}
+.itemsContainer li span {
+    font-size: var(--fs-xs);
+    color: var(--muted);
+    opacity: 0.7;
+    padding-left: 5px;
+}
+.itemsContainer li {
+    display: flex;
+    align-items: center;
+    /* font-weight: 500; */
+}
+
+.overview {
+    /* border: 1px solid red; */
+    padding: 5%;
+}
+
+.genres {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5%;
+    margin: 5% 0;
+    justify-content: center;
+}
+.genre {
+  background: var(--bg-l);
+  border: 1px solid var(--bg-ld);
+  border-radius: var(--radius-full);
+  padding: var(--pd-button);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+}
+
+
+
+.metaList {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 2em 0;
+  padding: 0 5%;
+  font-size: var(--fs-md);
+  margin-top: 5vh;
+}
+.metaList dt {
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.metaList dd {
+  margin: 0;
+  font-weight: 300;
+}
+
+.personLink {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: var(--transition);
+}
+.personLink:hover {
+  color: #000;
+  border-bottom-color: currentColor;
+}
+
+.cast {
+    line-height: var(--lh-big);
 }

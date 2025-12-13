@@ -1,10 +1,16 @@
 import placeholder_cover from "/images/placeholder_movie.webp";
 import styles from "./MovieCard.module.css";
 import { Star } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function MovieCard({ movie, onClick }) {
   return (
-    <div className={styles.movieCard} onClick={() => onClick?.(movie)}>
+    <motion.div
+      whileHover={{ y: -10 }}
+      whileTap={{ scale: 0.98 }}
+      className={styles.movieCard}
+      onClick={() => onClick?.(movie)}
+    >
       <img
         src={
           movie.poster_path
@@ -17,14 +23,15 @@ export default function MovieCard({ movie, onClick }) {
           e.target.src = placeholder_cover;
         }}
       />
-
-      <h3>{movie.title}</h3>
+      {/* <div className={styles.cardText}> */}
+      {/* <h3>{movie.title}</h3> */}
       <div className={styles.dateAndRate}>
         <p className={styles.releaseDate}>{movie.release_date?.slice(0, 4)}</p>
         <p className={styles.rating}>
           <Star size={10} /> {Number(movie.vote_average).toFixed(1)}
         </p>
       </div>
-    </div>
+    </motion.div>
+    // </div>
   );
 }

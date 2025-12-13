@@ -38,7 +38,7 @@ export async function getMovieDetails(movieId) {
     );
     
     const data = await res.json();
-    return data.results || [];
+    return data || [];
   } catch (err) {
     console.error("TMDB Error:", err);
     throw err;
@@ -52,7 +52,7 @@ export async function getCredits(movieId) {
     const res = await fetch(`${BASE_URL}/movie/${movieId}/credits?language=en-US`, options);
     
     const data = await res.json();
-    return data.results || [];
+    return data || [];
   } catch (err) {
     console.error("TMDB Error:", err);
     throw err;
@@ -127,4 +127,27 @@ export async function getTrending() {
   }
 } 
 
+// ---------------------IMAGES------------------------
 
+export async function getMovieImages(movieId) {
+  const res = await fetch(
+    `${BASE_URL}/movie/${movieId}/images?include_image_language=en,null`,
+    options
+  );
+  return res.json();
+}
+
+
+
+//-----------------------PERSONS--------------------------
+//person details (bio, birthday, etc.)
+export async function getPersonDetails(personId) {
+  const res = await fetch(`${BASE_URL}/person/${personId}?language=en-US`, options);
+  return res.json();
+}
+
+//person credits (movies they acted in or worked on)
+export async function getPersonMovieCredits(personId) {
+  const res = await fetch(`${BASE_URL}/person/${personId}/movie_credits?language=en-US`, options);
+  return res.json();
+}

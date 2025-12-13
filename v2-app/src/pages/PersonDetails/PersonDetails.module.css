@@ -1,0 +1,53 @@
+.page {
+    padding: 0 5%;
+}
+.header {
+    /* border: 1px solid red; */
+    display: flex;
+    flex-direction: column;
+}
+.avatar {
+  width: clamp(200px, 20vw, 250px);
+  height: auto;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: var(--radius-small);
+  background: var(--bg-l);
+  align-self: center;
+  margin: 2em 0;
+}
+.name {
+    margin: 0.5em 0;
+}
+.birthday,
+.placeOfBirth {
+    
+}
+.placeOfBirth {
+    margin-bottom: 1em;
+}
+
+
+.bioContainer {
+  margin-top: 16px;
+  max-width: 70ch;
+}
+.bio {
+  line-height: var(--lh-small);
+  transition: var(--transition);
+}
+.clamped {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.toggleBio {
+  margin: 10px;
+
+}
+
+.toggleBio:hover {
+  text-decoration: underline;
+}

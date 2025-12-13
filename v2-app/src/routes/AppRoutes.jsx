@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "../pages/Home";
 import MovieDetails from "../pages/MovieDetails";
+import PersonDetails from "../pages/PersonDetails";
 import Favorites from "../pages/Favorites";
 import NotFound from "../pages/NotFound";
 
@@ -28,6 +29,7 @@ export default function AppRoutes({
         }
       />
       <Route path="/movie/:id" element={<MovieDetails />} />
+      <Route path="/person/:id" element={<PersonDetails />} />
       <Route path="/favorites" element={<Favorites />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
