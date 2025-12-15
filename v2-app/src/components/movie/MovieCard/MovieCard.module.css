@@ -13,9 +13,12 @@
 
 .movieCard img {
     width: 100%;
-    border-top-left-radius: var(--radius-small);
-    border-top-right-radius: var(--radius-small);
-}
+    height: 177px;
+    padding: 2.5px;
+    /* border-top-left-radius: var(--radius-small);
+    border-top-right-radius: var(--radius-small); */
+    border-radius: var(--radius-small);
+} 
 
 .dateAndRate {
     display: flex;

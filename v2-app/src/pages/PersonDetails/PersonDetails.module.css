@@ -51,3 +51,10 @@
 .toggleBio:hover {
   text-decoration: underline;
 }
+
+
+.knownFor {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+}

@@ -1,4 +1,4 @@
-import { useParams, useLocation, useNavigate, Link } from "react-router-dom";
+import { useParams, useLocation, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import {
   getMovieDetails,
@@ -26,7 +26,12 @@ export default function MovieDetails() {
   const [loading, setLoading] = useState(!movie);
   const [error, setError] = useState(null);
 
-  const navigate = useNavigate();
+  // Reset movie state when id changes
+  useEffect(() => {
+    setMovie(location.state?.movie || null);
+    setLoading(!location.state?.movie);
+    setError(null);
+  }, [id, location.state?.movie]);
 
   useEffect(() => {
     const fetchMovie = async () => {
@@ -43,10 +48,11 @@ export default function MovieDetails() {
       }
     };
 
-    if (!movie || movie.runtime == null) {
+    // Always fetch if we don't have movie data or if the current movie id doesn't match the URL id
+    if (!movie || movie.id !== parseInt(id)) {
       fetchMovie();
     }
-  }, [id]);
+  }, [id, movie]);
 
   useEffect(() => {
     if (!movie?.id) return;
@@ -91,26 +97,26 @@ export default function MovieDetails() {
   );
   const cast = credits?.cast?.slice(0, 7) ?? []; //top 7 actors
 
-  // const openPerson = (person) => {
-  //   navigate(`/person/${person.id}`, { state: { person } });
-  // };
-
   return (
     <section className={styles.movieDetailsPage}>
       <div className={styles.backdropWrapper}>
-        <img
-          src={backdropUrl(movie.backdrop_path, "w780")}
-          srcSet={`
+        {movie.backdrop_path ? (
+          <img
+            src={backdropUrl(movie.backdrop_path, "w780")}
+            srcSet={`
     ${backdropUrl(movie.backdrop_path, "w780")} 780w,
     ${backdropUrl(movie.backdrop_path, "w1280")} 1280w,
     ${backdropUrl(movie.backdrop_path, "original")} 2000w
   `}
-          sizes="(max-width: 768px) 780px, 1280px"
-          alt={movie.title}
-          className={styles.backdrop}
-        />
+            sizes="(max-width: 768px) 780px, 1280px"
+            alt={movie.title}
+            className={styles.backdrop}
+          />
+        ) : (
+          <span className={styles.coverNotAvailable}>COVER NOT AVAILABLE</span>
+        )}
 
-        {logoPath && (
+        {logoPath ? (
           <img
             src={logoUrl(logoPath, "w300")}
             srcSet={`
@@ -130,6 +136,8 @@ export default function MovieDetails() {
             loading="eager"
             decoding="async"
           />
+        ) : (
+          <h2 className={styles.title}>{movie.title}</h2>
         )}
       </div>
       <ul className={styles.itemsContainer}>
@@ -147,7 +155,7 @@ export default function MovieDetails() {
           <span>({movie.vote_count})</span>
         </li>
       </ul>
-      <p className={styles.overview}>{movie.overview}</p>
+      {movie.overview && <p className={styles.overview}>{movie.overview}</p>}
       {/* <p>Release Date: {movie.release_date ? movie.release_date : "N/A"}</p> */}
 
       {/* GENRES  */}
@@ -163,50 +171,61 @@ export default function MovieDetails() {
 
       {/* CASTING DETAILS  */}
       <dl className={styles.metaList}>
-  {director && (
-    <>
-      <dt>Director</dt>
-      <dd>
-        <Link to={`/person/${director.id}`} id="navLinks" className={styles.personLink}>
-          {director.name}
-        </Link>
-      </dd>
-    </>
-  )}
+        {director && (
+          <>
+            <dt>Director</dt>
+            <dd>
+              <Link
+                to={`/person/${director.id}`}
+                id="navLinks"
+                className={styles.personLink}
+              >
+                {director.name}
+              </Link>
+            </dd>
+          </>
+        )}
 
-  {writers?.length > 0 && (
-    <>
-      <dt>Writers</dt>
-      <dd>
-        {writers.map((w, i) => (
-          <span key={w.id}>
-            <Link to={`/person/${w.id}`} id="navLinks" className={styles.personLink}>
-              {w.name}
-            </Link>
-            {i < writers.length - 1 && ", "}
-          </span>
-        ))}
-      </dd>
-    </>
-  )}
+        {writers?.length > 0 && (
+          <>
+            <dt>Writers</dt>
+            <dd>
+              {writers.map((w, i) => (
+                <span key={w.id}>
+                  <Link
+                    to={`/person/${w.id}`}
+                    id="navLinks"
+                    className={styles.personLink}
+                  >
+                    {w.name}
+                  </Link>
+                  {i < writers.length - 1 && ", "}
+                </span>
+              ))}
+            </dd>
+          </>
+        )}
 
-  {cast?.length > 0 && (
-    <>
-      <dt>Cast</dt>
-      <dd>
-        {cast.map((c, i) => (
-          <span key={c.id}>
-            <Link to={`/person/${c.id}`} id="navLinks" className={`${styles.personLink} ${styles.cast}`}>
-              {c.name}
-            </Link>
-            {i < cast.length - 1 && <br/>}
-          </span>
-        ))}
-      </dd>
-    </>
-  )}
-</dl>
-
+        {cast?.length > 0 && (
+          <>
+            <dt>Cast</dt>
+            <dd>
+              {cast.map((c, i) => (
+                <span key={c.id}>
+                  <Link
+                    to={`/person/${c.id}`}
+                    id="navLinks"
+                    className={`${styles.personLink} ${styles.cast}`}
+                  >
+                    {c.name}
+                  </Link>
+                  {i < cast.length - 1 && <br />}
+                </span>
+              ))}
+            </dd>
+          </>
+        )}
+      </dl>
     </section>
   );
 }

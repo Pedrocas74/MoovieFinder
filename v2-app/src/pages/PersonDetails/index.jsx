@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { getPersonDetails, getPersonMovieCredits } from "../../services/tmdb";
 import { profileUrl, posterUrl } from "../../services/tmdbImages";
 import styles from "./PersonDetails.module.css";
-import { User } from "lucide-react";
+import MovieList from "../../components/movie/MovieList";
 
 export default function PersonDetails() {
   const { id } = useParams();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const [person, setPerson] = useState(location.state?.person || null);
   const [credits, setCredits] = useState(null);
@@ -45,7 +46,9 @@ export default function PersonDetails() {
   if (error) return <div>{error}</div>;
   if (!person) return <div>Person not found</div>;
 
-  const knownFor = credits?.cast?.slice(0, 20) ?? [];
+  const knownFor =
+    credits?.cast?.sort((a, b) => b.popularity - a.popularity).slice(0, 20) ??
+    [];  //sort by popularity (descendent)
 
   return (
     <section className={styles.page}>
@@ -79,8 +82,6 @@ export default function PersonDetails() {
         </div>
       </div>
 
-      
-
       <div className={styles.bioContainer}>
         {person.biography && (
           <>
@@ -100,22 +101,9 @@ export default function PersonDetails() {
         )}
       </div>
 
-
       {knownFor.length > 0 && (
         <>
-          <h3>Known for</h3>
-          <div className={styles.knownFor}>
-            {knownFor.map((m) => (
-              <div key={m.id} className={styles.knownForCard}>
-                <img
-                  src={posterUrl(m.poster_path, "w185") || ""}
-                  alt={m.title}
-                  className={styles.poster}
-                />
-                <div className={styles.movieTitle}>{m.title}</div>
-              </div>
-            ))}
-          </div>
+          <MovieList title="Known for" movies={knownFor} layout="row" onMovieClick={(movie) => navigate(`/movie/${movie.id}`)} />
         </>
       )}
     </section>

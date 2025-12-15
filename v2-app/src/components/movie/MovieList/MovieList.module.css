@@ -1,7 +1,8 @@
 .grid {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(118px, 120px));
+  justify-content: center;
 }
 
 .row {
@@ -17,3 +18,4 @@
   padding: 7vh 0 2vh 5%;
 
 }
+ 

@@ -1,49 +1,125 @@
+import {
+  Combobox,
+  ComboboxInput,
+  ComboboxOption,
+  ComboboxOptions,
+} from "@headlessui/react";
 import styles from "./SearchBar.module.css";
-import { useState } from "react";
-import { Search } from "lucide-react";
-import { searchMovies } from "../../services/tmdb.js";
+import { useEffect, useState } from "react";
+import { searchMovies } from "../../services/tmdb";
+import { useNavigate } from "react-router-dom";
 
-export default function SearchBar({ setSearchedMovies, setLoading, setError }) {
+export default function SearchBar() {
   const [query, setQuery] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [selected, setSelected] = useState(null);
+  const navigate = useNavigate();
 
-  const handleSearch = async (e) => {
-    e.preventDefault();
-    if (!query) return;
-
-    setLoading(true);
-    setError(null);
-
-    try {
-      const results = await searchMovies(query);
-
-      if (results.length > 0) {
-        setSearchedMovies(results);
-      } else {
-        setError("No movies found!");
-        setSearchedMovies([]);
-      }
-    } catch {
-      setError("Unable to fetch.");
-      setSearchedMovies([]);
-    } finally {
-      setQuery("");
-      setLoading(false);
+  //debounced suggestions
+  useEffect(() => {
+    const q = query.trim();
+    if (!q) {
+      setSuggestions([]);
+      return;
     }
-  };
+
+    const t = setTimeout(async () => {
+      try {
+        const results = await searchMovies(q);
+
+        const seen = new Set();
+        const unique = results.filter((movie) => {
+          if (!movie.id || seen.has(movie.id)) {
+            return false;
+          }
+          seen.add(movie.id);
+          return true;
+        });
+
+        setSuggestions(unique.slice(0, 6));
+
+        // Debug: Check for duplicates
+        const ids = unique.map((m) => m.id);
+        const duplicateIds = ids.filter(
+          (id, index) => ids.indexOf(id) !== index
+        );
+        if (duplicateIds.length > 0) {
+          console.warn("Duplicate movie IDs found:", duplicateIds);
+        }
+      } catch (error) {
+        console.error("Error fetching suggestions:", error);
+        setSuggestions([]);
+      }
+    }, 300);
+
+    return () => clearTimeout(t);
+  }, [query]);
 
   return (
-    <div className={styles.searchContainer}>
-      <form onSubmit={handleSearch}>
-        <input
-          name="searchMovies"
+    <Combobox
+      value={selected}
+      by="id"
+      autoComplete="off" //disable input history - Chrome might ignore it
+      autoCorrect="off"
+      autoCapitalize="off"
+      spellCheck={false}
+      name="movie-search"
+      onChange={(movie) => {
+        if (!movie || !movie.id) {
+          // console.warn("Invalid movie selected:", movie);
+          return;
+        }
+        // console.log("Navigating to movie:", movie.id, movie.title);
+        navigate(`/movie/${movie.id}`, { state: { movie } });
+
+        setQuery("");
+        setSuggestions([]);
+        setSelected(null);
+      }}
+    >
+      <div className={styles.searchContainer}>
+        <ComboboxInput
+          className={styles.input}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search movies..."
         />
-        <button type="submit">
-          <Search size={15} />
-        </button>
-      </form>
-    </div>
+
+        {suggestions.length > 0 && (
+          <ComboboxOptions className={styles.dropdown}>
+            {suggestions
+              .map((movie, index) => {
+
+                const isDuplicate =
+                  suggestions.findIndex((m) => m.id === movie.id) !== index;
+                if (isDuplicate) {
+                  console.warn(
+                    "Rendering duplicate movie:",
+                    movie.id,
+                    movie.title
+                  );
+                  return null;
+                }
+
+                return (
+                  <ComboboxOption
+                    key={`searchbar-${movie.id}-${movie.title}-${index}`}
+                    value={movie}
+                    className={styles.item}
+                  >
+                    <div className={styles.title}>{movie.title}</div>
+                    {movie.release_date && (
+                      <div className={styles.year}>
+                        {movie.release_date.slice(0, 4)}
+                      </div>
+                    )}
+                  </ComboboxOption>
+                );
+              })
+              .filter(Boolean)}
+          </ComboboxOptions>
+        )}
+      </div>
+    </Combobox>
   );
 }

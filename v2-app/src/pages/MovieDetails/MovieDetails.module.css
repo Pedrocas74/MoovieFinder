@@ -1,12 +1,13 @@
-.movieDetailsPage {
+/* .movieDetailsPage {
 
-}
+} */
 
 .backdrop {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+  object-position: center 5%;
 }
 
 .backdropWrapper {
@@ -14,6 +15,7 @@
   height: 70vh;
   min-height: 360px;
   overflow: hidden;
+  
 }
 
 .backdropWrapper::after {
@@ -26,6 +28,16 @@
     rgba(0,0,0,.25),
     rgba(0,0,0,0)
   );
+}
+
+.coverNotAvailable {
+  position: absolute;
+  right: 5%;
+  top: 5%;
+  color: var(--muted);
+  opacity: 0.3;
+  font-size: var(--fs-sm);
+  writing-mode: sideways-lr;
 }
 
 .logo {
@@ -44,11 +56,13 @@
   position: absolute;
   left: 5%;
   bottom: 10%;
-  color: #fff;
+  padding-right: 5%;
+  color: var(--clr-bg);
   z-index: 2;
   font-size: var(--fs-lg);
   text-shadow: 0 10px 24px rgba(0,0,0,.75);
 }
+
 
 .itemsContainer {
     list-style-type: none;
@@ -78,7 +92,7 @@
 .genres {
     display: flex;
     flex-wrap: wrap;
-    gap: 5%;
+    gap: 15px;
     margin: 5% 0;
     justify-content: center;
 }
