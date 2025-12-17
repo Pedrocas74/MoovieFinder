@@ -27,6 +27,7 @@ import {
 } from "lucide-react";
 
 import { useLibrary } from "../../context/LibraryContext";
+import { useRecentlyViewed } from "../../context/RecentlyViewed";
 
 export default function MovieDetails() {
   const [logoPath, setLogoPath] = useState(null);
@@ -129,6 +130,14 @@ export default function MovieDetails() {
     }
   }
 
+  const { addRecentlyViewed } = useRecentlyViewed();
+
+  useEffect(() => {
+    if (movie) addRecentlyViewed(movie);
+  }, [movie, addRecentlyViewed]);
+
+  
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
   if (!movie) return <div>Movie not found</div>;
@@ -193,7 +202,11 @@ export default function MovieDetails() {
             aria-pressed={favorite}
             title={favorite ? "Remove from favorites" : "Add to favorites"}
           >
-            <Heart size={20} stroke="white" fill={favorite ? "white" : "none"} />
+            <Heart
+              size={20}
+              stroke="white"
+              fill={favorite ? "white" : "none"}
+            />
           </button>
         </div>
         {movie.backdrop_path ? (

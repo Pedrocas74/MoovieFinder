@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import MovieList from "../../components/movie/MovieList";
 import { useHomeMovies } from "../../hooks/useHomeMovies";
+import { useRecentlyViewed } from "../../context/RecentlyViewed";
 
-export default function Home({ searchedMovies }) {
+export default function Home() {
   const navigate = useNavigate();
-  const isSearched = searchedMovies.length > 0;
 
   const { trending, nowPlaying, upcoming, popular, loading, error, reload } =
     useHomeMovies();
@@ -13,17 +13,11 @@ export default function Home({ searchedMovies }) {
     navigate(`/movie/${movie.id}`, { state: { movie } });
   };
 
+  const { recent } = useRecentlyViewed();
+
   return (
     <>
-      {/* {isSearched && (
-        <MovieList
-          title="Search results"
-          movies={searchedMovies}
-          layout="grid"
-          onMovieClick={handleOpenDetails}
-        />
-      )} */}
-
+  
       {error && (
         <div>
           {error} <button onClick={reload}>Retry</button>
@@ -61,6 +55,15 @@ export default function Home({ searchedMovies }) {
         <MovieList
           title="Popular"
           movies={popular}
+          layout="row"
+          onMovieClick={handleOpenDetails}
+        />
+      )}
+
+      {recent.length > 0 && (
+        <MovieList
+          title="Recently viewed"
+          movies={recent}
           layout="row"
           onMovieClick={handleOpenDetails}
         />

@@ -43,7 +43,6 @@
     --fs-md: clamp(1rem, 2vw, 1.3rem);
     --fs-lg: clamp(1.3rem, 3vw, 2rem);
     --fs-xl: clamp(2.4rem, 4.5vw, 5.5rem);
-    --fs-menu: clamp(3.5rem, 5vw, 8rem);
 
     /* padding  */
     --pd-button: 0.5em 0.7em;
@@ -120,9 +119,13 @@ p {
   font-size: var(--fs-md);
 }
 
+a {
+  height: 20px;  /*delete later */
+}
+
 button:not(.actionButton),
 a:not(#navLinks) {
-    padding: var(--pd-button);
+    /* padding: var(--pd-button); */
     border-radius: var(--radius-button);
     letter-spacing: var(--ls);
     transition: var(--transition);
@@ -131,7 +134,9 @@ a:not(#navLinks) {
     width: fit-content;
     font-size: var(--fs-md);
     cursor: pointer;
+
 }
+
 
 .actionButton {
   padding: 7px;
@@ -145,6 +150,7 @@ a:not(#navLinks) {
   cursor: pointer;
   
 }
+
 
 /* Button Primary (line border, get's drowned by waves on hover) */
 /* .buttonPrimary,

@@ -9,12 +9,12 @@ export default function Navbar({ setSearchedMovies, setLoading, setError }) {
 
   return (
     <header className={styles.header}>
-      <Link to="/" id="navLinks">
-        <h1>Moo</h1>
-      </Link>
       <nav className={styles.navbar}>
         {!searchOpen && (
           <>
+            <Link to="/" id="navLinks">
+              <h1>Moo</h1>
+            </Link>
             <button
               className={`${styles.iconButton} actionButton`}
               onClick={() => setSearchOpen(true)}
@@ -22,14 +22,18 @@ export default function Navbar({ setSearchedMovies, setLoading, setError }) {
               <Search size={20} />
             </button>
 
-            <Link to="/library" className={styles.iconButton}>
-              <BookOpen size={20} />
+            <Link to="/library" id="navLinks" >
+              <BookOpen size={20} color="black" />
             </Link>
           </>
         )}
 
         {searchOpen && (
           <div className={styles.searchOverlay}>
+            <Link to="/" id="navLinks">
+              <h1>Moo</h1>
+            </Link>
+
             <SearchBar
               autoFocus
               onClose={() => setSearchOpen(false)}
@@ -39,10 +43,10 @@ export default function Navbar({ setSearchedMovies, setLoading, setError }) {
             />
 
             <button
-              className={styles.iconButton}
+              className={`${styles.iconButton} actionButton`}
               onClick={() => setSearchOpen(false)}
             >
-              <X size={22} />
+              <X size={20} />
             </button>
           </div>
         )}

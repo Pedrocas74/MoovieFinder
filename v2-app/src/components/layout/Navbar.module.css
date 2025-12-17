@@ -20,3 +20,13 @@ h1 {
     color: var(--clr-text);
     
 }
+
+
+.searchOverlay {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background: var(--clr-bg);
+
+}

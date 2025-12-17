@@ -5,7 +5,7 @@ import Navbar from "./components/layout/Navbar";
 import AppRoutes from "./routes/AppRoutes";
 import Footer from "./components/layout/Footer";
 import { LibraryProvider } from "./context/LibraryContext";
-
+import { RecentlyViewedProvider } from "./context/RecentlyViewed";
 
 export default function App() {
   const [searchedMovies, setSearchedMovies] = useState([]);
@@ -14,22 +14,24 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <LibraryProvider>
-        <Navbar
-          setSearchedMovies={setSearchedMovies}
-          setLoading={setLoading}
-          setError={setError}
-        />
-        <AppRoutes
-          searchedMovies={searchedMovies}
-          setSearchedMovies={setSearchedMovies}
-          error={error}
-          setError={setError}
-          loading={loading}
-          setLoading={setLoading}
-        />
-        {/* <Footer /> */}
-      </LibraryProvider>
+      <RecentlyViewedProvider>
+        <LibraryProvider>
+          <Navbar
+            setSearchedMovies={setSearchedMovies}
+            setLoading={setLoading}
+            setError={setError}
+          />
+          <AppRoutes
+            searchedMovies={searchedMovies}
+            setSearchedMovies={setSearchedMovies}
+            error={error}
+            setError={setError}
+            loading={loading}
+            setLoading={setLoading}
+          />
+          {/* <Footer /> */}
+        </LibraryProvider>
+      </RecentlyViewedProvider>
     </BrowserRouter>
   );
 }
