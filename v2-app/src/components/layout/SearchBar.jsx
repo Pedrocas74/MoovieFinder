@@ -5,15 +5,23 @@ import {
   ComboboxOptions,
 } from "@headlessui/react";
 import styles from "./SearchBar.module.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { searchMovies } from "../../services/tmdb";
 import { useNavigate } from "react-router-dom";
 
-export default function SearchBar() {
+export default function SearchBar({ autoFocus = false, onClose }) {
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [selected, setSelected] = useState(null);
   const navigate = useNavigate();
+
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (autoFocus) {
+      setTimeout(() => inputRef.current?.focus(), 0);
+    }
+  }, [autoFocus]);
 
   //debounced suggestions
   useEffect(() => {
@@ -75,6 +83,8 @@ export default function SearchBar() {
         setQuery("");
         setSuggestions([]);
         setSelected(null);
+
+        onClose?.();
       }}
     >
       <div className={styles.searchContainer}>
@@ -83,13 +93,31 @@ export default function SearchBar() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search movies..."
+          ref={inputRef}
+          autoComplete="off"
+          autoCorrect="off"
+          autoCapitalize="off"
+          spellCheck={false}
+          name="movie-search"
+          onKeyDown={(e) => {
+            if (e.key === "Escape") {
+              setQuery("");
+              setSuggestions([]);
+              setSelected(null);
+              onClose?.(); // ✅ close overlay on Esc
+            }
+          }}
+          onBlur={() => {
+            // optional UX: close when leaving the field
+            // (if you don't want this behavior, remove this block)
+            onClose?.();
+          }}
         />
 
         {suggestions.length > 0 && (
           <ComboboxOptions className={styles.dropdown}>
             {suggestions
               .map((movie, index) => {
-
                 const isDuplicate =
                   suggestions.findIndex((m) => m.id === movie.id) !== index;
                 if (isDuplicate) {

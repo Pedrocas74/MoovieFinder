@@ -4,7 +4,8 @@ import { BrowserRouter } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
 import AppRoutes from "./routes/AppRoutes";
 import Footer from "./components/layout/Footer";
-import { FavoritesProvider } from "./context/FavoritesContext";
+import { LibraryProvider } from "./context/LibraryContext";
+
 
 export default function App() {
   const [searchedMovies, setSearchedMovies] = useState([]);
@@ -13,7 +14,7 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <FavoritesProvider>
+      <LibraryProvider>
         <Navbar
           setSearchedMovies={setSearchedMovies}
           setLoading={setLoading}
@@ -28,7 +29,7 @@ export default function App() {
           setLoading={setLoading}
         />
         {/* <Footer /> */}
-      </FavoritesProvider>
+      </LibraryProvider>
     </BrowserRouter>
   );
 }

@@ -4,6 +4,7 @@ import {
   getMovieDetails,
   getMovieImages,
   getCredits,
+  getTrailer,
 } from "../../services/tmdb";
 // import LoadingSVG from "../../components/ui/LoadingSVG";
 import styles from "./MovieDetails.module.css";
@@ -14,19 +15,41 @@ import {
   profileUrl,
 } from "../../services/tmdbImages";
 
-import { Star, Hourglass, Calendar, User } from "lucide-react";
+import {
+  Star,
+  Hourglass,
+  Calendar,
+  Eye,
+  Play,
+  Heart,
+  ListPlus,
+  X,
+} from "lucide-react";
+
+import { useLibrary } from "../../context/LibraryContext";
 
 export default function MovieDetails() {
   const [logoPath, setLogoPath] = useState(null);
   const [credits, setCredits] = useState(null);
+  const [trailerKey, setTrailerKey] = useState(null);
+  const [showTrailer, setShowTrailer] = useState(false);
 
   const { id } = useParams();
   const location = useLocation();
-  const [movie, setMovie] = useState(location.state?.movie || null);
+  const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(!movie);
   const [error, setError] = useState(null);
 
-  // Reset movie state when id changes
+  const {
+    toggleWatched,
+    toggleWatchlist,
+    toggleFavorite,
+    isWatched,
+    isInWatchlist,
+    isFavorite,
+  } = useLibrary();
+
+  //reset movie state when id changes
   useEffect(() => {
     setMovie(location.state?.movie || null);
     setLoading(!location.state?.movie);
@@ -48,11 +71,8 @@ export default function MovieDetails() {
       }
     };
 
-    // Always fetch if we don't have movie data or if the current movie id doesn't match the URL id
-    if (!movie || movie.id !== parseInt(id)) {
-      fetchMovie();
-    }
-  }, [id, movie]);
+    fetchMovie();
+  }, [id]);
 
   useEffect(() => {
     if (!movie?.id) return;
@@ -87,6 +107,28 @@ export default function MovieDetails() {
     })();
   }, [movie?.id]);
 
+  async function handleWatchTrailer() {
+    try {
+      const data = await getTrailer(movie.id);
+
+      const trailer =
+        data?.results?.find(
+          (v) => v.site === "YouTube" && v.type === "Trailer"
+        ) || data?.results?.find((v) => v.site === "YouTube");
+
+      if (!trailer) {
+        alert("Trailer not available"); //change later
+        return;
+      }
+
+      setTrailerKey(trailer.key);
+      setShowTrailer(true);
+    } catch (e) {
+      console.error(e);
+      alert("Failed to load trailer");
+    }
+  }
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
   if (!movie) return <div>Movie not found</div>;
@@ -97,9 +139,63 @@ export default function MovieDetails() {
   );
   const cast = credits?.cast?.slice(0, 7) ?? []; //top 7 actors
 
+  const watched = isWatched(movie.id);
+  const inWatchlist = isInWatchlist(movie.id);
+  const favorite = isFavorite(movie.id);
+
   return (
     <section className={styles.movieDetailsPage}>
       <div className={styles.backdropWrapper}>
+        <div className={styles.actionButtons}>
+          <button
+            className="actionButton"
+            type="button"
+            onClick={handleWatchTrailer}
+          >
+            <Play size={20} fill="white" stroke="white" />
+          </button>
+
+          <button
+            className="actionButton"
+            type="button"
+            onClick={() => {
+              toggleWatched(movie);
+            }}
+            aria-pressed={watched}
+            title={watched ? "Remove from watched" : "Add to watched"}
+          >
+            <Eye
+              size={20}
+              color="white"
+              stroke="white"
+              fill={watched ? "white" : "none"}
+            />
+          </button>
+
+          <button
+            className="actionButton"
+            type="button"
+            onClick={() => toggleWatchlist(movie)}
+            aria-pressed={inWatchlist}
+            title={inWatchlist ? "Remove from watchlist" : "Add to watchlist"}
+          >
+            <ListPlus
+              size={20}
+              stroke="white"
+              fill={inWatchlist ? "white" : "none"}
+            />
+          </button>
+
+          <button
+            className="actionButton"
+            type="button"
+            onClick={() => toggleFavorite(movie)}
+            aria-pressed={favorite}
+            title={favorite ? "Remove from favorites" : "Add to favorites"}
+          >
+            <Heart size={20} stroke="white" fill={favorite ? "white" : "none"} />
+          </button>
+        </div>
         {movie.backdrop_path ? (
           <img
             src={backdropUrl(movie.backdrop_path, "w780")}
@@ -189,7 +285,7 @@ export default function MovieDetails() {
         {writers?.length > 0 && (
           <>
             <dt>Writers</dt>
-            <dd>
+            <dd className={styles.writers}>
               {writers.map((w, i) => (
                 <span key={w.id}>
                   <Link
@@ -226,6 +322,34 @@ export default function MovieDetails() {
           </>
         )}
       </dl>
+
+      {showTrailer && (
+        <div
+          className={styles.trailerOverlay}
+          onClick={() => setShowTrailer(false)}
+        >
+          <div
+            className={styles.trailerModal}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className={styles.closeBtn}
+              onClick={() => setShowTrailer(false)}
+              aria-label="Close trailer"
+            >
+              <X size={20} color="white" />
+            </button>
+
+            <iframe
+              src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1`}
+              title="Movie trailer"
+              // frameBorder="0"
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+            />
+          </div>
+        </div>
+      )}
     </section>
   );
 }

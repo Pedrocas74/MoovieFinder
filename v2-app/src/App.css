@@ -32,6 +32,7 @@
     /* --------------------------------------  */
 
     --clr-hover: rgba(121, 121, 121, 0.151);
+    --clr-white-low: rgba(255, 255, 255, 0.158);
 
     /* font families */
     /* --ff-heading: "Notable", sans-serif; */
@@ -57,6 +58,7 @@
     --radius-button: 8px;
     --radius-large: 16px;
     --radius-full: 999px;
+    --radius-max: 50%;
 
     /* box shadows */
     --shadow-button: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
@@ -118,7 +120,7 @@ p {
   font-size: var(--fs-md);
 }
 
-button,
+button:not(.actionButton),
 a:not(#navLinks) {
     padding: var(--pd-button);
     border-radius: var(--radius-button);
@@ -128,6 +130,19 @@ a:not(#navLinks) {
     text-decoration: none;
     width: fit-content;
     font-size: var(--fs-md);
+    cursor: pointer;
+}
+
+.actionButton {
+  padding: 7px;
+  border-radius: var(--radius-max);
+  transition: var(--transition);
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.158);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
   
 }
 
