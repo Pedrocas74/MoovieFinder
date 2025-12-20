@@ -133,10 +133,8 @@ export default function MovieDetails() {
   const { addRecentlyViewed } = useRecentlyViewed();
 
   useEffect(() => {
-    if (movie) addRecentlyViewed(movie);
-  }, [movie, addRecentlyViewed]);
-
-  
+    if (movie?.id) addRecentlyViewed(movie);
+  }, [movie?.id, addRecentlyViewed]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
@@ -172,11 +170,11 @@ export default function MovieDetails() {
             }}
             aria-pressed={watched}
             title={watched ? "Remove from watched" : "Add to watched"}
+            style={{background: watched ? "var(--bg-l)" : "transparent"}}
           >
             <Eye
               size={20}
-              color="white"
-              stroke="white"
+              stroke={watched ? "black" : "white"}
               fill={watched ? "white" : "none"}
             />
           </button>
@@ -187,11 +185,11 @@ export default function MovieDetails() {
             onClick={() => toggleWatchlist(movie)}
             aria-pressed={inWatchlist}
             title={inWatchlist ? "Remove from watchlist" : "Add to watchlist"}
+            style={{background: inWatchlist ? "var(--bg-l)" : "transparent"}}
           >
             <ListPlus
               size={20}
-              stroke="white"
-              fill={inWatchlist ? "white" : "none"}
+              stroke={inWatchlist ? "black" : "white"}
             />
           </button>
 
@@ -201,11 +199,12 @@ export default function MovieDetails() {
             onClick={() => toggleFavorite(movie)}
             aria-pressed={favorite}
             title={favorite ? "Remove from favorites" : "Add to favorites"}
+            style={{background: favorite ? "var(--bg-l)" : "transparent"}}
           >
             <Heart
               size={20}
-              stroke="white"
-              fill={favorite ? "white" : "none"}
+              stroke={favorite ? "var(--red)" : "white"}
+              fill={favorite ? "var(--red)" : "none"}
             />
           </button>
         </div>
@@ -356,7 +355,7 @@ export default function MovieDetails() {
             <iframe
               src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1`}
               title="Movie trailer"
-              // frameBorder="0"
+              frameBorder="0"
               allow="autoplay; encrypted-media"
               allowFullScreen
             />

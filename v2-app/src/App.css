@@ -12,7 +12,7 @@
     --bg-ll: #ffffff;
     --bg-ld: #d9d9d9;
 
-    --red: hsl(0, 70%, 33%);
+    --red: #8f1919;
     --red-light: hsl(0, 70%, 43%);
     --red-dark: hsl(0, 70%, 23%);
 
@@ -29,6 +29,9 @@
     --purple-dark: hsl(281, 82%, 46%);
 
     --clr-text-d: #f2f2f2;
+
+    --yellow: #FFF275;
+    --blue: #6699CC;
     /* --------------------------------------  */
 
     --clr-hover: rgba(121, 121, 121, 0.151);
@@ -116,7 +119,7 @@ h2 {
 p {
   max-width: 74ch;
   line-height: var(--lh-small);
-  font-size: var(--fs-md);
+  /* font-size: var(--fs-md); */
 }
 
 a {

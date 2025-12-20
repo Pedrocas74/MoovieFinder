@@ -20,8 +20,6 @@ export default function AppRoutes({
         path="/"
         element={
           <Home
-            searchedMovies={searchedMovies}
-            setSearchedMovies={setSearchedMovies}
             error={error}
             setError={setError}
             loading={loading}

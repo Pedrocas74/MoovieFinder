@@ -1,4 +1,11 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
 const RecentlyViewedContext = createContext(null);
 const STORAGE_KEY = "recently_viewed_movies_v1";
@@ -34,18 +41,21 @@ export function RecentlyViewedProvider({ children }) {
     }
   }, [recent]);
 
-  const addRecentlyViewed = (movie) => {
+  const addRecentlyViewed = useCallback((movie) => {
     const m = normalizeMovie(movie);
     if (!m) return;
 
     setRecent((prev) => {
-      // remove if already exists, then put on top, then cap to 20
       const without = prev.filter((x) => x.id !== m.id);
       return [m, ...without].slice(0, MAX);
     });
-  };
+  }, []);
 
-  const value = useMemo(() => ({ recent, addRecentlyViewed }), [recent]);
+  const value = useMemo(
+    () => ({ recent, addRecentlyViewed }),
+    [recent, addRecentlyViewed]
+  );
+
   return (
     <RecentlyViewedContext.Provider value={value}>
       {children}
@@ -55,6 +65,9 @@ export function RecentlyViewedProvider({ children }) {
 
 export function useRecentlyViewed() {
   const ctx = useContext(RecentlyViewedContext);
-  if (!ctx) throw new Error("useRecentlyViewed must be used inside RecentlyViewedProvider");
+  if (!ctx)
+    throw new Error(
+      "useRecentlyViewed must be used inside RecentlyViewedProvider"
+    );
   return ctx;
 }
