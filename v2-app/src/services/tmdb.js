@@ -15,7 +15,7 @@ export async function searchMovies(query) {
 
   try {
     const res = await fetch(
-      `${BASE_URL}/search/movie?include_adult=false&language=en-US&page=1&query=${encodeURIComponent(
+      `${BASE_URL}/search/movie?include_adult=false&language=en-US&region=US&page=1&query=${encodeURIComponent(
         query
       )}`,
       options
@@ -33,7 +33,7 @@ export async function searchMovies(query) {
 export async function getMovieDetails(movieId) {
   try {
     const res = await fetch(
-      `${BASE_URL}/movie/${movieId}?language=en-US`,
+      `${BASE_URL}/movie/${movieId}?language=en-US&region=US`,
       options
     );
     
@@ -49,7 +49,7 @@ export async function getMovieDetails(movieId) {
 //get Credits (cast/crew) of a movie 
 export async function getCredits(movieId) {
   try {
-    const res = await fetch(`${BASE_URL}/movie/${movieId}/credits?language=en-US`, options);
+    const res = await fetch(`${BASE_URL}/movie/${movieId}/credits?language=en-US&region=US`, options);
     
     const data = await res.json();
     return data || [];
@@ -63,7 +63,7 @@ export async function getCredits(movieId) {
 //get trailer from a movie 
 export async function getTrailer(movieId) {
   try {
-    const res = await fetch(`${BASE_URL}/movie/${movieId}/videos?language=en-US`, options);
+    const res = await fetch(`${BASE_URL}/movie/${movieId}/videos?language=en-US&region=US`, options);
     
     const data = await res.json();
     return data;
@@ -77,7 +77,7 @@ export async function getTrailer(movieId) {
 //get "Now In Theathers" movies list
 export async function getNowInTheathers() {
   try {
-    const res = await fetch(`${BASE_URL}/movie/now_playing?language=en-US&page=1`, options);
+    const res = await fetch(`${BASE_URL}/movie/now_playing?language=en-US&region=US&page=1`, options);
     
     const data = await res.json();
     return data.results || [];
@@ -90,7 +90,7 @@ export async function getNowInTheathers() {
 //get "Popular" movies list
 export async function getPopular() {
   try {
-    const res = await fetch(`${BASE_URL}/movie/popular?language=en-US&page=1`, options);
+    const res = await fetch(`${BASE_URL}/movie/popular?language=en-US&region=US&page=1`, options);
     
     const data = await res.json();
     return data.results || []; 
@@ -103,7 +103,7 @@ export async function getPopular() {
 //get "Upcoming" movies list
 export async function getUpcoming() {
   try {
-    const res = await fetch(`${BASE_URL}/movie/upcoming?language=en-US&page=1`, options);
+    const res = await fetch(`${BASE_URL}/movie/upcoming?language=en-US&region=US&page=1`, options);
     
     const data = await res.json();
     return data.results || [];
@@ -117,7 +117,7 @@ export async function getUpcoming() {
 //get "Trending" movies list
 export async function getTrending() {
   try {
-    const res = await fetch(`${BASE_URL}/trending/movie/day?language=en-US`, options);
+    const res = await fetch(`${BASE_URL}/trending/movie/day?language=en-US&region=US`, options);
     
     const data = await res.json();
     return data.results || [];

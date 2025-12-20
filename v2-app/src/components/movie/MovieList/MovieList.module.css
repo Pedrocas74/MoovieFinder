@@ -3,6 +3,8 @@
   gap: 1rem;
   grid-template-columns: repeat(auto-fill, minmax(118px, 120px));
   justify-content: center;
+  max-width: 90%;
+  margin: 0 auto;
 }
 
 .row {

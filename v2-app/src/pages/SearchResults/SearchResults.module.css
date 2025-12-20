@@ -1,0 +1,35 @@
+/* .page {
+    
+} */
+
+.title {
+    padding-left: 5%;
+    margin: 5vh 0 0 0 ;
+}
+.page span {
+    padding-left: 5%;
+}
+
+.filterContainer {
+    /* border: 1px solid red; */
+    padding-right: 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 5vh;
+}
+
+
+
+
+
+.filterMenu {
+    border: 1px solid red;
+    background: var(--clr-bg);
+    width: 100%;
+    height: 60vh;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    
+}

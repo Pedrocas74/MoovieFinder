@@ -7,6 +7,7 @@ import Footer from "./components/layout/Footer";
 import { LibraryProvider } from "./context/LibraryContext";
 import { RecentlyViewedProvider } from "./context/RecentlyViewed";
 
+
 export default function App() {
   const [searchedMovies, setSearchedMovies] = useState([]);
   const [error, setError] = useState(null);

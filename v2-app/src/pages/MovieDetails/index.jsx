@@ -25,6 +25,7 @@ import {
   ListPlus,
   X,
 } from "lucide-react";
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 import { useLibrary } from "../../context/LibraryContext";
 import { useRecentlyViewed } from "../../context/RecentlyViewed";
