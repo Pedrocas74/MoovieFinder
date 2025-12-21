@@ -10,16 +10,15 @@ const options = {
 };
 
 //search movies by query
-export async function searchMovies(query) {
-  if (!query) return [];
+export async function searchMovies(query, genres = []) {
+  if (!query && !genres.length) return [];
 
   try {
-    const res = await fetch(
-      `${BASE_URL}/search/movie?include_adult=false&language=en-US&region=US&page=1&query=${encodeURIComponent(
-        query
-      )}`,
-      options
-    );
+    let url = `${BASE_URL}/search/movie?include_adult=false&language=en-US&region=US&page=1`;
+    if (query) url += `&query=${encodeURIComponent(query)}`;
+    if (genres.length) url += `&with_genres=${genres.join(',')}`;
+    
+    const res = await fetch(url, options);
   
     const data = await res.json();
     return data.results || [];
@@ -58,6 +57,20 @@ export async function getCredits(movieId) {
     throw err;
   }
 } 
+
+
+//get movie genres list
+export async function getGenres() {
+  try {
+    const res = await fetch(`${BASE_URL}/genre/movie/list?language=en-US`, options);
+    
+    const data = await res.json();
+    return data.genres || [];
+  } catch (err) {
+    console.error("TMDB Error:", err);
+    throw err;
+  }
+}
 
 
 //get trailer from a movie 
@@ -146,8 +159,11 @@ export async function getPersonDetails(personId) {
   return res.json();
 }
 
+
 //person credits (movies they acted in or worked on)
 export async function getPersonMovieCredits(personId) {
   const res = await fetch(`${BASE_URL}/person/${personId}/movie_credits?language=en-US`, options);
   return res.json();
 }
+
+

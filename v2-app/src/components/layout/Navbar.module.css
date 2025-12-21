@@ -21,12 +21,22 @@ h1 {
     
 }
 
-
+.iconButton, a {
+    all: unset;
+    height: 24px;
+    cursor: pointer;
+}
 .searchOverlay {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
     background: var(--clr-bg);
+}
 
+.btnContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: clamp(120px, 25%, 130px);
 }

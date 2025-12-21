@@ -1,30 +1,85 @@
 import styles from "./Navbar.module.css";
 import { Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
-import { BookOpen, Search, X } from "lucide-react";
 import { useState } from "react";
+
+import ExploreIcon from "@mui/icons-material/Explore";
+import ExploreOutlinedIcon from "@mui/icons-material/ExploreOutlined";
+import VideoLibraryIcon from '@mui/icons-material/VideoLibrary';
+import VideoLibraryOutlinedIcon from "@mui/icons-material/VideoLibraryOutlined";
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
+
 
 export default function Navbar({ setSearchedMovies, setLoading, setError }) {
   const [searchOpen, setSearchOpen] = useState(false);
+  const [isExploreHover, setIsExploreHover] = useState(false);
+  const [isDarkHover, setIsDarkHover] = useState(false);
+  const [isLibraryHover, setIsLibraryHover] = useState(false);
 
   return (
     <header className={styles.header}>
       <nav className={styles.navbar}>
         {!searchOpen && (
           <>
-            <Link to="/" id="navLinks">
+            <Link to="/">
               <h1>Moo</h1>
             </Link>
-            <button
-              className={`${styles.iconButton} actionButton`}
-              onClick={() => setSearchOpen(true)}
-            >
-              <Search size={20} />
-            </button>
 
-            <Link to="/library" id="navLinks" >
-              <BookOpen size={20} color="black" />
-            </Link>
+            <div className={styles.btnContainer}>
+              <button
+                className={styles.iconButton}
+                onClick={() => setSearchOpen(true)}
+                type="button"
+                aria-label="Open search"
+              >
+                <SearchOutlinedIcon sx={{ color: "black" }} />
+              </button>
+
+              <button
+                className={styles.iconButton}
+                type="button"
+                aria-label="Toggle dark mode"
+                onMouseEnter={() => setIsDarkHover(true)}
+                onMouseLeave={() => setIsDarkHover(false)}
+              >
+                {isDarkHover ? (
+                  <DarkModeIcon sx={{ color: "black" }} />
+                ) : (
+                  <DarkModeOutlinedIcon sx={{ color: "black" }} />
+                )}
+              </button>
+
+              <Link
+                to="/discover"
+                id="navLinks"
+                onMouseEnter={() => setIsExploreHover(true)}
+                onMouseLeave={() => setIsExploreHover(false)}
+                aria-label="Discover"
+              >
+                {isExploreHover ? (
+                  <ExploreIcon sx={{ color: "black" }} />
+                ) : (
+                  <ExploreOutlinedIcon sx={{ color: "black" }} />
+                )}
+              </Link>
+
+              <Link
+                to="/library"
+                id="navLinks"
+                onMouseEnter={() => setIsLibraryHover(true)}
+                onMouseLeave={() => setIsLibraryHover(false)}
+                aria-label="Library"
+              >
+                {isLibraryHover ? (
+                  <VideoLibraryIcon sx={{ color: "black" }} />
+                ) : (
+                  <VideoLibraryOutlinedIcon sx={{ color: "black" }} />
+                )}
+              </Link>
+            </div>
           </>
         )}
 
@@ -45,8 +100,10 @@ export default function Navbar({ setSearchedMovies, setLoading, setError }) {
             <button
               className={`${styles.iconButton} actionButton`}
               onClick={() => setSearchOpen(false)}
+              type="button"
+              aria-label="Close search"
             >
-              <X size={20} />
+              <CloseOutlinedIcon sx={{ color: "black" }} />
             </button>
           </div>
         )}

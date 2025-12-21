@@ -122,9 +122,6 @@ p {
   /* font-size: var(--fs-md); */
 }
 
-a {
-  height: 20px;  /*delete later */
-}
 
 button:not(.actionButton),
 a:not(#navLinks) {
@@ -140,7 +137,6 @@ a:not(#navLinks) {
 
 }
 
-
 .actionButton {
   padding: 7px;
   border-radius: var(--radius-max);
@@ -151,8 +147,8 @@ a:not(#navLinks) {
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  
 }
+
 
 
 /* Button Primary (line border, get's drowned by waves on hover) */

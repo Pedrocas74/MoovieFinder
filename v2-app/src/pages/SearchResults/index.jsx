@@ -16,9 +16,8 @@ export default function SearchResults() {
   const [sort, setSort] = useState("");
 
   const q = (params.get("q") || "").trim();
-  
+
   useEffect(() => {
-    
     if (!q) {
       setMovies([]);
       setError(null);
@@ -60,7 +59,7 @@ export default function SearchResults() {
         (a.release_date ?? "").localeCompare(b.release_date ?? "")
       );
 
-      if (sort === "crescent")
+    if (sort === "crescent")
       return list.sort((a, b) =>
         (a.title ?? a.name ?? "").localeCompare(b.title ?? b.name ?? "")
       );
@@ -77,16 +76,13 @@ export default function SearchResults() {
     navigate(`/movie/${movie.id}`, { state: { movie } });
   };
 
-
   return (
     <section className={styles.page}>
       <h2 className={styles.title}>{q ? `Results for “${q}”` : "Search"}</h2>
-      
 
-        <div className={styles.sortContainer}>
-          <SortSelect value={sort} onChange={setSort} />
-        </div>
-     
+      <div className={styles.selectContainer}>
+        <SortSelect value={sort} onChange={setSort} />
+      </div>
 
       {loading && <p>Loading...</p>}
       {!loading && error && <p>{error}</p>}
@@ -96,7 +92,7 @@ export default function SearchResults() {
           movies={sortedMovies}
           layout="grid"
           onMovieClick={openMovie}
-          emptyMessage="Type something to search."
+          emptyMessage="Type something to search or select genres."
         />
       )}
     </section>
