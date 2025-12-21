@@ -14,15 +14,18 @@ export default function SortSelect({ value, onChange, label = "Sort" }) {
         label={label}
         onChange={(e) => onChange(e.target.value)}
       >
+        <MenuItem value="" disabled>
+          <em>Select sorting</em>
+        </MenuItem>
+
         <MenuItem value="recent">Recent</MenuItem>
         <MenuItem value="oldest">Oldest</MenuItem>
 
-        <MenuItem value="rating_desc">Most rated</MenuItem>
-        <MenuItem value="rating_asc">Lowest rated</MenuItem>
+        <MenuItem value="most_rated">Most rated</MenuItem>
+        <MenuItem value="lowest_rated">Lowest rated</MenuItem>
 
-        {/* optional explicit direction naming if you still want it */}
-        <MenuItem value="crescent">Crescent (A→Z / low→high)</MenuItem>
-        <MenuItem value="decrescent">Decrescent (Z→A / high→low)</MenuItem>
+        <MenuItem value="crescent">Crescent (A→Z)</MenuItem>
+        <MenuItem value="decrescent">Decrescent (Z→A)</MenuItem>
       </Select>
     </FormControl>
   );

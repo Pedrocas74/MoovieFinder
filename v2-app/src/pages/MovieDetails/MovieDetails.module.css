@@ -56,7 +56,7 @@
   position: absolute;
   left: 5%;
   bottom: 10%;
-  padding-right: 5%;
+  padding-right: 10%;
   color: var(--clr-bg);
   z-index: 2;
   font-size: var(--fs-lg);
