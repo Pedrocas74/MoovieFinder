@@ -91,15 +91,17 @@ export async function getTrailer(movieId) {
 
 // -------------------------------------------------------------------------------
 //get "Now In Theathers" movies list
-export async function getNowInTheathers(pages = 1) {
+export async function getNowInTheathers(page = 1, genres = []) {
   try {
-    const allResults = [];
-    for (let page = 1; page <= pages; page++) {
-      const res = await fetch(`${BASE_URL}/movie/now_playing?language=en-US&region=US&page=${page}`, options);
-      const data = await res.json();
-      allResults.push(...(data.results || []));
+    let url;
+    if (genres.length) {
+      url = `${BASE_URL}/discover/movie?primary_release_date.gte=${new Date().toISOString().split('T')[0]}&primary_release_date.lte=${new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}&sort_by=popularity.desc&with_genres=${genres.join(',')}&page=${page}`;
+    } else {
+      url = `${BASE_URL}/movie/now_playing?language=en-US&region=US&page=${page}`;
     }
-    return allResults;
+    const res = await fetch(url, options);
+    const data = await res.json();
+    return data.results || [];
   } catch (err) {
     console.error("TMDB Error:", err);
     throw err;
@@ -107,15 +109,17 @@ export async function getNowInTheathers(pages = 1) {
 }
 
 //get "Popular" movies list
-export async function getPopular(pages = 1) {
+export async function getPopular(page = 1, genres = []) {
   try {
-    const allResults = [];
-    for (let page = 1; page <= pages; page++) {
-      const res = await fetch(`${BASE_URL}/movie/popular?language=en-US&region=US&page=${page}`, options);
-      const data = await res.json();
-      allResults.push(...(data.results || []));
+    let url;
+    if (genres.length) {
+      url = `${BASE_URL}/discover/movie?sort_by=popularity.desc&with_genres=${genres.join(',')}&page=${page}`;
+    } else {
+      url = `${BASE_URL}/movie/popular?language=en-US&region=US&page=${page}`;
     }
-    return allResults;
+    const res = await fetch(url, options);
+    const data = await res.json();
+    return data.results || [];
   } catch (err) {
     console.error("TMDB Error:", err);
     throw err;
@@ -123,15 +127,17 @@ export async function getPopular(pages = 1) {
 }
 
 //get "Upcoming" movies list
-export async function getUpcoming(pages = 1) {
+export async function getUpcoming(page = 1, genres = []) {
   try {
-    const allResults = [];
-    for (let page = 1; page <= pages; page++) {
-      const res = await fetch(`${BASE_URL}/movie/upcoming?language=en-US&region=US&page=${page}`, options);
-      const data = await res.json();
-      allResults.push(...(data.results || []));
+    let url;
+    if (genres.length) {
+      url = `${BASE_URL}/discover/movie?primary_release_date.gte=${new Date().toISOString().split('T')[0]}&sort_by=release_date.asc&with_genres=${genres.join(',')}&page=${page}`;
+    } else {
+      url = `${BASE_URL}/movie/upcoming?language=en-US&region=US&page=${page}`;
     }
-    return allResults;
+    const res = await fetch(url, options);
+    const data = await res.json();
+    return data.results || [];
   } catch (err) {
     console.error("TMDB Error:", err);
     throw err;
@@ -140,15 +146,12 @@ export async function getUpcoming(pages = 1) {
 
 
 //get "Trending" movies list
-export async function getTrending(pages = 1) {
+export async function getTrending(page = 1, genres = []) {
   try {
-    const allResults = [];
-    for (let page = 1; page <= pages; page++) {
-      const res = await fetch(`${BASE_URL}/trending/movie/day?language=en-US&region=US&page=${page}`, options);
-      const data = await res.json();
-      allResults.push(...(data.results || []));
-    }
-    return allResults;
+    const url = `${BASE_URL}/trending/movie/day?language=en-US&region=US&page=${page}`;
+    const res = await fetch(url, options);
+    const data = await res.json();
+    return data.results || [];
   } catch (err) {
     console.error("TMDB Error:", err);
     throw err;
@@ -156,14 +159,18 @@ export async function getTrending(pages = 1) {
 } 
 
 //get movies by source (trending or popular)
-export async function getMoviesBySource(source, pages = 5) {
+export async function getMoviesBySource(source, page = 1, genres = []) {
   switch (source) {
     case "trending":
-      return getTrending(pages);
+      return getTrending(page, genres);
     case "popular":
-      return getPopular(pages);
+      return getPopular(page, genres);
+    case "now_playing":
+      return getNowInTheathers(page, genres);
+    case "upcoming":
+      return getUpcoming(page, genres);
     default:
-      return getTrending(pages);
+      return getTrending(page, genres);
   }
 }
 

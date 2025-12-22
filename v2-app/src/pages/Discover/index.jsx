@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { getMoviesBySource } from "../../services/tmdb";
 import MovieList from "../../components/movie/MovieList";
@@ -13,37 +13,84 @@ export default function Discover() {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [source, setSource] = useState("trending");
+  const [source, setSource] = useState("popular");
   const [sort, setSort] = useState("");
   const [genres, setGenres] = useState([]);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const observerRef = useRef();
 
-  useEffect(() => {
-    (async () => {
+  const loadMovies = useCallback(
+    async (currentPage, append = false) => {
       try {
-        setLoading(true);
+        if (!append) setLoading(true);
+        else setLoadingMore(true);
         setError(null);
-        const results = await getMoviesBySource(source);
-        setMovies(results);
+        const results = await getMoviesBySource(source, currentPage, genres);
+        if (!results || results.length === 0) {
+          setHasMore(false);
+        } else {
+          setHasMore(true);
+          setMovies((prev) => (append ? [...prev, ...results] : results));
+          if (!append) setPage(1);
+        }
       } catch {
         setError("Unable to fetch movies.");
-        setMovies([]);
+        if (!append) setMovies([]);
       } finally {
         setLoading(false);
+        setLoadingMore(false);
       }
-    })();
-  }, [source]);
+    },
+    [source, genres]
+  );
+
+  useEffect(() => {
+    setMovies([]);
+    setPage(1);
+    setHasMore(true);
+    loadMovies(1, false);
+  }, [source, genres, loadMovies]);
+
+  const loadMore = useCallback(() => {
+    if (!hasMore || loading || loadingMore) return;
+    const nextPage = page + 1;
+    setPage(nextPage);
+    loadMovies(nextPage, true);
+  }, [hasMore, loading, loadingMore, page, loadMovies]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          loadMore();
+        }
+      },
+      { threshold: 0 }
+    );
+
+    if (observerRef.current) {
+      observer.observe(observerRef.current);
+    }
+
+    return () => {
+      if (observerRef.current) {
+        observer.unobserve(observerRef.current);
+      }
+    };
+  }, [loadMore]);
 
   const filteredAndSortedMovies = useMemo(() => {
     let list = [...movies];
 
-    // Filter by genres if any selected
-    if (genres.length > 0) {
+    // Filter by genres if any selected (client-side for trending)
+    if (genres.length > 0 && source === "trending") {
       list = list.filter((movie) =>
         genres.some((genreId) => movie.genre_ids?.includes(genreId))
       );
     }
 
-    // Sort
     if (sort === "most_rated")
       return list.sort((a, b) => (b.vote_average ?? 0) - (a.vote_average ?? 0));
 
@@ -71,7 +118,7 @@ export default function Discover() {
       );
 
     return list;
-  }, [movies, sort, genres]);
+  }, [movies, sort, genres, source]);
 
   const openMovie = (movie) => {
     navigate(`/movie/${movie.id}`, { state: { movie } });
@@ -91,12 +138,22 @@ export default function Discover() {
       {!loading && error && <p>{error}</p>}
 
       {!loading && !error && (
-        <MovieList
-          movies={filteredAndSortedMovies}
-          layout="grid"
-          onMovieClick={openMovie}
-          emptyMessage="No movies found."
-        />
+        <>
+          <MovieList
+            movies={filteredAndSortedMovies}
+            layout="grid"
+            onMovieClick={openMovie}
+            emptyMessage="No movies found."
+          />
+          {hasMore && (
+            <div
+              ref={observerRef}
+              style={{ height: "20px", background: "transparent" }}
+            >
+              {loadingMore && <p>Loading more...</p>}
+            </div>
+          )}
+        </>
       )}
     </section>
   );

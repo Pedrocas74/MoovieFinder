@@ -51,14 +51,14 @@ export default function Home() {
         />
       )}
 
-      {popular.length > 0 && (
+      {/* {popular.length > 0 && (
         <MovieList
           title="Popular"
           movies={popular}
           layout="row"
           onMovieClick={handleOpenDetails}
         />
-      )}
+      )} */}
 
       {recent.length > 0 && (
         <MovieList
