@@ -1,0 +1,14 @@
+.page {
+  padding: 0 5%;
+}
+
+.title {
+  margin: 5vh 0 2vh 0;
+}
+
+.filters {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2vh;
+  flex-wrap: wrap;
+}

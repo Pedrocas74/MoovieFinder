@@ -28,7 +28,7 @@ export default function SearchResults() {
       try {
         setLoading(true);
         setError(null);
-        const results = await searchMovies(q);
+        const results = await searchMovies(q, [], 3); // Fetch 3 pages for more results
         setMovies(results);
         if (!results?.length) setError("No movies found!");
       } catch {

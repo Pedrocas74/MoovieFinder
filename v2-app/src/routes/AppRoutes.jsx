@@ -5,6 +5,7 @@ import PersonDetails from "../pages/PersonDetails";
 import NotFound from "../pages/NotFound";
 import SearchResults from "../pages/SearchResults";
 import Library from "../pages/Library";
+import Discover from "../pages/Discover";
 
 export default function AppRoutes({
   searchedMovies,
@@ -28,6 +29,7 @@ export default function AppRoutes({
         }
       />
       <Route path="/search" element={<SearchResults />} />
+      <Route path="/discover" element={<Discover />} />
       <Route path="/movie/:id" element={<MovieDetails />} />
       <Route path="/person/:id" element={<PersonDetails />} />
       <Route path="/library" element={<Library />} />
