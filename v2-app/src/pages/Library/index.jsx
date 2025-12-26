@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import MovieList from "../../components/movie/MovieList";
 import { useLibrary } from "../../context/LibraryContext";
 
+//tabs
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";

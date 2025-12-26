@@ -5,19 +5,35 @@ import { useState } from "react";
 
 import ExploreIcon from "@mui/icons-material/Explore";
 import ExploreOutlinedIcon from "@mui/icons-material/ExploreOutlined";
-import VideoLibraryIcon from '@mui/icons-material/VideoLibrary';
+import VideoLibraryIcon from "@mui/icons-material/VideoLibrary";
 import VideoLibraryOutlinedIcon from "@mui/icons-material/VideoLibraryOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import DarkModeIcon from '@mui/icons-material/DarkMode';
+import DarkModeIcon from "@mui/icons-material/DarkMode";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 
+import Tooltip from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
 
 export default function Navbar({ setSearchedMovies, setLoading, setError }) {
   const [searchOpen, setSearchOpen] = useState(false);
   const [isExploreHover, setIsExploreHover] = useState(false);
   const [isDarkHover, setIsDarkHover] = useState(false);
   const [isLibraryHover, setIsLibraryHover] = useState(false);
+
+  const AppTooltip = styled(({ className, ...props }) => (
+    <Tooltip {...props} classes={{ popper: className }} />
+  ))({
+    "& .MuiTooltip-tooltip": {
+      backgroundColor: "var(--clr-primary)",
+      fontSize: "var(--fs-sm)",
+      padding: "var(--pd-button)",
+      borderRadius: "var(--radius-button)",
+    },
+    "& .MuiTooltip-arrow": {
+      color: "var(--clr-primary)",
+    },
+  });
 
   return (
     <header className={styles.header}>
@@ -29,15 +45,18 @@ export default function Navbar({ setSearchedMovies, setLoading, setError }) {
             </Link>
 
             <div className={styles.btnContainer}>
-              <button
-                className={styles.iconButton}
-                onClick={() => setSearchOpen(true)}
-                type="button"
-                aria-label="Open search"
-              >
-                <SearchOutlinedIcon sx={{ color: "black" }} />
-              </button>
+              <AppTooltip title="Search" arrow>
+                <button
+                  className={styles.iconButton}
+                  onClick={() => setSearchOpen(true)}
+                  type="button"
+                  aria-label="Open search"
+                >
+                  <SearchOutlinedIcon sx={{ color: "black" }} />
+                </button>
+              </AppTooltip>
 
+              <AppTooltip title="Dark mode" arrow>
               <button
                 className={styles.iconButton}
                 type="button"
@@ -51,7 +70,9 @@ export default function Navbar({ setSearchedMovies, setLoading, setError }) {
                   <DarkModeOutlinedIcon sx={{ color: "black" }} />
                 )}
               </button>
-
+              </AppTooltip>
+              
+              <AppTooltip title="Discover" arrow>
               <Link
                 to="/discover"
                 id="navLinks"
@@ -65,7 +86,9 @@ export default function Navbar({ setSearchedMovies, setLoading, setError }) {
                   <ExploreOutlinedIcon sx={{ color: "black" }} />
                 )}
               </Link>
-
+              </AppTooltip>
+                
+                <AppTooltip title="Library" arrow>
               <Link
                 to="/library"
                 id="navLinks"
@@ -79,6 +102,7 @@ export default function Navbar({ setSearchedMovies, setLoading, setError }) {
                   <VideoLibraryOutlinedIcon sx={{ color: "black" }} />
                 )}
               </Link>
+              </AppTooltip>
             </div>
           </>
         )}

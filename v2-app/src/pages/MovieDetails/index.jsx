@@ -15,20 +15,23 @@ import {
   profileUrl,
 } from "../../services/tmdbImages";
 
-import {
-  Star,
-  Hourglass,
-  Calendar,
-  Eye,
-  Play,
-  Heart,
-  ListPlus,
-  X,
-} from "lucide-react";
-import VisibilityIcon from '@mui/icons-material/Visibility';
+import { Star, Hourglass, Calendar, Play, X } from "lucide-react";
+
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
+
+import PlaylistAddRoundedIcon from "@mui/icons-material/PlaylistAddRounded";
+import PlaylistAddCheckRoundedIcon from "@mui/icons-material/PlaylistAddCheckRounded";
+
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 import { useLibrary } from "../../context/LibraryContext";
 import { useRecentlyViewed } from "../../context/RecentlyViewed";
+
+//tooltip
+import { styled } from "@mui/material/styles";
+import Tooltip from "@mui/material/Tooltip";
 
 export default function MovieDetails() {
   const [logoPath, setLogoPath] = useState(null);
@@ -151,63 +154,88 @@ export default function MovieDetails() {
   const inWatchlist = isInWatchlist(movie.id);
   const favorite = isFavorite(movie.id);
 
+  const AppTooltip = styled(({ className, ...props }) => (
+    <Tooltip {...props} classes={{ popper: className }} />
+  ))({
+    "& .MuiTooltip-tooltip": {
+      backgroundColor: "var(--clr-primary)",
+      fontSize: "var(--fs-sm)",
+      padding: "var(--pd-button)",
+      borderRadius: "var(--radius-button)",
+    },
+    "& .MuiTooltip-arrow": {
+      color: "var(--clr-primary)",
+    },
+  });
+
   return (
     <section className={styles.movieDetailsPage}>
       <div className={styles.backdropWrapper}>
         <div className={styles.actionButtons}>
-          <button
-            className="actionButton"
-            type="button"
-            onClick={handleWatchTrailer}
-          >
-            <Play size={20} fill="white" stroke="white" />
-          </button>
+          <AppTooltip title="Play trailer" placement="left">
+            <button
+              className="actionButton"
+              type="button"
+              onClick={handleWatchTrailer}
+            >
+              <Play size={24} fill="var(--clr-bg)" stroke="transparent" />
+            </button>
+          </AppTooltip>
 
-          <button
-            className="actionButton"
-            type="button"
-            onClick={() => {
-              toggleWatched(movie);
-            }}
-            aria-pressed={watched}
-            title={watched ? "Remove from watched" : "Add to watched"}
-            style={{background: watched ? "var(--bg-l)" : "transparent"}}
-          >
-            <Eye
-              size={20}
-              stroke={watched ? "black" : "white"}
-              fill={watched ? "white" : "none"}
-            />
-          </button>
+          <AppTooltip title={watched ? "Remove from watched" : "Add to watched"} placement="left">
+            <button
+              className="actionButton"
+              type="button"
+              onClick={() => {
+                toggleWatched(movie);
+              }}
+              aria-pressed={watched}
+              title={watched ? "Remove from watched" : "Add to watched"}
+              style={{ background: watched ? "var(--bg-l)" : "transparent" }}
+            >
+              {watched ? (
+                <VisibilityIcon />
+              ) : (
+                <VisibilityOffOutlinedIcon sx={{ color: "var(--clr-bg)" }} />
+              )}
+            </button>
+          </AppTooltip>
 
-          <button
-            className="actionButton"
-            type="button"
-            onClick={() => toggleWatchlist(movie)}
-            aria-pressed={inWatchlist}
-            title={inWatchlist ? "Remove from watchlist" : "Add to watchlist"}
-            style={{background: inWatchlist ? "var(--bg-l)" : "transparent"}}
-          >
-            <ListPlus
-              size={20}
-              stroke={inWatchlist ? "black" : "white"}
-            />
-          </button>
+          <AppTooltip title={inWatchlist ? "Remove from watchlist" : "Add to watchlist"} placement="left">
+            <button
+              className="actionButton"
+              type="button"
+              onClick={() => toggleWatchlist(movie)}
+              aria-pressed={inWatchlist}
+              title={inWatchlist ? "Remove from watchlist" : "Add to watchlist"}
+              style={{
+                background: inWatchlist ? "var(--bg-l)" : "transparent",
+              }}
+            >
+              {inWatchlist ? (
+                <PlaylistAddCheckRoundedIcon />
+              ) : (
+                <PlaylistAddRoundedIcon sx={{ color: "var(--clr-bg)" }} />
+              )}
+            </button>
+          </AppTooltip>
 
-          <button
-            className="actionButton"
-            type="button"
-            onClick={() => toggleFavorite(movie)}
-            aria-pressed={favorite}
-            title={favorite ? "Remove from favorites" : "Add to favorites"}
-            style={{background: favorite ? "var(--bg-l)" : "transparent"}}
-          >
-            <Heart
-              size={20}
-              stroke={favorite ? "var(--red)" : "white"}
-              fill={favorite ? "var(--red)" : "none"}
-            />
-          </button>
+          <AppTooltip title={favorite ? "Remove from favorites" : "Add to favorites"} placement="left">
+            <button
+              className="actionButton"
+              type="button"
+              onClick={() => toggleFavorite(movie)}
+              aria-pressed={favorite}
+              title={favorite ? "Remove from favorites" : "Add to favorites"}
+              style={{ background: favorite ? "var(--bg-l)" : "transparent" }}
+            >
+              {favorite ? (
+                <FavoriteIcon sx={{ color: "var(--clr-primary)" }} />
+              ) : (
+                <FavoriteBorderIcon sx={{ color: "var(--clr-bg)" }} />
+              )}
+            </button>
+          </AppTooltip>
         </div>
         {movie.backdrop_path ? (
           <img
