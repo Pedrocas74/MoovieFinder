@@ -15,7 +15,7 @@ import {
   profileUrl,
 } from "../../services/tmdbImages";
 
-import { Star, Hourglass, Calendar, Play, X } from "lucide-react";
+import { Star, Hourglass, Calendar, Play, X, ArrowLeft } from "lucide-react";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
@@ -171,6 +171,9 @@ export default function MovieDetails() {
   return (
     <section className={styles.movieDetailsPage}>
       <div className={styles.backdropWrapper}>
+        {/* <button className={styles.backButton} type="button" onClick={() => navigate(-1)}>
+          <ArrowLeft size={24} />
+        </button> */}
         <div className={styles.actionButtons}>
           <AppTooltip title="Play trailer" placement="left">
             <button
@@ -182,7 +185,10 @@ export default function MovieDetails() {
             </button>
           </AppTooltip>
 
-          <AppTooltip title={watched ? "Remove from watched" : "Add to watched"} placement="left">
+          <AppTooltip
+            title={watched ? "Remove from watched" : "Add to watched"}
+            placement="left"
+          >
             <button
               className="actionButton"
               type="button"
@@ -201,7 +207,10 @@ export default function MovieDetails() {
             </button>
           </AppTooltip>
 
-          <AppTooltip title={inWatchlist ? "Remove from watchlist" : "Add to watchlist"} placement="left">
+          <AppTooltip
+            title={inWatchlist ? "Remove from watchlist" : "Add to watchlist"}
+            placement="left"
+          >
             <button
               className="actionButton"
               type="button"
@@ -220,7 +229,10 @@ export default function MovieDetails() {
             </button>
           </AppTooltip>
 
-          <AppTooltip title={favorite ? "Remove from favorites" : "Add to favorites"} placement="left">
+          <AppTooltip
+            title={favorite ? "Remove from favorites" : "Add to favorites"}
+            placement="left"
+          >
             <button
               className="actionButton"
               type="button"

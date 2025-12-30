@@ -53,10 +53,6 @@ export default function Library() {
     "& .MuiSvgIcon-root": {
       transition: "transform 250ms ease",
     },
-
-    "&.Mui-selected .MuiSvgIcon-root": {
-      transform: "scale(1.10)",
-    },
   };
 
   return (
@@ -74,6 +70,9 @@ export default function Library() {
               height: 3,
               borderRadius: 999,
               transition: "left 250ms ease, width 250ms ease",
+            },
+            "& .MuiTab-root": {
+              fontFamily: `"Inter", sans-serif`,
             },
           }}
         >

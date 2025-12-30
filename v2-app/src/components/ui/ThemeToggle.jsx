@@ -1,37 +1,38 @@
-import styles from "./styles/ThemeToggle.module.css";
-import { motion, AnimatePresence } from "framer-motion";
-import { Sun, Moon } from "lucide-react"; 
+import styles from "./ThemeToggle.module.css";
+import { motion } from "framer-motion";
+
+import { useState } from "react";
+
+import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
+import LightModeIcon from '@mui/icons-material/LightMode';
+
+import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
 
 export default function ThemeToggle({ darkMode, setDarkMode }) {
+  const [isHover, setIsHover] = useState(false);
+
   return (
-    <button
+    <motion.button
       aria-label="Toggle dark/light mode"
       onClick={() => setDarkMode(!darkMode)}
       className={styles.toggleButton}
+      onMouseEnter={() => setIsHover(true)}
+      onMouseLeave={() => setIsHover(false)}
     >
-      <AnimatePresence mode="wait" initial={false}>
-        {darkMode ? (
-          <motion.span
-            key="moon"
-            initial={{ rotate: -90, opacity: 0, scale: 0.5 }}
-            animate={{ rotate: 0, opacity: 1, scale: 1 }}
-            exit={{ rotate: 90, opacity: 0, scale: 0.5 }}
-            transition={{ duration: 0.3 }}
-          >
-            <Moon size={20} color="#b032eb" />
-          </motion.span>
+      {
+        darkMode ? (
+          isHover ? (
+            <DarkModeIcon /> 
+          ) : (
+            <DarkModeOutlinedIcon />
+          ) 
+        ) : isHover ? (
+          <LightModeIcon /> 
         ) : (
-          <motion.span
-            key="sun"
-            initial={{ rotate: 90, opacity: 0, scale: 0.5 }}
-            animate={{ rotate: 0, opacity: 1, scale: 1 }}
-            exit={{ rotate: -90, opacity: 0, scale: 0.5 }}
-            transition={{ duration: 0.3 }}
-          >
-            <Sun size={20} color="#8f1919" />
-          </motion.span>
-        )}
-      </AnimatePresence>
-    </button>
+          <LightModeOutlinedIcon />
+        ) 
+      }
+    </motion.button>
   );
 }

@@ -1,5 +1,5 @@
 .header {
-    border-bottom: 1px solid;
+    border-bottom: 1.5px solid var(--clr-border);
     height: 10vh;
     display: flex;
     align-items: center;
@@ -12,12 +12,6 @@
     width: 90%;
     justify-content: space-between;
     align-items: center;
-}
-
-h1 {
-    /* border: 1px solid red; */
-    font-size: var(--fs-small);
-    color: var(--clr-text);
     
 }
 
@@ -25,6 +19,8 @@ h1 {
     all: unset;
     height: 24px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
 }
 .searchOverlay {
     display: flex;
@@ -39,4 +35,5 @@ h1 {
     align-items: center;
     justify-content: space-between;
     width: clamp(120px, 25%, 130px);
+    transition: var(--transition);
 }

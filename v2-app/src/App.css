@@ -12,9 +12,10 @@
     --bg-ll: #ffffff;
     --bg-ld: #d9d9d9;
 
-    --red: #8f1919;
+    --red: hsl(0, 70%, 33%);
     --red-light: hsl(0, 70%, 43%);
     --red-dark: hsl(0, 70%, 23%);
+    --red-border: hsla(0, 70%, 33%, 0.129);
 
     --clr-text-l: #1d1814;
     --muted: #5a5a5a;
@@ -27,8 +28,9 @@
     --purple: hsl(281, 82%, 56%);
     --purple-light: hsl(281, 82%, 66%);
     --purple-dark: hsl(281, 82%, 46%);
+    --purple-border: hsla(281, 82%, 56%, 0.129);
 
-    --clr-text-d: #f2f2f2;
+    --clr-text-d: hsl(0, 0%, 97%);
 
     --yellow: #FFF275;
     --blue: #6699CC;
@@ -50,6 +52,7 @@
     /* padding  */
     --pd-button: 0.5em 0.7em;
     --pd-movieCard: 0.1em 0.3em;
+    --pd-title: 7vh 0 2vh 5%;
     
     /* line height  */
     --lh-small: 1.6;
@@ -91,6 +94,7 @@
   --clr-bg-alt: var(--bg-l);
   --clr-text: var(--clr-text-l);
   --clr-primary: var(--red);
+  --clr-border: var(--red-border);
 }
 
 /* ACTIVE THEME VARIABLES — DARK MODE */
@@ -99,6 +103,7 @@
   --clr-bg-alt: var(--bg-dl);
   --clr-text: var(--clr-text-d);
   --clr-primary: var(--purple);
+  --clr-border: var(--purple-border);
 }
 
 html {  

@@ -9,6 +9,8 @@ const options = {
   },
 };
 
+const today = new Date().toISOString().split("T")[0];
+
 //search movies by query
 export async function searchMovies(query, genres = [], pages = 1) {
   if (!query && !genres.length) return [];
@@ -95,7 +97,7 @@ export async function getNowInTheathers(page = 1, genres = []) {
   try {
     let url;
     if (genres.length) {
-      url = `${BASE_URL}/discover/movie?primary_release_date.gte=${new Date().toISOString().split('T')[0]}&primary_release_date.lte=${new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}&sort_by=popularity.desc&with_genres=${genres.join(',')}&page=${page}`;
+      url = `${BASE_URL}/discover/movie?primary_release_date.gte=${today}&primary_release_date.lte=${new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]}&sort_by=popularity.desc&with_genres=${genres.join(',')}&page=${page}`;
     } else {
       url = `${BASE_URL}/movie/now_playing?language=en-US&region=US&page=${page}`;
     }
@@ -126,23 +128,34 @@ export async function getPopular(page = 1, genres = []) {
   }
 }
 
-//get "Upcoming" movies list
+
+// get "Upcoming" movies list (strictly future only)
 export async function getUpcoming(page = 1, genres = []) {
   try {
     let url;
     if (genres.length) {
-      url = `${BASE_URL}/discover/movie?primary_release_date.gte=${new Date().toISOString().split('T')[0]}&sort_by=release_date.asc&with_genres=${genres.join(',')}&page=${page}`;
+      url = `${BASE_URL}/discover/movie?primary_release_date.gte=${new Date().toISOString().split("T")[0]}&sort_by=release_date.asc&with_genres=${genres.join(",")}&page=${page}`;
     } else {
       url = `${BASE_URL}/movie/upcoming?language=en-US&region=US&page=${page}`;
     }
+
     const res = await fetch(url, options);
     const data = await res.json();
-    return data.results || [];
+
+    const today = new Date().toISOString().split("T")[0];
+
+    return (data.results || []).filter(
+      (movie) =>
+        movie.release_date &&
+        movie.release_date >= today
+    );
   } catch (err) {
     console.error("TMDB Error:", err);
     throw err;
   }
 }
+
+
 
 
 //get "Trending" movies list

@@ -6,7 +6,7 @@ import { useRecentlyViewed } from "../../context/RecentlyViewed";
 export default function Home() {
   const navigate = useNavigate();
 
-  const { trending, nowPlaying, upcoming, popular, loading, error, reload } =
+  const { trending, nowPlaying, upcoming, loading, error, reload } =
     useHomeMovies();
 
   const handleOpenDetails = (movie) => {
@@ -50,15 +50,6 @@ export default function Home() {
           onMovieClick={handleOpenDetails}
         />
       )}
-
-      {/* {popular.length > 0 && (
-        <MovieList
-          title="Popular"
-          movies={popular}
-          layout="row"
-          onMovieClick={handleOpenDetails}
-        />
-      )} */}
 
       {recent.length > 0 && (
         <MovieList

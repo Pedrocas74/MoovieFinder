@@ -8,18 +8,20 @@ import ExploreOutlinedIcon from "@mui/icons-material/ExploreOutlined";
 import VideoLibraryIcon from "@mui/icons-material/VideoLibrary";
 import VideoLibraryOutlinedIcon from "@mui/icons-material/VideoLibraryOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import DarkModeIcon from "@mui/icons-material/DarkMode";
-import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 
 import Tooltip from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 
+import LogoSVG from "./LogoSVG";
+import ThemeToggle from "../ui/ThemeToggle";
+import { useTheme } from "../../context/ThemeContext";
+
 export default function Navbar({ setSearchedMovies, setLoading, setError }) {
   const [searchOpen, setSearchOpen] = useState(false);
   const [isExploreHover, setIsExploreHover] = useState(false);
-  const [isDarkHover, setIsDarkHover] = useState(false);
   const [isLibraryHover, setIsLibraryHover] = useState(false);
+  const { darkMode, setDarkMode } = useTheme();
 
   const AppTooltip = styled(({ className, ...props }) => (
     <Tooltip {...props} classes={{ popper: className }} />
@@ -40,68 +42,54 @@ export default function Navbar({ setSearchedMovies, setLoading, setError }) {
       <nav className={styles.navbar}>
         {!searchOpen && (
           <>
-            <Link to="/">
-              <h1>Moo</h1>
+            <Link to="/" id="navLinks" aria-label="Moo Logo">
+              <LogoSVG />
             </Link>
 
             <div className={styles.btnContainer}>
-              <AppTooltip title="Search" arrow>
-                <button
-                  className={styles.iconButton}
-                  onClick={() => setSearchOpen(true)}
-                  type="button"
-                  aria-label="Open search"
-                >
-                  <SearchOutlinedIcon sx={{ color: "black" }} />
-                </button>
-              </AppTooltip>
-
-              <AppTooltip title="Dark mode" arrow>
               <button
                 className={styles.iconButton}
+                onClick={() => setSearchOpen(true)}
                 type="button"
-                aria-label="Toggle dark mode"
-                onMouseEnter={() => setIsDarkHover(true)}
-                onMouseLeave={() => setIsDarkHover(false)}
+                aria-label="Open search"
               >
-                {isDarkHover ? (
-                  <DarkModeIcon sx={{ color: "black" }} />
-                ) : (
-                  <DarkModeOutlinedIcon sx={{ color: "black" }} />
-                )}
+                <SearchOutlinedIcon sx={{ color: "var(--clr-text)" }} />
               </button>
-              </AppTooltip>
-              
+
+              <ThemeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
+
               <AppTooltip title="Discover" arrow>
-              <Link
-                to="/discover"
-                id="navLinks"
-                onMouseEnter={() => setIsExploreHover(true)}
-                onMouseLeave={() => setIsExploreHover(false)}
-                aria-label="Discover"
-              >
-                {isExploreHover ? (
-                  <ExploreIcon sx={{ color: "black" }} />
-                ) : (
-                  <ExploreOutlinedIcon sx={{ color: "black" }} />
-                )}
-              </Link>
+                <Link
+                  to="/discover"
+                  id="navLinks"
+                  onMouseEnter={() => setIsExploreHover(true)}
+                  onMouseLeave={() => setIsExploreHover(false)}
+                  aria-label="Discover"
+                >
+                  {isExploreHover ? (
+                    <ExploreIcon sx={{ color: "var(--clr-text)" }} />
+                  ) : (
+                    <ExploreOutlinedIcon sx={{ color: "var(--clr-text)" }} />
+                  )}
+                </Link>
               </AppTooltip>
-                
-                <AppTooltip title="Library" arrow>
-              <Link
-                to="/library"
-                id="navLinks"
-                onMouseEnter={() => setIsLibraryHover(true)}
-                onMouseLeave={() => setIsLibraryHover(false)}
-                aria-label="Library"
-              >
-                {isLibraryHover ? (
-                  <VideoLibraryIcon sx={{ color: "black" }} />
-                ) : (
-                  <VideoLibraryOutlinedIcon sx={{ color: "black" }} />
-                )}
-              </Link>
+
+              <AppTooltip title="Library" arrow>
+                <Link
+                  to="/library"
+                  id="navLinks"
+                  onMouseEnter={() => setIsLibraryHover(true)}
+                  onMouseLeave={() => setIsLibraryHover(false)}
+                  aria-label="Library"
+                >
+                  {isLibraryHover ? (
+                    <VideoLibraryIcon sx={{ color: "var(--clr-text)" }} />
+                  ) : (
+                    <VideoLibraryOutlinedIcon
+                      sx={{ color: "var(--clr-text)" }}
+                    />
+                  )}
+                </Link>
               </AppTooltip>
             </div>
           </>
@@ -110,7 +98,7 @@ export default function Navbar({ setSearchedMovies, setLoading, setError }) {
         {searchOpen && (
           <div className={styles.searchOverlay}>
             <Link to="/" id="navLinks">
-              <h1>Moo</h1>
+              <LogoSVG />
             </Link>
 
             <SearchBar
@@ -127,7 +115,7 @@ export default function Navbar({ setSearchedMovies, setLoading, setError }) {
               type="button"
               aria-label="Close search"
             >
-              <CloseOutlinedIcon sx={{ color: "black" }} />
+              <CloseOutlinedIcon sx={{ color: "var(--clr-text)" }} />
             </button>
           </div>
         )}
