@@ -1,12 +1,6 @@
-.page {
-  padding: 0 5%;
-}
-
-.title {
-  margin: 5vh 0 2vh 0;
-}
 
 .filters {
+  padding: var(--pd-normal);
   display: flex;
   gap: 1rem;
   margin-bottom: 2vh;

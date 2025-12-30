@@ -52,7 +52,8 @@
     /* padding  */
     --pd-button: 0.5em 0.7em;
     --pd-movieCard: 0.1em 0.3em;
-    --pd-title: 7vh 0 2vh 5%;
+    --pd-title: 7vh 0 5vh 5%;
+    --pd-normal: 0 5% 5vh 5%;
     
     /* line height  */
     --lh-small: 1.6;
@@ -119,6 +120,9 @@ body {
 h1,
 h2 {
   font-family: var(--ff-heading);
+}
+h2 {
+  padding: var(--pd-title);
 }
 
 p {

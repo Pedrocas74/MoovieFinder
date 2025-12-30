@@ -13,9 +13,15 @@ export default function Discover() {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [source, setSource] = useState("popular");
-  const [sort, setSort] = useState("");
-  const [genres, setGenres] = useState([]);
+  const [source, setSource] = useState(
+    sessionStorage.getItem("discover_source") || "popular"
+  );
+  const [sort, setSort] = useState(
+    sessionStorage.getItem("discover_sort") || ""
+  );
+  const [genres, setGenres] = useState(
+    JSON.parse(sessionStorage.getItem("discover_genres") || "[]")
+  );
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -53,6 +59,18 @@ export default function Discover() {
     loadMovies(1, false);
   }, [source, genres, loadMovies]);
 
+  useEffect(() => {
+    sessionStorage.setItem("discover_source", source);
+  }, [source]);
+
+  useEffect(() => {
+    sessionStorage.setItem("discover_sort", sort);
+  }, [sort]);
+
+  useEffect(() => {
+    sessionStorage.setItem("discover_genres", JSON.stringify(genres));
+  }, [genres]);
+
   const loadMore = useCallback(() => {
     if (!hasMore || loading || loadingMore) return;
     const nextPage = page + 1;
@@ -84,7 +102,7 @@ export default function Discover() {
   const filteredAndSortedMovies = useMemo(() => {
     let list = [...movies];
 
-    // Filter by genres if any selected (client-side for trending)
+    //filter by genres if any selected (client-side for trending)
     if (genres.length > 0 && source === "trending") {
       list = list.filter((movie) =>
         genres.some((genreId) => movie.genre_ids?.includes(genreId))

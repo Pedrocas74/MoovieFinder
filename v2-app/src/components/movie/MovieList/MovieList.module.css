@@ -13,11 +13,8 @@
   /* height: 40vh; */
   gap: 1rem;
   overflow-x: auto;
-  padding: 2vh 0 3vh 2.5%;
+  padding: 0 0 0 2.5%;
 }
 
-.movieList h2 {
-  padding: 7vh 0 2vh 5%;
 
-}
  
