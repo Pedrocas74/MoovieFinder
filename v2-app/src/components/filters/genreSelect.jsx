@@ -39,7 +39,37 @@ export default function GenreSelect({
   };
 
   return (
-    <FormControl size="small" fullWidth>
+    <FormControl
+      sx={{
+        "& .MuiOutlinedInput-notchedOutline": {
+          borderColor: "var(--clr-text)",
+        },
+        "&:hover .MuiOutlinedInput-notchedOutline": {
+          borderColor: "var(--clr-primary)",
+        },
+        "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+          {
+            borderColor: "var(--clr-primary)",
+          },
+
+        "& .MuiSelect-select": {
+          color: "var(--clr-text)",
+        },
+
+        "& .MuiInputLabel-root": {
+          color: "var(--clr-text)",
+        },
+        "& .MuiInputLabel-root.Mui-focused": {
+          color: "var(--clr-primary)",
+        },
+
+        "& .MuiSvgIcon-root": {
+          color: "var(--clr-text)", // dropdown arrow
+        },
+      }}
+      size="small"
+      fullWidth
+    >
       <InputLabel id="genre-select-label">{label}</InputLabel>
       <Select
         labelId="genre-select-label"
@@ -48,6 +78,16 @@ export default function GenreSelect({
         label={label}
         onChange={handleChange}
         renderValue={renderValue}
+        MenuProps={{
+    PaperProps: {
+      sx: {
+        backgroundColor: "var(--clr-bg)",
+        color: "var(--clr-text)",
+        border: "1px solid var(--clr-border)",
+      },
+    },
+  }}
+
       >
         {genres.map((genre) => (
           <MenuItem key={genre.id} value={genre.id}>

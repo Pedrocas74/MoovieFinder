@@ -5,6 +5,7 @@
   justify-content: center;
   -webkit-tap-highlight-color: transparent;
   transition: var(--transition);
+  cursor: pointer;
 }
 .toggleButton:focus {
   outline: none ;

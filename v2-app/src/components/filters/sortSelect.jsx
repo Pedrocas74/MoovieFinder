@@ -5,7 +5,37 @@ import MenuItem from "@mui/material/MenuItem";
 
 export default function SortSelect({ value, onChange, label = "Sort" }) {
   return (
-    <FormControl size="small" fullWidth>
+    <FormControl
+      sx={{
+        "& .MuiOutlinedInput-notchedOutline": {
+          borderColor: "var(--clr-text)",
+        },
+        "&:hover .MuiOutlinedInput-notchedOutline": {
+          borderColor: "var(--clr-primary)",
+        },
+        "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+          {
+            borderColor: "var(--clr-primary)",
+          },
+
+        "& .MuiSelect-select": {
+          color: "var(--clr-text)",
+        },
+
+        "& .MuiInputLabel-root": {
+          color: "var(--clr-text)",
+        },
+        "& .MuiInputLabel-root.Mui-focused": {
+          color: "var(--clr-primary)",
+        },
+
+        "& .MuiSvgIcon-root": {
+          color: "var(--clr-text)", 
+        },
+      }}
+      size="small"
+      fullWidth
+    >
       <InputLabel id="sort-select-label">{label}</InputLabel>
 
       <Select
@@ -13,6 +43,15 @@ export default function SortSelect({ value, onChange, label = "Sort" }) {
         value={value}
         label={label}
         onChange={(e) => onChange(e.target.value)}
+        MenuProps={{
+          PaperProps: {
+            sx: {
+              backgroundColor: "var(--clr-bg)",
+              color: "var(--clr-text)",
+              border: "1px solid var(--clr-border)",
+            },
+          },
+        }}
       >
         <MenuItem value="" disabled>
           <em>Select sorting</em>

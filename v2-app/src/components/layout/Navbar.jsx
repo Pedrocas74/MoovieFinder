@@ -48,7 +48,7 @@ export default function Navbar({ setSearchedMovies, setLoading, setError }) {
 
             <div className={styles.btnContainer}>
               <button
-                className={styles.iconButton}
+                className={`${styles.iconButton} actionButton`}
                 onClick={() => setSearchOpen(true)}
                 type="button"
                 aria-label="Open search"

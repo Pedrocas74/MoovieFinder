@@ -22,7 +22,7 @@
 
     /* DARK MODE  */
     --bg-d: hsl(27, 18%, 10%);
-    --bg-dl: hsl(27, 18%, 15%);
+    --bg-dl: hsl(27, 18%, 20%);
     --bg-dd: hsl(27, 18%, 5%);
 
     --purple: hsl(281, 82%, 56%);
@@ -31,6 +31,7 @@
     --purple-border: hsla(281, 82%, 56%, 0.129);
 
     --clr-text-d: hsl(0, 0%, 97%);
+    --muted-d: #9c9c9c;
 
     --yellow: #FFF275;
     --blue: #6699CC;
@@ -52,8 +53,8 @@
     /* padding  */
     --pd-button: 0.5em 0.7em;
     --pd-movieCard: 0.1em 0.3em;
-    --pd-title: 7vh 0 5vh 5%;
-    --pd-normal: 0 5% 5vh 5%;
+    --pd-title: 7vh 0 2vh 5%;
+    --pd-normal: 0 5% 4vh 5%;
     
     /* line height  */
     --lh-small: 1.6;
@@ -89,22 +90,28 @@
     --z-waves: 400;
 }
 
-/* ACTIVE THEME VARIABLES — LIGHT MODE (DEFAULT) */
+/* LIGHT MODE (DEFAULT) */
 :root {
   --clr-bg: var(--bg-ll);
   --clr-bg-alt: var(--bg-l);
   --clr-text: var(--clr-text-l);
   --clr-primary: var(--red);
   --clr-border: var(--red-border);
+  --clr-card: var(--bg-l);
+  --clr-card-border: var(--bg-ld);
+  --clr-muted: var(--muted);
 }
 
-/* ACTIVE THEME VARIABLES — DARK MODE */
+/* DARK MODE */
 :root.dark {
   --clr-bg: var(--bg-d);
   --clr-bg-alt: var(--bg-dl);
   --clr-text: var(--clr-text-d);
   --clr-primary: var(--purple);
   --clr-border: var(--purple-border);
+  --clr-card: var(--bg-dl);
+  --clr-card-border: var(--bg-dd);
+  --clr-muted: var(--muted-d);
 }
 
 html {  
@@ -134,16 +141,36 @@ p {
 
 button:not(.actionButton),
 a:not(#navLinks) {
-    /* padding: var(--pd-button); */
+    padding: var(--pd-button);
     border-radius: var(--radius-button);
-    letter-spacing: var(--ls);
     transition: var(--transition);
     font-weight: 600;
     text-decoration: none;
     width: fit-content;
-    font-size: var(--fs-md);
+    font-size: var(--fs-sm);
     cursor: pointer;
+}
 
+.btnPrimary {
+  border-radius: var(--radius-button);
+  background: var(--clr-primary);
+  color: var(--clr-bg);
+  border: 1px solid transparent;
+  box-shadow: var(--shadow-button);
+  transition: var(--transition);
+}
+.btnPrimary:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-card);
+  filter: brightness(1.05);
+}
+.btnPrimary:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-card-smooth);
+}
+.btnPrimary:focus-visible {
+  outline: 2px solid var(--clr-primary);
+  outline-offset: 2px;
 }
 
 .actionButton {

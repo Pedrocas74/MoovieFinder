@@ -16,21 +16,21 @@ export default function ThemeToggle({ darkMode, setDarkMode }) {
     <motion.button
       aria-label="Toggle dark/light mode"
       onClick={() => setDarkMode(!darkMode)}
-      className={styles.toggleButton}
+      className={`${styles.toggleButton} actionButton`}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
     >
       {
         darkMode ? (
           isHover ? (
-            <DarkModeIcon /> 
+            <DarkModeIcon sx={{ color: "var(--clr-text)" }}/> 
           ) : (
-            <DarkModeOutlinedIcon />
+            <DarkModeOutlinedIcon sx={{ color: "var(--clr-text)" }} />
           ) 
         ) : isHover ? (
-          <LightModeIcon /> 
+          <LightModeIcon sx={{ color: "var(--clr-text)" }} /> 
         ) : (
-          <LightModeOutlinedIcon />
+          <LightModeOutlinedIcon sx={{ color: "var(--clr-text)" }} />
         ) 
       }
     </motion.button>

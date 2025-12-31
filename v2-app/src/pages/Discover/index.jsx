@@ -2,6 +2,7 @@ import { useEffect, useState, useMemo, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { getMoviesBySource } from "../../services/tmdb";
 import MovieList from "../../components/movie/MovieList";
+import SkeletonMovieList from "../../components/movie/MovieList/SkeletonMovieList";
 import SortSelect from "../../components/filters/sortSelect";
 import SourceSelect from "../../components/filters/sourceSelect";
 import GenreSelect from "../../components/filters/genreSelect";
@@ -142,6 +143,12 @@ export default function Discover() {
     navigate(`/movie/${movie.id}`, { state: { movie } });
   };
 
+  const resetFilters = () => {
+    setSource("popular");
+    setSort("");
+    setGenres([]);
+  };
+
   return (
     <section className={styles.page}>
       <h2 className={styles.title}>Discover Movies</h2>
@@ -152,7 +159,18 @@ export default function Discover() {
         <GenreSelect value={genres} onChange={setGenres} />
       </div>
 
-      {loading && <p>Loading...</p>}
+      <button
+        type="button"
+        onClick={resetFilters}
+        className="btnPrimary"
+        style={{
+          margin: "0 auto 5vh auto",
+        }}
+      >
+        Reset Filters
+      </button>
+
+      {loading && <SkeletonMovieList layout="grid" count={20} />}
       {!loading && error && <p>{error}</p>}
 
       {!loading && !error && (
