@@ -1,5 +1,5 @@
 import { useParams, useLocation, Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   getMovieDetails,
   getMovieImages,
@@ -15,7 +15,7 @@ import {
   profileUrl,
 } from "../../services/tmdbImages";
 
-import { Star, Hourglass, Calendar, Play, X, ArrowLeft } from "lucide-react";
+import { Star, Hourglass, Calendar, Play, X, ChevronLeft, ChevronRight } from "lucide-react";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
@@ -38,6 +38,9 @@ export default function MovieDetails() {
   const [credits, setCredits] = useState(null);
   const [trailerKey, setTrailerKey] = useState(null);
   const [showTrailer, setShowTrailer] = useState(false);
+  const [screenshots, setScreenshots] = useState([]);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [activeShot, setActiveShot] = useState(0);
 
   const { id } = useParams();
   const location = useLocation();
@@ -92,6 +95,7 @@ export default function MovieDetails() {
           images.logos?.[0];
 
         setLogoPath(bestLogo?.file_path ?? null);
+        setScreenshots((images.backdrops || []).slice(5, 17));
       } catch (e) {
         console.error("Logo fetch failed:", e);
         setLogoPath(null);
@@ -140,6 +144,40 @@ export default function MovieDetails() {
     if (movie?.id) addRecentlyViewed(movie);
   }, [movie?.id, addRecentlyViewed]);
 
+  const openLightbox = useCallback((index) => {
+    setActiveShot(index);
+    setLightboxOpen(true);
+  }, []);
+
+  const closeLightbox = useCallback(() => setLightboxOpen(false), []);
+
+  const prevShot = useCallback(() => {
+    setActiveShot((i) => (i - 1 + screenshots.length) % screenshots.length);
+  }, [screenshots.length]);
+
+  const nextShot = useCallback(() => {
+    setActiveShot((i) => (i + 1) % screenshots.length);
+  }, [screenshots.length]);
+
+  useEffect(() => {
+    if (!lightboxOpen) return;
+
+    const onKeyDown = (e) => {
+      if (e.key === "Escape") closeLightbox();
+      if (e.key === "ArrowLeft") prevShot();
+      if (e.key === "ArrowRight") nextShot();
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [lightboxOpen, closeLightbox, prevShot, nextShot]);
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
   if (!movie) return <div>Movie not found</div>;
@@ -148,8 +186,7 @@ export default function MovieDetails() {
   const writers = credits?.crew?.filter((person) =>
     ["Writer", "Screenplay", "Story"].includes(person.job)
   );
-  const cast = credits?.cast?.slice(0, 7) ?? []; //top 7 actors
-
+  const cast = credits?.cast?.slice(0, 7) ?? []; 
   const watched = isWatched(movie.id);
   const inWatchlist = isInWatchlist(movie.id);
   const favorite = isFavorite(movie.id);
@@ -171,9 +208,6 @@ export default function MovieDetails() {
   return (
     <section className={styles.movieDetailsPage}>
       <div className={styles.backdropWrapper}>
-        {/* <button className={styles.backButton} type="button" onClick={() => navigate(-1)}>
-          <ArrowLeft size={24} />
-        </button> */}
         <div className={styles.actionButtons}>
           <AppTooltip title="Play trailer" placement="left">
             <button
@@ -181,7 +215,7 @@ export default function MovieDetails() {
               type="button"
               onClick={handleWatchTrailer}
             >
-              <Play size={24} fill="var(--clr-bg)" stroke="transparent" />
+              <Play size={24} fill="var(--bg-ll)" stroke="transparent" />
             </button>
           </AppTooltip>
 
@@ -202,7 +236,7 @@ export default function MovieDetails() {
               {watched ? (
                 <VisibilityIcon />
               ) : (
-                <VisibilityOffOutlinedIcon sx={{ color: "var(--clr-bg)" }} />
+                <VisibilityOffOutlinedIcon sx={{ color: "var(--bg-ll)" }} />
               )}
             </button>
           </AppTooltip>
@@ -224,7 +258,7 @@ export default function MovieDetails() {
               {inWatchlist ? (
                 <PlaylistAddCheckRoundedIcon />
               ) : (
-                <PlaylistAddRoundedIcon sx={{ color: "var(--clr-bg)" }} />
+                <PlaylistAddRoundedIcon sx={{ color: "var(--bg-ll)" }} />
               )}
             </button>
           </AppTooltip>
@@ -244,7 +278,7 @@ export default function MovieDetails() {
               {favorite ? (
                 <FavoriteIcon sx={{ color: "var(--clr-primary)" }} />
               ) : (
-                <FavoriteBorderIcon sx={{ color: "var(--clr-bg)" }} />
+                <FavoriteBorderIcon sx={{ color: "var(--bg-ll)" }} />
               )}
             </button>
           </AppTooltip>
@@ -348,7 +382,7 @@ export default function MovieDetails() {
                   >
                     {w.name}
                   </Link>
-                  {i < writers.length - 1 && ", "}
+                  {/* {i < writers.length - 1 && ", "} */}
                 </span>
               ))}
             </dd>
@@ -358,7 +392,7 @@ export default function MovieDetails() {
         {cast?.length > 0 && (
           <>
             <dt>Cast</dt>
-            <dd>
+            <dd className={styles.cast}>
               {cast.map((c, i) => (
                 <span key={c.id}>
                   <Link
@@ -368,13 +402,90 @@ export default function MovieDetails() {
                   >
                     {c.name}
                   </Link>
-                  {i < cast.length - 1 && <br />}
                 </span>
               ))}
             </dd>
           </>
         )}
       </dl>
+
+      {screenshots.length > 0 && (
+        <section className={styles.screenshotsSection}>
+          <h3 className={styles.sectionTitle}>Screenshots</h3>
+
+          <div className={styles.screenshotsRow}>
+            {screenshots.map((img, idx) => (
+              <button
+                key={img.file_path}
+                type="button"
+                className={`${styles.screenshotBtn} actionButton`}
+                onClick={() => openLightbox(idx)}
+                aria-label={`Open screenshot ${idx + 1} fullscreen`}
+              >
+                <img
+                  src={screenshotUrl(img.file_path, "w780")}
+                  alt={`${movie.title} screenshot ${idx + 1}`}
+                  className={styles.screenshot}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </button>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {lightboxOpen && screenshots[activeShot] && (
+        <div
+          className={styles.lightboxOverlay}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Screenshot viewer"
+          onClick={closeLightbox}
+        >
+          <div
+            className={styles.lightboxInner}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              className={styles.lightboxClose}
+              onClick={closeLightbox}
+              aria-label="Close viewer"
+            >
+              <X size={20} />
+            </button>
+
+            <button
+              type="button"
+              className={styles.lightboxNavLeft}
+              onClick={prevShot}
+              aria-label="Previous screenshot"
+            >
+              <ChevronLeft size={20} />
+            </button>
+
+            <img
+              className={styles.lightboxImg}
+              src={screenshotUrl(screenshots[activeShot].file_path, "original")}
+              alt={`${movie.title} screenshot ${activeShot + 1}`}
+            />
+
+            <button
+              type="button"
+              className={styles.lightboxNavRight}
+              onClick={nextShot}
+              aria-label="Next screenshot"
+            >
+              <ChevronRight size={20} />
+            </button>
+
+            <div className={styles.lightboxCounter}>
+              {activeShot + 1} / {screenshots.length}
+            </div>
+          </div>
+        </div>
+      )}
 
       {showTrailer && (
         <div

@@ -13,7 +13,7 @@
     --bg-ld: #d9d9d9;
 
     --red: hsl(0, 70%, 33%);
-    --red-light: hsl(0, 70%, 43%);
+    --red-light: hsl(0, 82%, 66%);
     --red-dark: hsl(0, 70%, 23%);
     --red-border: hsla(0, 70%, 33%, 0.129);
 
@@ -50,13 +50,13 @@
     --fs-lg: clamp(1.3rem, 3vw, 2rem);
     --fs-xl: clamp(2.4rem, 4.5vw, 5.5rem);
 
-    /* padding  */
-    --pd-button: 0.5em 0.7em;
-    --pd-movieCard: 0.1em 0.3em;
+    /* padding */
+    --pd-button: 0.5em 1.5em;
+    --pd-movieCard: 0em 0.3em;
     --pd-title: 7vh 0 2vh 5%;
     --pd-normal: 0 5% 4vh 5%;
     
-    /* line height  */
+    /* line height */
     --lh-small: 1.6;
     --lh-big: 1.8;
 
@@ -96,6 +96,7 @@
   --clr-bg-alt: var(--bg-l);
   --clr-text: var(--clr-text-l);
   --clr-primary: var(--red);
+  --clr-primary-light: var(--red-light);
   --clr-border: var(--red-border);
   --clr-card: var(--bg-l);
   --clr-card-border: var(--bg-ld);
@@ -108,6 +109,7 @@
   --clr-bg-alt: var(--bg-dl);
   --clr-text: var(--clr-text-d);
   --clr-primary: var(--purple);
+  --clr-primary-light: var(--purple-light);
   --clr-border: var(--purple-border);
   --clr-card: var(--bg-dl);
   --clr-card-border: var(--bg-dd);
