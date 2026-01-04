@@ -1,5 +1,5 @@
 import styles from "./Library.module.css";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import MovieList from "../../components/movie/MovieList";
 import { useLibrary } from "../../context/LibraryContext";
@@ -22,7 +22,14 @@ export default function Library() {
   const navigate = useNavigate();
   const { watched, watchlist, favorites } = useLibrary();
 
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(() => {
+    const saved = localStorage.getItem('libraryTab');
+    return saved ? parseInt(saved, 10) : 0;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('libraryTab', value);
+  }, [value]);
 
   const movies = useMemo(() => {
     if (value === 0) return watched;
@@ -57,7 +64,6 @@ export default function Library() {
 
   return (
     <section className={styles.librarySection}>
-      {/* <h2>My Library</h2> */}
       <Box sx={{ borderBottom: 1, borderColor: "divider", marginBottom: 5 }}>
         <Tabs
           value={value}

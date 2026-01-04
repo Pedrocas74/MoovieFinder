@@ -31,7 +31,7 @@ export default function SourceSelect({ value, onChange, label = "Source" }) {
           },
 
           "& .MuiSvgIcon-root": {
-            color: "var(--clr-text)", 
+            color: "var(--clr-text)",
           },
         }}
         size="small"
@@ -56,6 +56,7 @@ export default function SourceSelect({ value, onChange, label = "Source" }) {
         >
           <MenuItem value="trending">Trending</MenuItem>
           <MenuItem value="popular">Popular</MenuItem>
+          <MenuItem value="upcoming">Upcoming</MenuItem>
         </Select>
       </FormControl>
     </>

@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo, useCallback, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { getMoviesBySource } from "../../services/tmdb";
 import MovieList from "../../components/movie/MovieList";
 import SkeletonMovieList from "../../components/movie/MovieList/SkeletonMovieList";
@@ -10,13 +10,20 @@ import styles from "./Discover.module.css";
 
 export default function Discover() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const urlSource = params.get("source");
 
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [source, setSource] = useState(
-    sessionStorage.getItem("discover_source") || "popular"
+  const [source, setSource] = useState(() => {
+  return (
+    urlSource ||
+    sessionStorage.getItem("discover_source") ||
+    "popular"
   );
+});
   const [sort, setSort] = useState(
     sessionStorage.getItem("discover_sort") || ""
   );
@@ -27,6 +34,10 @@ export default function Discover() {
   const [hasMore, setHasMore] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
   const observerRef = useRef();
+
+  
+
+  
 
   const loadMovies = useCallback(
     async (currentPage, append = false) => {
@@ -61,8 +72,9 @@ export default function Discover() {
   }, [source, genres, loadMovies]);
 
   useEffect(() => {
-    sessionStorage.setItem("discover_source", source);
-  }, [source]);
+  sessionStorage.setItem("discover_source", source);
+  navigate(`/discover?source=${source}`, { replace: true });
+}, [source]);
 
   useEffect(() => {
     sessionStorage.setItem("discover_sort", sort);

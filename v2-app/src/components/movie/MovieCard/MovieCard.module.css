@@ -11,14 +11,12 @@
 /* .movieCard:hover {
     box-shadow: var(--shadow-inverse);
 } */
-
 .movieCard img {
     width: 100%;
     height: 177px;
     border-top-left-radius: var(--radius-small);
     border-top-right-radius: var(--radius-small);
 } 
-
 .dateAndRate {
     display: flex;
     align-items: center;
@@ -28,3 +26,28 @@
     color: var(--clr-muted);
 }
 
+
+/* SEE MORE CARD  */
+.seeMore {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--clr-card);
+  border: 1.5px dashed var(--clr-border);
+}
+
+.seeMoreContent {
+  height: 177px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: var(--clr-muted);
+  text-align: center;
+}
+
+.seeMoreContent p {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+}

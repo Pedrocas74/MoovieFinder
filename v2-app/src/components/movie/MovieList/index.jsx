@@ -6,6 +6,7 @@ export default function MovieList({
   movies,
   layout,
   onMovieClick,
+  tailCard,
   emptyMessage = "No movies to show.",
 }) {
   if (!movies || movies.length === 0) {
@@ -38,6 +39,8 @@ export default function MovieList({
 
           return <MovieCard key={key} movie={movie} onClick={onMovieClick} />;
         })}
+
+        {tailCard}
       </div>
     </section>
   );
