@@ -1,10 +1,11 @@
-import { useParams, useLocation, Link } from "react-router-dom";
+import { useParams, useLocation, Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
 import {
   getMovieDetails,
   getMovieImages,
   getCredits,
   getTrailer,
+  getSimilarMovies,
 } from "../../services/tmdb";
 // import LoadingSVG from "../../components/ui/LoadingSVG";
 import styles from "./MovieDetails.module.css";
@@ -15,7 +16,15 @@ import {
   profileUrl,
 } from "../../services/tmdbImages";
 
-import { Star, Hourglass, Calendar, Play, X, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  Star,
+  Hourglass,
+  Calendar,
+  Play,
+  X,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
@@ -33,6 +42,8 @@ import { useRecentlyViewed } from "../../context/RecentlyViewed";
 import { styled } from "@mui/material/styles";
 import Tooltip from "@mui/material/Tooltip";
 
+import MovieList from '../../components/movie/MovieList/index';
+
 export default function MovieDetails() {
   const [logoPath, setLogoPath] = useState(null);
   const [credits, setCredits] = useState(null);
@@ -41,9 +52,11 @@ export default function MovieDetails() {
   const [screenshots, setScreenshots] = useState([]);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [activeShot, setActiveShot] = useState(0);
+  const [similar, setSimilar] = useState([]);
 
   const { id } = useParams();
   const location = useLocation();
+  const navigate = useNavigate();
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(!movie);
   const [error, setError] = useState(null);
@@ -178,6 +191,20 @@ export default function MovieDetails() {
     };
   }, [lightboxOpen, closeLightbox, prevShot, nextShot]);
 
+  useEffect(() => {
+    if (!movie?.id) return;
+
+    (async () => {
+      try {
+        const sims = await getSimilarMovies(movie.id, 1);
+        setSimilar((sims || []).filter((m) => m.id !== movie.id));
+      } catch (e) {
+        console.error("Similar movies fetch failed", e);
+        setSimilar([]);
+      }
+    })();
+  }, [movie?.id]);
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
   if (!movie) return <div>Movie not found</div>;
@@ -186,7 +213,7 @@ export default function MovieDetails() {
   const writers = credits?.crew?.filter((person) =>
     ["Writer", "Screenplay", "Story"].includes(person.job)
   );
-  const cast = credits?.cast?.slice(0, 7) ?? []; 
+  const cast = credits?.cast?.slice(0, 7) ?? [];
   const watched = isWatched(movie.id);
   const inWatchlist = isInWatchlist(movie.id);
   const favorite = isFavorite(movie.id);
@@ -204,6 +231,10 @@ export default function MovieDetails() {
       color: "var(--clr-primary)",
     },
   });
+
+  const handleOpenDetails = (m) => {
+    navigate(`/movie/${m.id}`, { state: { movie: m } });
+  };
 
   return (
     <section className={styles.movieDetailsPage}>
@@ -411,7 +442,7 @@ export default function MovieDetails() {
 
       {screenshots.length > 0 && (
         <section className={styles.screenshotsSection}>
-          <h3 className={styles.sectionTitle}>Screenshots</h3>
+          <h3 className={styles.sectionTitle1}>Screenshots</h3>
 
           <div className={styles.screenshotsRow}>
             {screenshots.map((img, idx) => (
@@ -433,6 +464,18 @@ export default function MovieDetails() {
             ))}
           </div>
         </section>
+      )}
+
+      {similar?.length > 0 && (
+        <>
+        <h3 className={styles.sectionTitle2}>Similar movies</h3>
+        <MovieList
+          // title="Similar movies"
+          movies={similar.slice(0, 20)}
+          layout="row"
+          onMovieClick={handleOpenDetails}
+        />
+        </>
       )}
 
       {lightboxOpen && screenshots[activeShot] && (
@@ -507,13 +550,14 @@ export default function MovieDetails() {
             <iframe
               src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1`}
               title="Movie trailer"
-              frameBorder="0"
               allow="autoplay; encrypted-media"
               allowFullScreen
             />
           </div>
         </div>
       )}
+
+      
     </section>
   );
 }

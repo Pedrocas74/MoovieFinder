@@ -171,6 +171,21 @@ export async function getTrending(page = 1, genres = []) {
   }
 } 
 
+//get similar movies
+export async function getSimilarMovies(movieId, page = 1) {
+  try {
+    const res = await fetch(
+      `${BASE_URL}/movie/${movieId}/similar?language=en-US&region=US&page=${page}`,
+      options
+    );
+    const data = await res.json();
+    return data.results || [];
+  } catch (err) {
+    console.error("TMDB Error:", err);
+    throw err;
+  }
+}
+
 //get movies by source (trending or popular)
 export async function getMoviesBySource(source, page = 1, genres = []) {
   switch (source) {
