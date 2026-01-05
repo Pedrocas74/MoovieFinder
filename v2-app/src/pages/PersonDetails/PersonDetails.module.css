@@ -1,5 +1,5 @@
 .page {
-    padding: 0 5%;
+    /* border: 1px solid red; */
 }
 .header {
     /* border: 1px solid red; */
@@ -7,34 +7,53 @@
     flex-direction: column;
 }
 .avatar {
-  width: clamp(200px, 20vw, 250px);
+  width: clamp(200px, 20vw, 350px);
   height: auto;
   aspect-ratio: 2 / 3;
   object-fit: cover;
   border-radius: var(--radius-small);
   background: var(--bg-l);
   align-self: center;
-  margin: 2em 0;
+  margin-top: 1rem;
 }
 .name {
-    margin: 0.5em 0;
+    /* margin: 0.5em 0; */
+}
+
+.detailsContainer {
+  /* padding: 0 5%; */
 }
 .birthday,
 .placeOfBirth {
-    
+    padding: 0 5%;
+    font-size: var(--fs-sm);
+    opacity: 0.95;
 }
 .placeOfBirth {
-    margin-bottom: 1em;
+  
 }
 
 
 .bioContainer {
-  margin-top: 16px;
+  margin-top: 1rem;
   max-width: 70ch;
+  padding: 1rem 5%;
+  height: fit-content;
+  max-height: 250px;
+  border: 17px inset var(--clr-primary);
+  border-left: none;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-top-right-radius: var(--radius-small);
+  border-bottom-right-radius: var(--radius-small);
+  background: var(--clr-bg-alt);
 }
 .bio {
-  line-height: var(--lh-small);
-  transition: var(--transition);
+  /* height: 20px; */
+  
 }
 .clamped {
   display: -webkit-box;
@@ -44,17 +63,10 @@
   overflow: hidden;
 }
 .toggleBio {
-  margin: 10px;
-
+  margin-top: 1rem;
 }
-
 .toggleBio:hover {
   text-decoration: underline;
 }
 
 
-.knownFor {
-  display: flex;
-  gap: 1rem;
-  overflow-x: auto;
-}

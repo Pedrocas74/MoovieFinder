@@ -2,13 +2,25 @@ import placeholder_cover from "/images/placeholder_movie.webp";
 import styles from "./MovieCard.module.css";
 import { Star } from "lucide-react";
 import { motion } from "framer-motion";
+import { useLibrary } from  "../../../context/LibraryContext";
+
+
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import PlaylistAddRoundedIcon from "@mui/icons-material/PlaylistAddRounded";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+
+
 
 export default function MovieCard({ movie, onClick }) {
+  const { isWatched, isInWatchlist, isFavorite } = useLibrary();
+  const isSaved =
+    isWatched(movie.id) || isInWatchlist(movie.id) || isFavorite(movie.id);
+
   return (
     <motion.div
       whileHover={{ y: -10 }}
       whileTap={{ scale: 0.98 }}
-      className={styles.movieCard}
+      className={`${styles.movieCard} ${isSaved ? styles.saved : ""}`}
       onClick={() => onClick?.(movie)}
     >
       <img
@@ -23,8 +35,13 @@ export default function MovieCard({ movie, onClick }) {
           e.target.src = placeholder_cover;
         }}
       />
-      {/* <div className={styles.cardText}> */}
-      {/* <h3>{movie.title}</h3> */}
+
+      {/* {isSaved && (
+        <div>
+
+        </div>
+      )} */}
+
       <div className={styles.dateAndRate}>
         <p className={styles.releaseDate}>{movie.release_date?.slice(0, 4)}</p>
         <p className={styles.rating}>
@@ -32,6 +49,5 @@ export default function MovieCard({ movie, onClick }) {
         </p>
       </div>
     </motion.div>
-    // </div>
   );
 }

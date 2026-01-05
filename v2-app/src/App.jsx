@@ -31,7 +31,7 @@ export default function App() {
               loading={loading}
               setLoading={setLoading}
             />
-            {/* <Footer /> */}
+            <Footer />
           </LibraryProvider>
         </RecentlyViewedProvider>
       </ThemeProvider>

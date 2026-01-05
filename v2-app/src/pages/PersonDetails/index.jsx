@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { getPersonDetails, getPersonMovieCredits } from "../../services/tmdb";
-import { profileUrl, posterUrl } from "../../services/tmdbImages";
+import { profileUrl } from "../../services/tmdbImages";
 import styles from "./PersonDetails.module.css";
 import MovieList from "../../components/movie/MovieList";
+
+import CakeIcon from "@mui/icons-material/Cake";
+import CottageIcon from "@mui/icons-material/Cottage";
 
 export default function PersonDetails() {
   const { id } = useParams();
@@ -14,7 +17,7 @@ export default function PersonDetails() {
   const [credits, setCredits] = useState(null);
   const [loading, setLoading] = useState(!person);
   const [error, setError] = useState(null);
-  const [isOpen, setIsOpen] = useState(false); //to open extra info about biography
+  const [isOpen, setIsOpen] = useState(false); //to open biography extra info
 
   useEffect(() => {
     (async () => {
@@ -43,12 +46,11 @@ export default function PersonDetails() {
   }, [id]);
 
   if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
-  if (!person) return <div>Person not found</div>;
+  if (!person || error) return <div>Person not found</div>;
 
   const knownFor =
     credits?.cast?.sort((a, b) => b.popularity - a.popularity).slice(0, 20) ??
-    [];  //sort by popularity (descendent)
+    []; //sort by popularity (desccenterent)
 
   return (
     <section className={styles.page}>
@@ -71,13 +73,21 @@ export default function PersonDetails() {
           loading="eager"
           decoding="async"
         />
-        <div>
-          <h2 className={styles.name}>{person.name}</h2>
+        <div className={styles.detailsContainer}>
+          <h2>{person.name}</h2>
           {person.birthday && (
-            <p className={styles.birthday}>{person.birthday}</p>
+            <div style={{ display: "flex", alignItems: "center", paddingLeft: "5%", marginBottom: "0.7rem" }}>
+              <CakeIcon sx={{ color: "var(--clr-border)" }} />
+              <span className={styles.birthday}>{person.birthday}</span>
+            </div>
           )}
           {person.place_of_birth && (
-            <p className={styles.placeOfBirth}>{person.place_of_birth}</p>
+            <div style={{ display: "flex", alignItems: "center", paddingLeft: "5%", marginBottom: "1rem"  }}>
+              <CottageIcon sx={{ color: "var(--clr-border)" }}/>
+              <span className={styles.placeOfBirth}>
+                {person.place_of_birth}
+              </span>
+            </div>
           )}
         </div>
       </div>
@@ -91,7 +101,7 @@ export default function PersonDetails() {
 
             {person.biography.length > 300 && (
               <button
-                className={styles.toggleBio}
+                className={`${styles.toggleBio} btnSecondary`}
                 onClick={() => setIsOpen(!isOpen)}
               >
                 {isOpen ? "Show less" : "Read more"}
@@ -103,7 +113,12 @@ export default function PersonDetails() {
 
       {knownFor.length > 0 && (
         <>
-          <MovieList title="Known for" movies={knownFor} layout="row" onMovieClick={(movie) => navigate(`/movie/${movie.id}`)} />
+          <h3>Known for:</h3>
+          <MovieList
+            movies={knownFor}
+            layout="row"
+            onMovieClick={(movie) => navigate(`/movie/${movie.id}`)}
+          />
         </>
       )}
     </section>

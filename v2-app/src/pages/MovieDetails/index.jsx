@@ -41,8 +41,12 @@ import { useRecentlyViewed } from "../../context/RecentlyViewed";
 //tooltip
 import { styled } from "@mui/material/styles";
 import Tooltip from "@mui/material/Tooltip";
+//Snackbar and Alert / toast
+import Snackbar from "@mui/material/Snackbar";
+import Alert from '@mui/material/Alert';
 
-import MovieList from '../../components/movie/MovieList/index';
+import MovieList from "../../components/movie/MovieList/index";
+import SkeletonMovieDetails from "./SkeletonMovieDetails";
 
 export default function MovieDetails() {
   const [logoPath, setLogoPath] = useState(null);
@@ -50,9 +54,10 @@ export default function MovieDetails() {
   const [trailerKey, setTrailerKey] = useState(null);
   const [showTrailer, setShowTrailer] = useState(false);
   const [screenshots, setScreenshots] = useState([]);
-  const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [activeShot, setActiveShot] = useState(0);
-  const [similar, setSimilar] = useState([]);
+  const [lightboxOpen, setLightboxOpen] = useState(false); //screenshots viewer
+  const [activeShot, setActiveShot] = useState(0); //screenshot being displayed
+  const [similar, setSimilar] = useState([]); //similar movies row
+  const [open, setOpen] = useState(false); //snackbar - toast
 
   const { id } = useParams();
   const location = useLocation();
@@ -139,15 +144,13 @@ export default function MovieDetails() {
         ) || data?.results?.find((v) => v.site === "YouTube");
 
       if (!trailer) {
-        alert("Trailer not available"); //change later
+        setOpen(true);
         return;
       }
-
       setTrailerKey(trailer.key);
       setShowTrailer(true);
     } catch (e) {
       console.error(e);
-      alert("Failed to load trailer");
     }
   }
 
@@ -205,7 +208,7 @@ export default function MovieDetails() {
     })();
   }, [movie?.id]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <SkeletonMovieDetails />;
   if (error) return <div>{error}</div>;
   if (!movie) return <div>Movie not found</div>;
 
@@ -468,13 +471,13 @@ export default function MovieDetails() {
 
       {similar?.length > 0 && (
         <>
-        <h3 className={styles.sectionTitle2}>Similar movies</h3>
-        <MovieList
-          // title="Similar movies"
-          movies={similar.slice(0, 20)}
-          layout="row"
-          onMovieClick={handleOpenDetails}
-        />
+          <h3 className={styles.sectionTitle2}>Similar movies</h3>
+          <MovieList
+            // title="Similar movies"
+            movies={similar.slice(0, 20)}
+            layout="row"
+            onMovieClick={handleOpenDetails}
+          />
         </>
       )}
 
@@ -557,7 +560,20 @@ export default function MovieDetails() {
         </div>
       )}
 
-      
+      {!showTrailer && (
+        <Snackbar open={open} autoHideDuration={3000} onClose={() => setOpen(false)}>
+          <Alert
+            severity="info"
+            sx={{
+              backgroundColor: "var(--clr-primary)",
+              color: "var(--clr-bg)",
+              fontWeight: 600
+            }}
+          >
+            Trailer not available
+          </Alert>
+        </Snackbar>
+      )}
     </section>
   );
 }

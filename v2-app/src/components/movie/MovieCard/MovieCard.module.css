@@ -8,6 +8,11 @@
     box-shadow: var(--shadow-card-smooth);
     padding: 2.5px;
 }
+
+.movieCard.saved {
+    border-color: var(--clr-primary);
+}
+
 /* .movieCard:hover {
     box-shadow: var(--shadow-inverse);
 } */
@@ -35,7 +40,6 @@
   background: var(--clr-card);
   border: 1.5px dashed var(--clr-border);
 }
-
 .seeMoreContent {
   height: 177px;
   display: flex;
@@ -46,7 +50,6 @@
   color: var(--clr-muted);
   text-align: center;
 }
-
 .seeMoreContent p {
   font-size: var(--fs-xs);
   font-weight: 600;
