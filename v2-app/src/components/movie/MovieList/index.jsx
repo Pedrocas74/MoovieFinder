@@ -1,6 +1,6 @@
 import MovieCard from "../MovieCard";
 import styles from "./MovieList.module.css";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 export default function MovieList({
   title,
@@ -11,6 +11,44 @@ export default function MovieList({
   emptyMessage = "No movies to show.",
 }) {
   const [openMenuMovieId, setOpenMenuMovieId] = useState(null); //to only allow one radial menu open at once
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+  const scrollContainerRef = useRef(null);
+
+  const checkScrollButtons = () => {
+    if (scrollContainerRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } =
+        scrollContainerRef.current;
+      setCanScrollLeft(scrollLeft > 0);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 1);
+    }
+  };
+
+  const scrollLeft = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: -300, behavior: "smooth" });
+    }
+  };
+
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: 300, behavior: "smooth" });
+    }
+  };
+
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (container && layout === "row") {
+      checkScrollButtons();
+      container.addEventListener("scroll", checkScrollButtons);
+      window.addEventListener("resize", checkScrollButtons);
+
+      return () => {
+        container.removeEventListener("scroll", checkScrollButtons);
+        window.removeEventListener("resize", checkScrollButtons);
+      };
+    }
+  }, [layout, movies]);
 
   if (!movies || movies.length === 0) {
     return (
@@ -24,36 +62,118 @@ export default function MovieList({
   return (
     <section className={styles.movieList}>
       {title && <h2>{title}</h2>}
-      <div className={styles[layout]}>
-        {movies.map((movie, index) => {
-          const key = `movielist-${title || "untitled"}-${movie.id}`;
+      {layout === "row" && (
+        <div className={styles.scrollContainer}>
+          {canScrollLeft && (
+            <button
+              className={styles.scrollButton}
+              onClick={scrollLeft}
+              aria-label="Scroll left"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M15 18L9 12L15 6"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+          )}
+          <div className={styles[layout]} ref={scrollContainerRef}>
+            {movies.map((movie, index) => {
+              const key = `movielist-${title || "untitled"}-${movie.id}`;
 
-          // Debug: Check for duplicate keys within this list
-          const duplicateInList =
-            movies.findIndex(
-              (m, i) =>
-                i !== index &&
-                `movielist-${title || "untitled"}-${m.id}` === key
-            ) !== -1;
+              // Debug: Check for duplicate keys within this list
+              const duplicateInList =
+                movies.findIndex(
+                  (m, i) =>
+                    i !== index &&
+                    `movielist-${title || "untitled"}-${m.id}` === key
+                ) !== -1;
 
-          if (duplicateInList) {
-            console.warn(`Duplicate key in ${title}:`, key, movie.title);
-          }
+              if (duplicateInList) {
+                console.warn(`Duplicate key in ${title}:`, key, movie.title);
+              }
 
-          return (
-            <MovieCard
-              key={key}
-              movie={movie}
-              onClick={onMovieClick}
-              menuOpen={openMenuMovieId === movie.id}
-              onOpenMenu={() => setOpenMenuMovieId(movie.id)}
-              onCloseMenu={() => setOpenMenuMovieId(null)}
-            />
-          );
-        })}
+              return (
+                <MovieCard
+                  key={key}
+                  movie={movie}
+                  onClick={onMovieClick}
+                  menuOpen={openMenuMovieId === movie.id}
+                  onOpenMenu={() => setOpenMenuMovieId(movie.id)}
+                  onCloseMenu={() => setOpenMenuMovieId(null)}
+                />
+              );
+            })}
 
-        {tailCard}
-      </div>
+            {tailCard}
+          </div>
+          {canScrollRight && (
+            <button
+              className={styles.scrollButton}
+              onClick={scrollRight}
+              aria-label="Scroll right"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M9 18L15 12L9 6"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+          )}
+        </div>
+      )}
+      {layout !== "row" && (
+        <div className={styles[layout]}>
+          {movies.map((movie, index) => {
+            const key = `movielist-${title || "untitled"}-${movie.id}`;
+
+            // Debug: Check for duplicate keys within this list
+            const duplicateInList =
+              movies.findIndex(
+                (m, i) =>
+                  i !== index &&
+                  `movielist-${title || "untitled"}-${m.id}` === key
+              ) !== -1;
+
+            if (duplicateInList) {
+              console.warn(`Duplicate key in ${title}:`, key, movie.title);
+            }
+
+            return (
+              <MovieCard
+                key={key}
+                movie={movie}
+                onClick={onMovieClick}
+                menuOpen={openMenuMovieId === movie.id}
+                onOpenMenu={() => setOpenMenuMovieId(movie.id)}
+                onCloseMenu={() => setOpenMenuMovieId(null)}
+              />
+            );
+          })}
+
+          {tailCard}
+        </div>
+      )}
     </section>
   );
 }

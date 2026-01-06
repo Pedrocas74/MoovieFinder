@@ -1,7 +1,7 @@
 .grid {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 140px));
+  grid-template-columns: repeat(auto-fill, minmax(120px, 125px));
   justify-content: center;
   max-width: 90%;
   margin: 0 auto;
@@ -27,22 +27,60 @@
   display: none;              
 }
 
+.scrollContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
 
-@media (hover: none) and (pointer: coarse) {
-  .row {
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
+.scrollButton {
+  position: absolute;
+  z-index: 10;
+  background: var(--clr-background);
+  border: 1px solid var(--clr-border);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--clr-text);
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
 
-  .row::-webkit-scrollbar {
-    display: none;
-  }
+.scrollButton:hover {
+  background: var(--clr-primary);
+  color: white;
+  transform: scale(1.05);
+}
+
+.scrollButton:active {
+  transform: scale(0.95);
+}
+
+.scrollButton:first-of-type {
+  left: -20px;
+}
+
+.scrollButton:last-of-type {
+  right: -20px;
+}
+
+.scrollButton svg {
+  width: 20px;
+  height: 20px;
 }
 
 @media (min-width: 1024px) {
   .grid {
     grid-template-columns: repeat(auto-fill, minmax(125px, 135px));
     gap: 2rem;
+  }
+  .row {
+     scrollbar-width: thin; 
+     scrollbar-color: var(--clr-primary); 
   }
 }
 

@@ -1,7 +1,7 @@
 import placeholder_cover from "/images/placeholder_movie.webp";
 import styles from "./MovieCard.module.css";
 import { Star } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence, delay } from "framer-motion";
 import { useLibrary } from "../../../context/LibraryContext";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -18,7 +18,55 @@ import { useCallback, useEffect, useRef } from "react";
 const LONG_PRESS_MS = 450;
 const MOVE_CANCEL_PX = 10;
 
-export default function MovieCard({ movie, onClick, menuOpen, onOpenMenu, onCloseMenu }) {
+const overlayV = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { duration: 0.12 } },
+  exit: { opacity: 0, transition: { duration: 0.12 } },
+};
+
+const menuV = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    // transition: { staggerChildren: 0.15, delayChildren: 0.02 },
+  },
+  exit: {
+    opacity: 0,
+    // transition: { staggerChildren: 0.1, staggerDirection: -1 },
+  },
+};
+
+const itemV = {
+  hidden: { x: 0, y: 0, scale: 0.6, opacity: 0 },
+  show: (custom) => ({
+    x: Math.cos((custom.angle * Math.PI) / 180) * 54,
+    y: Math.sin((custom.angle * Math.PI) / 180) * 54,
+    scale: 1,
+    opacity: 1,
+    transition: {
+      x: { type: "spring", stiffness: 140, damping: 16 },
+      y: { type: "spring", stiffness: 140, damping: 16 },
+      scale: { type: "spring", stiffness: 420, damping: 26 },
+      opacity: { duration: 0.3, delay: 0.55 },
+    },
+  }),
+  exit: {
+    x: 0,
+    y: 0,
+    scale: 0.6,
+    opacity: 0,
+    transition: { duration: 0.12 },
+  },
+};
+
+
+export default function MovieCard({
+  movie,
+  onClick,
+  menuOpen,
+  onOpenMenu,
+  onCloseMenu,
+}) {
   const {
     toggleWatched,
     toggleWatchlist,
@@ -33,8 +81,6 @@ export default function MovieCard({ movie, onClick, menuOpen, onOpenMenu, onClos
   const favorite = isFavorite(movie.id);
 
   const isSaved = watched || inWatchlist || favorite;
-
-  // const [menuOpen, setMenuOpen] = useState(false);
 
   const timerRef = useRef(null);
   const startPtRef = useRef({ x: 0, y: 0 });
@@ -56,8 +102,8 @@ export default function MovieCard({ movie, onClick, menuOpen, onOpenMenu, onClos
   }, []);
 
   const closeMenu = useCallback(() => {
-  onCloseMenu?.();
-}, [onCloseMenu]);
+    onCloseMenu?.();
+  }, [onCloseMenu]);
 
   // close on Escape
   useEffect(() => {
@@ -125,10 +171,11 @@ export default function MovieCard({ movie, onClick, menuOpen, onOpenMenu, onClos
     closeMenu();
   };
 
+  const isTouchDevice = window.innerWidth < 1024;
+
   return (
     <motion.div
       className={`${styles.movieCard} ${isSaved ? styles.saved : ""}`}
-      whileHover={{ y: -10 }}
       whileTap={{ scale: 0.98 }}
       onClick={handleCardClick}
       onPointerDown={onPointerDown}
@@ -148,6 +195,24 @@ export default function MovieCard({ movie, onClick, menuOpen, onOpenMenu, onClos
         }}
       />
 
+      {!isTouchDevice && ( //only on computers
+        <button
+          className={`${styles.hoverBtn} actionButton`}
+          onClick={(e) => {
+            if (!menuOpen) {
+              e.stopPropagation();
+              openMenu();
+            } else {
+              closeMenu();
+            }
+          }}
+          aria-label="Open quick actions"
+          title="Quick actions"
+        >
+          {menuOpen ? "-" : "+"}
+        </button>
+      )}
+
       <div className={styles.dateAndRate}>
         <p className={`${styles.releaseDate} cardInfo`}>
           {movie.release_date?.slice(0, 4)}
@@ -157,101 +222,131 @@ export default function MovieCard({ movie, onClick, menuOpen, onOpenMenu, onClos
         </p>
       </div>
 
-      {menuOpen && (
-        <div
-          className={styles.radialOverlay}
-          role="dialog"
-          aria-label="Quick actions"
-        >
-          {/* Click outside closes */}
-          <button
-            type="button"
-            className={`${styles.radialBackdrop} actionButton`}
-            aria-label="Close quick actions"
-            onClick={(e) => {
-              e.stopPropagation();
-              closeMenu();
-            }}
-          />
-
-          <div
-            className={styles.radialMenu}
-            onClick={(e) => e.stopPropagation()}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            className={styles.radialOverlay}
+            role="dialog"
+            aria-label="Quick actions"
+            variants={overlayV}
+            initial="hidden"
+            animate="show"
+            exit="exit"
           >
-            {/* Watched */}
-            <button
+            {/* Click outside closes */}
+            <motion.button
               type="button"
-              className={`${styles.radialBtn} ${watched ? styles.active : ""} actionButton`}
-              onClick={handleToggleWatched}
-              aria-pressed={watched}
-              aria-label={watched ? "Remove from watched" : "Add to watched"}
-              title={watched ? "Remove from watched" : "Add to watched"}
-              style={{ "--angle": "270deg" }}
-            >
-              {watched ? (
-                <VisibilityIcon sx={{ color: "var(--clr-primary)" }} />
-              ) : (
-                <VisibilityOffOutlinedIcon sx={{ color: "var(--clr-muted)" }} />
-              )}
-            </button>
-
-            {/* Watchlist */}
-            <button
-              type="button"
-              className={`${styles.radialBtn} ${
-                inWatchlist ? styles.active : ""
-              } actionButton`}
-              onClick={handleToggleWatchlist}
-              aria-pressed={inWatchlist}
-              aria-label={
-                inWatchlist ? "Remove from watchlist" : "Add to watchlist"
-              }
-              title={inWatchlist ? "Remove from watchlist" : "Add to watchlist"}
-              style={{ "--angle": "30deg" }}
-            >
-              {inWatchlist ? (
-                <PlaylistAddCheckRoundedIcon
-                  sx={{ color: "var(--clr-primary)" }}
-                />
-              ) : (
-                <PlaylistAddRoundedIcon sx={{ color: "var(--clr-muted)" }} />
-              )}
-            </button>
-
-            {/* Favorite */}
-            <button
-              type="button"
-              className={`${styles.radialBtn} ${favorite ? styles.active : ""} actionButton`}
-              onClick={handleToggleFavorite}
-              aria-pressed={favorite}
-              aria-label={
-                favorite ? "Remove from favorites" : "Add to favorites"
-              }
-              title={favorite ? "Remove from favorites" : "Add to favorites"}
-              style={{ "--angle": "150deg" }}
-            >
-              {favorite ? (
-                <FavoriteIcon sx={{ color: "var(--clr-primary)" }} />
-              ) : (
-                <FavoriteBorderIcon sx={{ color: "var(--clr-muted)" }} />
-              )}
-            </button>
-
-            {/* Optional center “close” dot (nice touch) */}
-            <button
-              type="button"
-              className={`${styles.radialCenter} actionButton`}
+              className={`${styles.radialBackdrop} actionButton`}
+              aria-label="Close quick actions"
               onClick={(e) => {
                 e.stopPropagation();
                 closeMenu();
               }}
-              aria-label="Close"
-              title="Close"
-            >-</button>
-          </div>
-        </div>
-      )}
+              variants={overlayV}
+            />
+
+            <motion.div
+              className={styles.radialMenu}
+              onClick={(e) => e.stopPropagation()}
+              variants={menuV}
+              initial="hidden"
+              animate="show"
+              exit="exit"
+            >
+              {/* Watched */}
+              <motion.button
+                type="button"
+                className={`${styles.radialBtn} ${
+                  watched ? styles.active : ""
+                } actionButton`}
+                onClick={handleToggleWatched}
+                aria-pressed={watched}
+                aria-label={watched ? "Remove from watched" : "Add to watched"}
+                title={watched ? "Remove from watched" : "Add to watched"}
+                style={{ "--angle": "150deg" }}
+                variants={itemV}
+                custom={{ angle: 150 }}
+                whileHover={{ background: watched ? "var(--clr-card)" : "var(--clr-primary-dark) "}}
+
+              >
+                {watched ? (
+                  <VisibilityIcon sx={{ color: "var(--clr-primary)" }} />
+                ) : (
+                  <VisibilityOffOutlinedIcon
+                    sx={{ color: "var(--clr-muted)" }}
+                  />
+                )}
+              </motion.button>
+
+              {/* Watchlist */}
+              <motion.button
+                type="button"
+                className={`${styles.radialBtn} ${
+                  inWatchlist ? styles.active : ""
+                } actionButton`}
+                onClick={handleToggleWatchlist}
+                aria-pressed={inWatchlist}
+                aria-label={
+                  inWatchlist ? "Remove from watchlist" : "Add to watchlist"
+                }
+                title={
+                  inWatchlist ? "Remove from watchlist" : "Add to watchlist"
+                }
+                style={{ "--angle": "270deg" }}
+                variants={itemV}
+                custom={{ angle: 270 }}
+                whileHover={{ background: inWatchlist ? "var(--clr-card)" : "var(--clr-primary-dark) "}}
+              >
+                {inWatchlist ? (
+                  <PlaylistAddCheckRoundedIcon
+                    sx={{ color: "var(--clr-primary)" }}
+                  />
+                ) : (
+                  <PlaylistAddRoundedIcon sx={{ color: "var(--clr-muted)" }} />
+                )}
+              </motion.button>
+
+              {/* Favorite */}
+              <motion.button
+                type="button"
+                className={`${styles.radialBtn} ${
+                  favorite ? styles.active : ""
+                } actionButton`}
+                onClick={handleToggleFavorite}
+                aria-pressed={favorite}
+                aria-label={
+                  favorite ? "Remove from favorites" : "Add to favorites"
+                }
+                title={favorite ? "Remove from favorites" : "Add to favorites"}
+                style={{ "--angle": "30deg" }}
+                variants={itemV}
+                custom={{ angle: 30 }}
+                whileHover={{ background: favorite ? "var(--clr-card)" : "var(--clr-primary-dark) "}}
+              >
+                {favorite ? (
+                  <FavoriteIcon sx={{ color: "var(--clr-primary)" }} />
+                ) : (
+                  <FavoriteBorderIcon sx={{ color: "var(--clr-muted)" }} />
+                )}
+              </motion.button>
+
+              {/* center close dot */}
+              <button
+                type="button"
+                className={`${styles.radialCenter} actionButton`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  closeMenu();
+                }}
+                aria-label="Close"
+                title="Close"
+              >
+                -
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 }
-

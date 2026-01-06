@@ -1,6 +1,6 @@
 .movieCard {
     min-width: 120px;
-    /* width: 160px; */
+    max-width: 125px;
     cursor: pointer;
     border: 1.5px solid var(--clr-card-border);
     border-radius: var(--radius-small);
@@ -41,6 +41,7 @@
     font-size: var(--fs-xs);
     padding: var(--pd-movieCard);
     color: var(--clr-muted);
+    margin-top: 3px;
 }
 
 
@@ -85,11 +86,48 @@
   .seeMoreContent {
     height: 192px;
   }
+  /* ---------HOVER BUTTON------------ */
+  .hoverBtn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    z-index: 100;
+    color: var(--clr-text);
+    transition: var(--transition);
+    display: none;
+    width: 40px;
+    font-size: var(--fs-md);
+  }
+
+  .movieCard:hover .hoverBtn {
+    display: block;
+  }
+
+  .hoverBtn:hover {
+    background: var(--clr-card);
+    transform: scale(1.05);
+  }
+
+  .hoverBtn:active {
+    transform: scale(0.95);
+  }
 }
 
 
+/* ------------------------------------------------ */
+/* positions each action around center */
+.radialSlot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
 
-
+  --radius: 44px;
+  transform: translate(
+    calc(-50% + (cos(var(--angle)) * var(--radius))),
+    calc(-50% + (sin(var(--angle)) * var(--radius)))
+  );
+}
 
 /* --- Radial menu overlay --- */
 .radialOverlay {
@@ -127,7 +165,6 @@
   cursor: pointer;
   transition: var(--transition);
   box-shadow: var(--shadow-card-smooth);
-
   /* radial positioning */
   --radius: 44px;
   transform: translate(
@@ -167,8 +204,8 @@
 }
 
 .radialCenter {
-  width: 12px;
-  height: 12px;
+  width: 25px;
+  height: 25px;
   border-radius: var(--radius-full);
   border: 0;
   background: var(--clr-primary);
