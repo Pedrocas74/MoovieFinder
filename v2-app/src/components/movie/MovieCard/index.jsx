@@ -13,12 +13,12 @@ import PlaylistAddCheckRoundedIcon from "@mui/icons-material/PlaylistAddCheckRou
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 const LONG_PRESS_MS = 450;
 const MOVE_CANCEL_PX = 10;
 
-export default function MovieCard({ movie, onClick }) {
+export default function MovieCard({ movie, onClick, menuOpen, onOpenMenu, onCloseMenu }) {
   const {
     toggleWatched,
     toggleWatchlist,
@@ -34,7 +34,7 @@ export default function MovieCard({ movie, onClick }) {
 
   const isSaved = watched || inWatchlist || favorite;
 
-  const [menuOpen, setMenuOpen] = useState(false);
+  // const [menuOpen, setMenuOpen] = useState(false);
 
   const timerRef = useRef(null);
   const startPtRef = useRef({ x: 0, y: 0 });
@@ -47,7 +47,7 @@ export default function MovieCard({ movie, onClick }) {
 
   const openMenu = useCallback(() => {
     longPressedRef.current = true;
-    setMenuOpen(true);
+    onOpenMenu?.();
 
     // allow future taps after this gesture finishes
     window.setTimeout(() => {
@@ -56,8 +56,8 @@ export default function MovieCard({ movie, onClick }) {
   }, []);
 
   const closeMenu = useCallback(() => {
-    setMenuOpen(false);
-  }, []);
+  onCloseMenu?.();
+}, [onCloseMenu]);
 
   // close on Escape
   useEffect(() => {
@@ -125,7 +125,6 @@ export default function MovieCard({ movie, onClick }) {
     closeMenu();
   };
 
-
   return (
     <motion.div
       className={`${styles.movieCard} ${isSaved ? styles.saved : ""}`}
@@ -140,14 +139,13 @@ export default function MovieCard({ movie, onClick }) {
       // stops iOS callout / image selection weirdness
       style={{ touchAction: "manipulation" }}
     >
-      <img
-        src={
-          movie.poster_path
-            ? `https://image.tmdb.org/t/p/w342${movie.poster_path}`
-            : placeholder_cover
-        }
-        alt={movie.title}
-        onError={(e) => hintImgFallback(e)}
+      <div
+        className={styles.poster}
+        style={{
+          backgroundImage: movie.poster_path
+            ? `url(https://image.tmdb.org/t/p/w342${movie.poster_path})`
+            : `url(${placeholder_cover})`,
+        }}
       />
 
       <div className={styles.dateAndRate}>
@@ -165,10 +163,10 @@ export default function MovieCard({ movie, onClick }) {
           role="dialog"
           aria-label="Quick actions"
         >
-          {/* clicking this closes the menu */}
+          {/* Click outside closes */}
           <button
             type="button"
-            className={styles.radialBackdrop}
+            className={`${styles.radialBackdrop} actionButton`}
             aria-label="Close quick actions"
             onClick={(e) => {
               e.stopPropagation();
@@ -176,38 +174,25 @@ export default function MovieCard({ movie, onClick }) {
             }}
           />
 
-            {/* RADIAL MENU  */}
           <div
             className={styles.radialMenu}
             onClick={(e) => e.stopPropagation()}
           >
-
-            {/* Favorite */}
-            <button
-              type="button"
-              className={`${styles.radialBtn} ${favorite ? styles.active : ""}`}
-              onClick={handleToggleFavorite}
-              aria-pressed={favorite}
-              aria-label={
-                favorite ? "Remove from favorites" : "Add to favorites"
-              }
-              title={favorite ? "Remove from favorites" : "Add to favorites"}
-              style={{ "--angle": "270deg" }}
-            >
-              {favorite ? <FavoriteIcon sx={{ color: "var(--clr-primary)"}} /> : <FavoriteBorderIcon sx={{ color: "var(--clr-muted)"}} />}
-            </button>
-
             {/* Watched */}
             <button
               type="button"
-              className={`${styles.radialBtn} ${watched ? styles.active : ""}`}
+              className={`${styles.radialBtn} ${watched ? styles.active : ""} actionButton`}
               onClick={handleToggleWatched}
               aria-pressed={watched}
               aria-label={watched ? "Remove from watched" : "Add to watched"}
               title={watched ? "Remove from watched" : "Add to watched"}
-              style={{ "--angle": "150deg" }}
+              style={{ "--angle": "270deg" }}
             >
-              {watched ? <VisibilityIcon sx={{ color: "var(--clr-primary)"}} /> : <VisibilityOffOutlinedIcon sx={{ color: "var(--clr-muted)"}} />}
+              {watched ? (
+                <VisibilityIcon sx={{ color: "var(--clr-primary)" }} />
+              ) : (
+                <VisibilityOffOutlinedIcon sx={{ color: "var(--clr-muted)" }} />
+              )}
             </button>
 
             {/* Watchlist */}
@@ -215,7 +200,7 @@ export default function MovieCard({ movie, onClick }) {
               type="button"
               className={`${styles.radialBtn} ${
                 inWatchlist ? styles.active : ""
-              }`}
+              } actionButton`}
               onClick={handleToggleWatchlist}
               aria-pressed={inWatchlist}
               aria-label={
@@ -225,24 +210,44 @@ export default function MovieCard({ movie, onClick }) {
               style={{ "--angle": "30deg" }}
             >
               {inWatchlist ? (
-                <PlaylistAddCheckRoundedIcon sx={{ color: "var(--clr-primary)"}}/>
+                <PlaylistAddCheckRoundedIcon
+                  sx={{ color: "var(--clr-primary)" }}
+                />
               ) : (
-                <PlaylistAddRoundedIcon sx={{ color: "var(--clr-muted)"}} />
+                <PlaylistAddRoundedIcon sx={{ color: "var(--clr-muted)" }} />
               )}
             </button>
 
+            {/* Favorite */}
+            <button
+              type="button"
+              className={`${styles.radialBtn} ${favorite ? styles.active : ""} actionButton`}
+              onClick={handleToggleFavorite}
+              aria-pressed={favorite}
+              aria-label={
+                favorite ? "Remove from favorites" : "Add to favorites"
+              }
+              title={favorite ? "Remove from favorites" : "Add to favorites"}
+              style={{ "--angle": "150deg" }}
+            >
+              {favorite ? (
+                <FavoriteIcon sx={{ color: "var(--clr-primary)" }} />
+              ) : (
+                <FavoriteBorderIcon sx={{ color: "var(--clr-muted)" }} />
+              )}
+            </button>
 
             {/* Optional center “close” dot (nice touch) */}
-            {/* <button
+            <button
               type="button"
-              className={styles.radialCenter}
+              className={`${styles.radialCenter} actionButton`}
               onClick={(e) => {
                 e.stopPropagation();
                 closeMenu();
               }}
               aria-label="Close"
               title="Close"
-            /> */}
+            >-</button>
           </div>
         </div>
       )}
@@ -250,7 +255,3 @@ export default function MovieCard({ movie, onClick }) {
   );
 }
 
-function hintImgFallback(e) {
-  e.target.onerror = null;
-  e.target.src = "/images/placeholder_movie.webp";
-}

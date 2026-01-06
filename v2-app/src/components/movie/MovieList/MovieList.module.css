@@ -14,7 +14,14 @@
   padding: 2vh 0 2vh 2.5%;
   scroll-behavior: smooth;
   scrollbar-width: none;       
-  -ms-overflow-style: none;     
+  -ms-overflow-style: none;   
+
+  scroll-snap-type: x proximity;  
+  scroll-padding-left: 2.5%;
+
+  /* prevent weird vertical scroll interference on mobile */
+  touch-action: pan-x;
+  -webkit-overflow-scrolling: touch;  
 }
 .row::-webkit-scrollbar {
   display: none;              

@@ -1,5 +1,6 @@
 import MovieCard from "../MovieCard";
 import styles from "./MovieList.module.css";
+import { useState } from "react";
 
 export default function MovieList({
   title,
@@ -9,6 +10,8 @@ export default function MovieList({
   tailCard,
   emptyMessage = "No movies to show.",
 }) {
+  const [openMenuMovieId, setOpenMenuMovieId] = useState(null); //to only allow one radial menu open at once
+
   if (!movies || movies.length === 0) {
     return (
       <section className={styles.emptyList}>
@@ -37,7 +40,16 @@ export default function MovieList({
             console.warn(`Duplicate key in ${title}:`, key, movie.title);
           }
 
-          return <MovieCard key={key} movie={movie} onClick={onMovieClick} />;
+          return (
+            <MovieCard
+              key={key}
+              movie={movie}
+              onClick={onMovieClick}
+              menuOpen={openMenuMovieId === movie.id}
+              onOpenMenu={() => setOpenMenuMovieId(movie.id)}
+              onCloseMenu={() => setOpenMenuMovieId(null)}
+            />
+          );
         })}
 
         {tailCard}
