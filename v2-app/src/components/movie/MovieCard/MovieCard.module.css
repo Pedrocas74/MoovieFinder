@@ -10,6 +10,7 @@
     box-shadow: var(--shadow-card-smooth);
     padding: 3px;
     /* flex-shrink: 0; */
+    position: relative;
 }
 
 .movieCard.saved {
@@ -80,4 +81,102 @@
   .seeMoreContent {
     height: 192px;
   }
+}
+
+
+
+
+
+
+
+
+
+
+
+/* --- Radial menu overlay --- */
+.radialOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+}
+
+.radialBackdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+}
+
+/* container centered over the card */
+.radialMenu {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+/* each button placed using angle around center */
+.radialBtn {
+  position: absolute;
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-max);
+  border: 1px solid var(--clr-card-border);
+  background: var(--clr-bg);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: var(--shadow-card-smooth);
+
+  /* radial positioning */
+  --radius: 44px;
+  transform: translate(
+    calc(cos(var(--angle)) * var(--radius)),
+    calc(sin(var(--angle)) * var(--radius))
+  );
+}
+
+/* fallback if cos()/sin() not supported  */
+@supports not (transform: translate(calc(cos(30deg) * 1px), 0)) {
+  .radialBtn {
+    transform: none;
+  }
+  .radialBtn:nth-child(1) { top: 20%; left: 50%; transform: translateX(-50%); }
+  .radialBtn:nth-child(2) { top: 55%; left: 80%; transform: translate(-50%, -50%); }
+  .radialBtn:nth-child(3) { top: 55%; left: 20%; transform: translate(-50%, -50%); }
+}
+
+.radialBtn:hover {
+  transform: translate(
+      calc(cos(var(--angle)) * var(--radius)),
+      calc(sin(var(--angle)) * var(--radius))
+    )
+    translateY(-1px);
+  filter: brightness(1.03);
+}
+
+.radialBtn:active {
+  transform: translate(
+      calc(cos(var(--angle)) * var(--radius)),
+      calc(sin(var(--angle)) * var(--radius))
+    )
+    scale(0.98);
+}
+
+.active {
+  border-color: var(--clr-primary);
+}
+
+/* optional center close */
+.radialCenter {
+  width: 12px;
+  height: 12px;
+  border-radius: var(--radius-full);
+  border: 0;
+  background: var(--clr-primary);
+  cursor: pointer;
+  opacity: 0.85;
+  place-items: center;
 }

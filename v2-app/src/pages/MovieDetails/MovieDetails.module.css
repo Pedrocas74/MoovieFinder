@@ -167,7 +167,6 @@
 .screenshotsSection::-webkit-scrollbar {
   height: 8px;
 }
-
 .screenshotsSection::-webkit-scrollbar-track {
   background: transparent;
 }
