@@ -8,12 +8,12 @@
 :root {
     /* colors */
     /* LIGHT MODE  */
-    --bg-l: #fcfcfc;
+    --bg-l: hsl(0, 0%, 97%);
     --bg-ll: #ffffff;
     --bg-ld: #d9d9d9;
 
     --red: hsl(0, 70%, 33%);
-    --red-light: hsl(0, 82%, 66%);
+    --red-light: hsl(0, 82%, 43%);
     --red-dark: hsl(0, 70%, 23%);
     --red-border: hsla(0, 70%, 33%, 0.2);
 
@@ -46,6 +46,7 @@
     /* font sizes  */
     --fs-xs: clamp(0.75rem, 1vw, 0.85rem);
     --fs-sm: clamp(0.85rem, 1.2vw, 1rem);
+    --fs-button: clamp(0.95rem, 1.3vw, 1.1rem);
     --fs-md: clamp(1rem, 2vw, 1.3rem);
     --fs-lg: clamp(1.3rem, 3vw, 2rem);
     --fs-xl: clamp(2.4rem, 4.5vw, 5.5rem);
@@ -54,6 +55,7 @@
     --pd-button: 0.5em 1.5em;
     --pd-movieCard: 0em 0.3em;
     --pd-title: 7vh 0 2vh 5%;
+    --pd-td: 7vh 0 2vh 0;
     --pd-normal: 0 5% 4vh 5%;
     
     /* line height */
@@ -62,8 +64,8 @@
 
     /* border-radius */
     --radius-small: 4px;
-    --radius-button: 8px;
-    --radius-large: 16px;
+    --radius-button: 20px;
+    --radius-large: 15px;
     --radius-full: 999px;
     --radius-max: 50%;
 
@@ -97,6 +99,7 @@
   --clr-text: var(--clr-text-l);
   --clr-primary: var(--red);
   --clr-primary-light: var(--red-light);
+  --clr-primary-dark: var(--red-dark);
   --clr-border: var(--red-border);
   --clr-card: var(--bg-l);
   --clr-card-border: var(--bg-ld);
@@ -110,6 +113,7 @@
   --clr-text: var(--clr-text-d);
   --clr-primary: var(--purple);
   --clr-primary-light: var(--purple-light);
+  --clr-primary-dark: var(--purple-dark);
   --clr-border: var(--purple-border);
   --clr-card: var(--bg-dl);
   --clr-card-border: var(--bg-dd);
@@ -130,14 +134,21 @@ h1,
 h2 {
   font-family: var(--ff-heading);
 }
-h2, h3 {
+h2 {
   padding: var(--pd-title);
+  font-size: var(--fs-lg);
+  font-weight: 900;
+}
+h3 {
+  /* padding: var(--pd-title); */
+  font-size: var(--fs-md);
+  font-weight: 800;
 }
 
-p {
+p:not(.cardInfo) {
   max-width: 74ch;
   line-height: var(--lh-small);
-  /* font-size: var(--fs-md); */
+  font-size: var(--fs-md);
 }
 
 
@@ -149,7 +160,7 @@ a:not(#navLinks) {
     font-weight: 600;
     text-decoration: none;
     width: fit-content;
-    font-size: var(--fs-sm);
+    font-size: var(--fs-button);
     cursor: pointer;
 }
 
@@ -179,8 +190,8 @@ a:not(#navLinks) {
 .btnSecondary {
   border-radius: var(--radius-button);
   background: transparent;
-  color: var(--clr-text);
-  border: 1px solid var(--clr-primary);
+  color: var(--clr-primary-light);
+  border: 1px solid var(--clr-primary-dark);
   box-shadow: var(--shadow-button);
   transition: var(--transition);
 }

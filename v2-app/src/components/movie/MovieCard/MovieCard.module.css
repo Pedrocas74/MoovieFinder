@@ -1,12 +1,15 @@
 .movieCard {
     min-width: 120px;
+    /* width: 160px; */
+  
     cursor: pointer;
     border: 1.5px solid var(--clr-card-border);
     border-radius: var(--radius-small);
     background: var(--clr-card);
     /* transition: var(--transition); */
     box-shadow: var(--shadow-card-smooth);
-    padding: 2.5px;
+    padding: 3px;
+    /* flex-shrink: 0; */
 }
 
 .movieCard.saved {
@@ -22,6 +25,10 @@
     border-top-left-radius: var(--radius-small);
     border-top-right-radius: var(--radius-small);
 } 
+
+.skeletonImg {
+    height: 177px;
+}
 .dateAndRate {
     display: flex;
     align-items: center;
@@ -53,4 +60,24 @@
 .seeMoreContent p {
   font-size: var(--fs-xs);
   font-weight: 600;
+}
+
+
+
+@media (min-width: 1024px) {
+  .movieCard {
+    min-width: 135px;
+  }
+
+  .movieCard img {
+    height: 192px;
+  }
+
+  .skeletonImg {
+    height: 192px;
+  }
+
+  .seeMoreContent {
+    height: 192px;
+  }
 }

@@ -174,7 +174,7 @@ export default function Discover() {
       <button
         type="button"
         onClick={resetFilters}
-        className="btnPrimary"
+        className="btnSecondary"
         style={{
           margin: "0 auto 5vh auto",
         }}

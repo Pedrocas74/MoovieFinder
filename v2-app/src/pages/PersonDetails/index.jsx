@@ -4,6 +4,7 @@ import { getPersonDetails, getPersonMovieCredits } from "../../services/tmdb";
 import { profileUrl } from "../../services/tmdbImages";
 import styles from "./PersonDetails.module.css";
 import MovieList from "../../components/movie/MovieList";
+import SkeletonPersonDetails from "./SkeletonPersonDetails";
 
 import CakeIcon from "@mui/icons-material/Cake";
 import CottageIcon from "@mui/icons-material/Cottage";
@@ -45,7 +46,7 @@ export default function PersonDetails() {
     })();
   }, [id]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <SkeletonPersonDetails />;
   if (!person || error) return <div>Person not found</div>;
 
   const knownFor =
@@ -54,61 +55,83 @@ export default function PersonDetails() {
 
   return (
     <section className={styles.page}>
-      <div className={styles.header}>
-        <img
-          src={profileUrl(person.profile_path, "w185")}
-          srcSet={`
+      <div className={styles.mainContainer}>
+        <div className={styles.imgContainer}>
+          <img
+            src={profileUrl(person.profile_path, "w342")}
+            srcSet={`
     ${profileUrl(person.profile_path, "w92")} 92w,
     ${profileUrl(person.profile_path, "w185")} 185w,
     ${profileUrl(person.profile_path, "w342")} 342w,
     ${profileUrl(person.profile_path, "original")} 700w
   `}
-          sizes="
+            sizes="
     (max-width: 480px) 120px,
     (max-width: 768px) 160px,
-    200px
+    (max-width: 1200px) 250px,
+    350px
   "
-          alt={person.name}
-          className={styles.avatar}
-          loading="eager"
-          decoding="async"
-        />
-        <div className={styles.detailsContainer}>
-          <h2>{person.name}</h2>
-          {person.birthday && (
-            <div style={{ display: "flex", alignItems: "center", paddingLeft: "5%", marginBottom: "0.7rem" }}>
-              <CakeIcon sx={{ color: "var(--clr-border)" }} />
-              <span className={styles.birthday}>{person.birthday}</span>
-            </div>
-          )}
-          {person.place_of_birth && (
-            <div style={{ display: "flex", alignItems: "center", paddingLeft: "5%", marginBottom: "1rem"  }}>
-              <CottageIcon sx={{ color: "var(--clr-border)" }}/>
-              <span className={styles.placeOfBirth}>
-                {person.place_of_birth}
-              </span>
+            alt={person.name}
+            className={styles.avatar}
+            loading="eager"
+            decoding="async"
+          />
+        </div>
+        <div className={styles.textContainer}>
+          <div className={styles.detailsContainer}>
+            <h2>{person.name}</h2>
+            {person.birthday && (
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  paddingLeft: "5%",
+                  marginBottom: "0.7rem",
+                }}
+              >
+                <CakeIcon sx={{ color: "var(--clr-border)" }} />
+                <span style={{ paddingLeft: 7 }} className={styles.birthday}>
+                  {person.birthday.split("-").reverse().join("-")}
+                </span>
+              </div>
+            )}
+            {person.place_of_birth && (
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  paddingLeft: "5%",
+                  marginBottom: "1rem",
+                }}
+              >
+                <CottageIcon sx={{ color: "var(--clr-border)" }} />
+                <span
+                  style={{ paddingLeft: 7 }}
+                  className={styles.placeOfBirth}
+                >
+                  {person.place_of_birth}
+                </span>
+              </div>
+            )}
+          </div>
+
+          {person.biography && (
+            <div className={styles.bioContainer}>
+              <p className={`${styles.bio} ${!isOpen ? styles.clamped : ""}`}>
+                {person.biography}
+              </p>
+
+              {person.biography.length > 100 && (
+                <button
+                  className={`${styles.toggleBio} btnSecondary`}
+                  onClick={() => setIsOpen(!isOpen)}
+                >
+                  {isOpen ? "Show less" : "Read more"}
+                </button>
+              )}
             </div>
           )}
         </div>
-      </div>
-
-      <div className={styles.bioContainer}>
-        {person.biography && (
-          <>
-            <p className={`${styles.bio} ${!isOpen ? styles.clamped : ""}`}>
-              {person.biography}
-            </p>
-
-            {person.biography.length > 300 && (
-              <button
-                className={`${styles.toggleBio} btnSecondary`}
-                onClick={() => setIsOpen(!isOpen)}
-              >
-                {isOpen ? "Show less" : "Read more"}
-              </button>
-            )}
-          </>
-        )}
       </div>
 
       {knownFor.length > 0 && (

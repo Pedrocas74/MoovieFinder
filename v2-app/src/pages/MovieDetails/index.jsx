@@ -359,15 +359,15 @@ export default function MovieDetails() {
       </div>
       <ul className={styles.itemsContainer}>
         <li>
-          <Hourglass style={{ marginRight: 5 }} size={11} />{" "}
+          <Hourglass style={{ marginRight: 5 }} size={13} />{" "}
           {movie.runtime ? `${movie.runtime} min` : "N/A"}
         </li>
         <li>
-          <Calendar style={{ marginRight: 5 }} size={11} />{" "}
+          <Calendar style={{ marginRight: 5 }} size={13} />{" "}
           {movie.release_date.split("-")[0]}
         </li>
         <li>
-          <Star style={{ marginRight: 5 }} size={11} />
+          <Star style={{ marginRight: 5 }} size={13} />
           {Number(movie.vote_average).toFixed(1)}
           <span>({movie.vote_count})</span>
         </li>

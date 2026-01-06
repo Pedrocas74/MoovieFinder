@@ -43,8 +43,8 @@ export default function MovieCard({ movie, onClick }) {
       )} */}
 
       <div className={styles.dateAndRate}>
-        <p className={styles.releaseDate}>{movie.release_date?.slice(0, 4)}</p>
-        <p className={styles.rating}>
+        <p className={`${styles.releaseDate} cardInfo`}>{movie.release_date?.slice(0, 4)}</p>
+        <p className={`${styles.rating} cardInfo`}>
           <Star size={10} /> {Number(movie.vote_average).toFixed(1)}
         </p>
       </div>
