@@ -3,7 +3,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { getMoviesBySource } from "../../services/tmdb";
 import MovieList from "../../components/movie/MovieList";
 import SkeletonMovieList from "../../components/movie/MovieList/SkeletonMovieList";
-import SortSelect from "../../components/filters/sortSelect";
 import SourceSelect from "../../components/filters/sourceSelect";
 import GenreSelect from "../../components/filters/genreSelect";
 import styles from "./Discover.module.css";
@@ -18,15 +17,8 @@ export default function Discover() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [source, setSource] = useState(() => {
-  return (
-    urlSource ||
-    sessionStorage.getItem("discover_source") ||
-    "popular"
-  );
-});
-  const [sort, setSort] = useState(
-    sessionStorage.getItem("discover_sort") || ""
-  );
+    return urlSource || sessionStorage.getItem("discover_source") || "popular";
+  });
   const [genres, setGenres] = useState(
     JSON.parse(sessionStorage.getItem("discover_genres") || "[]")
   );
@@ -34,10 +26,6 @@ export default function Discover() {
   const [hasMore, setHasMore] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
   const observerRef = useRef();
-
-  
-
-  
 
   const loadMovies = useCallback(
     async (currentPage, append = false) => {
@@ -72,13 +60,9 @@ export default function Discover() {
   }, [source, genres, loadMovies]);
 
   useEffect(() => {
-  sessionStorage.setItem("discover_source", source);
-  navigate(`/discover?source=${source}`, { replace: true });
-}, [source]);
-
-  useEffect(() => {
-    sessionStorage.setItem("discover_sort", sort);
-  }, [sort]);
+    sessionStorage.setItem("discover_source", source);
+    navigate(`/discover?source=${source}`, { replace: true });
+  }, [source]);
 
   useEffect(() => {
     sessionStorage.setItem("discover_genres", JSON.stringify(genres));
@@ -112,7 +96,7 @@ export default function Discover() {
     };
   }, [loadMore]);
 
-  const filteredAndSortedMovies = useMemo(() => {
+  const filteredMovies = useMemo(() => {
     let list = [...movies];
 
     //filter by genres if any selected (client-side for trending)
@@ -122,34 +106,8 @@ export default function Discover() {
       );
     }
 
-    if (sort === "most_rated")
-      return list.sort((a, b) => (b.vote_average ?? 0) - (a.vote_average ?? 0));
-
-    if (sort === "lowest_rated")
-      return list.sort((a, b) => (a.vote_average ?? 0) - (b.vote_average ?? 0));
-
-    if (sort === "recent")
-      return list.sort((a, b) =>
-        (b.release_date ?? "").localeCompare(a.release_date ?? "")
-      );
-
-    if (sort === "oldest")
-      return list.sort((a, b) =>
-        (a.release_date ?? "").localeCompare(b.release_date ?? "")
-      );
-
-    if (sort === "crescent")
-      return list.sort((a, b) =>
-        (a.title ?? a.name ?? "").localeCompare(b.title ?? b.name ?? "")
-      );
-
-    if (sort === "decrescent")
-      return list.sort((a, b) =>
-        (b.title ?? a.name ?? "").localeCompare(a.title ?? a.name ?? "")
-      );
-
     return list;
-  }, [movies, sort, genres, source]);
+  }, [movies, genres, source]);
 
   const openMovie = (movie) => {
     navigate(`/movie/${movie.id}`, { state: { movie } });
@@ -157,7 +115,6 @@ export default function Discover() {
 
   const resetFilters = () => {
     setSource("popular");
-    setSort("");
     setGenres([]);
   };
 
@@ -167,7 +124,6 @@ export default function Discover() {
 
       <div className={styles.filters}>
         <SourceSelect value={source} onChange={setSource} />
-        <SortSelect value={sort} onChange={setSort} />
         <GenreSelect value={genres} onChange={setGenres} />
       </div>
 
@@ -188,7 +144,7 @@ export default function Discover() {
       {!loading && !error && (
         <>
           <MovieList
-            movies={filteredAndSortedMovies}
+            movies={filteredMovies}
             layout="grid"
             onMovieClick={openMovie}
             emptyMessage="No movies found."

@@ -1,8 +1,9 @@
 import MovieCard from "../MovieCard";
 import styles from "./MovieList.module.css";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import SortSelect from "../../filters/sortSelect";
 
 export default function MovieList({
   title,
@@ -11,6 +12,8 @@ export default function MovieList({
   onMovieClick,
   tailCard,
   emptyMessage = "No movies to show.",
+  sort = "",
+  onSortChange,
 }) {
   const [openMenuMovieId, setOpenMenuMovieId] = useState(null); //to only allow one radial menu open at once
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -18,9 +21,40 @@ export default function MovieList({
   const scrollContainerRef = useRef(null);
 
   const isTouchDevice = window.matchMedia(
-  "(hover: none) and (pointer: coarse)"
-).matches;
+    "(hover: none) and (pointer: coarse)"
+  ).matches;
 
+  const sortedMovies = useMemo(() => {
+    let list = [...movies];
+
+    if (sort === "most_rated")
+      return list.sort((a, b) => (b.vote_average ?? 0) - (a.vote_average ?? 0));
+
+    if (sort === "lowest_rated")
+      return list.sort((a, b) => (a.vote_average ?? 0) - (b.vote_average ?? 0));
+
+    if (sort === "recent")
+      return list.sort((a, b) =>
+        (b.release_date ?? "").localeCompare(a.release_date ?? "")
+      );
+
+    if (sort === "oldest")
+      return list.sort((a, b) =>
+        (a.release_date ?? "").localeCompare(b.release_date ?? "")
+      );
+
+    if (sort === "crescent")
+      return list.sort((a, b) =>
+        (a.title ?? a.name ?? "").localeCompare(b.title ?? b.name ?? "")
+      );
+
+    if (sort === "decrescent")
+      return list.sort((a, b) =>
+        (b.title ?? a.name ?? "").localeCompare(a.title ?? a.name ?? "")
+      );
+
+    return list;
+  }, [movies, sort]);
 
   const checkScrollButtons = () => {
     if (scrollContainerRef.current) {
@@ -55,11 +89,9 @@ export default function MovieList({
         window.removeEventListener("resize", checkScrollButtons);
       };
     }
-  }, [layout, movies]);
+  }, [layout, sortedMovies]);
 
-
-
-  if (!movies || movies.length === 0) {
+  if (!sortedMovies || sortedMovies.length === 0) {
     return (
       <section className={styles.emptyList}>
         {title && <h2>{title}</h2>}
@@ -70,7 +102,13 @@ export default function MovieList({
 
   return (
     <section className={styles.movieList}>
-      {title && <h2>{title}</h2>}
+      {title && layout === "row" && (
+        <div className={styles.header}>
+          <h2>{title}</h2>
+          {onSortChange && <SortSelect value={sort} onChange={onSortChange} />}
+        </div>
+      )}
+      {title && layout !== "row" && <h2>{title}</h2>}
       {layout === "row" && (
         <div className={styles.scrollContainer}>
           {!isTouchDevice && canScrollLeft && (
@@ -85,12 +123,12 @@ export default function MovieList({
             </button>
           )}
           <div className={styles[layout]} ref={scrollContainerRef}>
-            {movies.map((movie, index) => {
+            {sortedMovies.map((movie, index) => {
               const key = `movielist-${title || "untitled"}-${movie.id}`;
 
               //check for duplicate keys within this list
               const duplicateInList =
-                movies.findIndex(
+                sortedMovies.findIndex(
                   (m, i) =>
                     i !== index &&
                     `movielist-${title || "untitled"}-${m.id}` === key
@@ -127,12 +165,12 @@ export default function MovieList({
       )}
       {layout !== "row" && (
         <div className={styles[layout]}>
-          {movies.map((movie, index) => {
+          {sortedMovies.map((movie, index) => {
             const key = `movielist-${title || "untitled"}-${movie.id}`;
 
             //check for duplicate keys within this list
             const duplicateInList =
-              movies.findIndex(
+              sortedMovies.findIndex(
                 (m, i) =>
                   i !== index &&
                   `movielist-${title || "untitled"}-${m.id}` === key

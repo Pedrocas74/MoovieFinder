@@ -1,4 +1,3 @@
-
 import styles from "./MovieDetails.module.css";
 import { useParams, useLocation, Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
@@ -11,11 +10,7 @@ import {
 } from "../../services/tmdb";
 // import LoadingSVG from "../../components/ui/LoadingSVG";
 
-import {
-  backdropUrl,
-  logoUrl,
-  screenshotUrl,
-} from "../../services/tmdbImages";
+import { backdropUrl, logoUrl, screenshotUrl } from "../../services/tmdbImages";
 
 import {
   Star,
@@ -44,7 +39,7 @@ import { styled } from "@mui/material/styles";
 import Tooltip from "@mui/material/Tooltip";
 //Snackbar and Alert / toast
 import Snackbar from "@mui/material/Snackbar";
-import Alert from '@mui/material/Alert';
+import Alert from "@mui/material/Alert";
 
 import MovieList from "../../components/movie/MovieList/index";
 import SkeletonMovieDetails from "./SkeletonMovieDetails";
@@ -58,6 +53,7 @@ export default function MovieDetails() {
   const [lightboxOpen, setLightboxOpen] = useState(false); //screenshots viewer
   const [activeShot, setActiveShot] = useState(0); //screenshot being displayed
   const [similar, setSimilar] = useState([]); //similar movies row
+  const [similarSort, setSimilarSort] = useState("");
   const [open, setOpen] = useState(false); //snackbar - toast
 
   const { id } = useParams();
@@ -478,6 +474,8 @@ export default function MovieDetails() {
             movies={similar.slice(0, 20)}
             layout="row"
             onMovieClick={handleOpenDetails}
+            sort={similarSort}
+            onSortChange={setSimilarSort}
           />
         </>
       )}
@@ -562,13 +560,17 @@ export default function MovieDetails() {
       )}
 
       {!showTrailer && (
-        <Snackbar open={open} autoHideDuration={3000} onClose={() => setOpen(false)}>
+        <Snackbar
+          open={open}
+          autoHideDuration={3000}
+          onClose={() => setOpen(false)}
+        >
           <Alert
             severity="info"
             sx={{
               backgroundColor: "var(--clr-primary)",
               color: "var(--clr-bg)",
-              fontWeight: 600
+              fontWeight: 600,
             }}
           >
             Trailer not available

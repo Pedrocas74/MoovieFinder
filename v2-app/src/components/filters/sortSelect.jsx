@@ -7,8 +7,13 @@ export default function SortSelect({ value, onChange, label = "Sort" }) {
   return (
     <FormControl
       sx={{
+        minWidth: 80,
+        maxWidth: 100,
+        marginRight: "5%",
+        maxHeight: 10,
+    
         "& .MuiOutlinedInput-notchedOutline": {
-          borderColor: "var(--clr-text)",
+          borderColor: "var(--clr-muted)",
         },
         "&:hover .MuiOutlinedInput-notchedOutline": {
           borderColor: "var(--clr-primary)",
@@ -23,18 +28,18 @@ export default function SortSelect({ value, onChange, label = "Sort" }) {
         },
 
         "& .MuiInputLabel-root": {
-          color: "var(--clr-text)",
+          color: "var(--clr-muted)",
         },
         "& .MuiInputLabel-root.Mui-focused": {
           color: "var(--clr-primary)",
         },
 
         "& .MuiSvgIcon-root": {
-          color: "var(--clr-text)", 
+          color: "var(--clr-muted)", 
         },
+
       }}
       size="small"
-      fullWidth
     >
       <InputLabel id="sort-select-label">{label}</InputLabel>
 
@@ -57,14 +62,14 @@ export default function SortSelect({ value, onChange, label = "Sort" }) {
           <em>Select sorting</em>
         </MenuItem>
 
-        <MenuItem value="recent">Recent</MenuItem>
+        <MenuItem value="recent">Recent </MenuItem>
         <MenuItem value="oldest">Oldest</MenuItem>
 
-        <MenuItem value="most_rated">Most rated</MenuItem>
-        <MenuItem value="lowest_rated">Lowest rated</MenuItem>
+        <MenuItem value="most_rated">↑ Rate</MenuItem>
+        <MenuItem value="lowest_rated">↓ Rate</MenuItem>
 
-        <MenuItem value="crescent">Crescent (A→Z)</MenuItem>
-        <MenuItem value="decrescent">Decrescent (Z→A)</MenuItem>
+        <MenuItem value="crescent">A→Z</MenuItem>
+        <MenuItem value="decrescent">Z→A</MenuItem>
       </Select>
     </FormControl>
   );

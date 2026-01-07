@@ -72,6 +72,13 @@
   left: 0;
 }
 
+/* title + sortSelect  */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 
 
 

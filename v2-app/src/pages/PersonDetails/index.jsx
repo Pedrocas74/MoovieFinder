@@ -19,6 +19,7 @@ export default function PersonDetails() {
   const [loading, setLoading] = useState(!person);
   const [error, setError] = useState(null);
   const [isOpen, setIsOpen] = useState(false); //to open biography extra info
+  const [knownForSort, setKnownForSort] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -141,6 +142,8 @@ export default function PersonDetails() {
             movies={knownFor}
             layout="row"
             onMovieClick={(movie) => navigate(`/movie/${movie.id}`)}
+            sort={knownForSort}
+            onSortChange={setKnownForSort}
           />
         </>
       )}

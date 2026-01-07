@@ -1,4 +1,3 @@
-
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import MovieList from "../../components/movie/MovieList";
@@ -14,6 +13,11 @@ export default function Home() {
     useHomeMovies();
 
   const { recent } = useRecentlyViewed();
+
+  const [trendingSort, setTrendingSort] = useState("");
+  const [upcomingSort, setUpcomingSort] = useState("");
+  const [nowPlayingSort, setNowPlayingSort] = useState("");
+  const [recentSort, setRecentSort] = useState("");
 
   const handleOpenDetails = (movie) => {
     navigate(`/movie/${movie.id}`, { state: { movie } });
@@ -34,7 +38,7 @@ export default function Home() {
   const showSkeleton = loading || !minTimePassed;
 
   return (
-    <div style={{ minHeight: "100vh"}}>
+    <div style={{ minHeight: "100vh" }}>
       {error && (
         <div>
           {error} <button onClick={reload}>Retry</button>
@@ -50,6 +54,8 @@ export default function Home() {
             movies={trending}
             layout="row"
             onMovieClick={handleOpenDetails}
+            sort={trendingSort}
+            onSortChange={setTrendingSort}
             tailCard={
               <SeeMoreCard
                 label="See all trending"
@@ -69,6 +75,8 @@ export default function Home() {
             movies={upcoming}
             layout="row"
             onMovieClick={handleOpenDetails}
+            sort={upcomingSort}
+            onSortChange={setUpcomingSort}
             tailCard={
               <SeeMoreCard
                 label="See all upcoming"
@@ -88,6 +96,8 @@ export default function Home() {
             movies={nowPlaying}
             layout="row"
             onMovieClick={handleOpenDetails}
+            sort={nowPlayingSort}
+            onSortChange={setNowPlayingSort}
           />
         )
       )}
@@ -98,6 +108,8 @@ export default function Home() {
           movies={recent}
           layout="row"
           onMovieClick={handleOpenDetails}
+          sort={recentSort}
+          onSortChange={setRecentSort}
         />
       )}
     </div>
