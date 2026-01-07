@@ -41,8 +41,13 @@ export default function GenreSelect({
   return (
     <FormControl
       sx={{
+        minWidth: 100,
+        maxWidth: "100%",
+        maxHeight: 10,
+        textOverflow: "ellipsis",
+    
         "& .MuiOutlinedInput-notchedOutline": {
-          borderColor: "var(--clr-text)",
+          borderColor: "var(--clr-muted)",
         },
         "&:hover .MuiOutlinedInput-notchedOutline": {
           borderColor: "var(--clr-primary)",
@@ -57,18 +62,18 @@ export default function GenreSelect({
         },
 
         "& .MuiInputLabel-root": {
-          color: "var(--clr-text)",
+          color: "var(--clr-muted)",
         },
         "& .MuiInputLabel-root.Mui-focused": {
           color: "var(--clr-primary)",
         },
 
         "& .MuiSvgIcon-root": {
-          color: "var(--clr-text)", // dropdown arrow
+          color: "var(--clr-muted)", 
         },
+
       }}
       size="small"
-      fullWidth
     >
       <InputLabel id="genre-select-label">{label}</InputLabel>
       <Select

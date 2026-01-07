@@ -4,7 +4,6 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { searchMovies } from "../../services/tmdb";
 import MovieList from "../../components/movie/MovieList";
 
-
 import SortSelect from "../../components/filters/sortSelect";
 
 export default function SearchResults() {
@@ -15,6 +14,7 @@ export default function SearchResults() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [sort, setSort] = useState("");
+  const [effectiveQuery, setEffectiveQuery] = useState("");
 
   const q = (params.get("q") || "").trim();
 
@@ -22,6 +22,7 @@ export default function SearchResults() {
     if (!q) {
       setMovies([]);
       setError(null);
+      setEffectiveQuery("");
       return;
     }
 
@@ -29,12 +30,31 @@ export default function SearchResults() {
       try {
         setLoading(true);
         setError(null);
-        const results = await searchMovies(q, [], 3); //fetch 3 pages for more results
+        setEffectiveQuery("");
+
+        //try full query, then remove last letter until results found
+        let currentQuery = q;
+        let results = [];
+
+        while (currentQuery.length > 0) {
+          results = await searchMovies(currentQuery, [], 3);
+          if (results?.length > 0) {
+            setEffectiveQuery(currentQuery);
+            break;
+          }
+          //remove last character
+          currentQuery = currentQuery.slice(0, -1);
+        }
+
         setMovies(results);
-        if (!results?.length) setError("No movies found!");
+        if (!results?.length) {
+          setError("No movies found!");
+          setEffectiveQuery("");
+        }
       } catch {
         setError("Unable to fetch.");
         setMovies([]);
+        setEffectiveQuery("");
       } finally {
         setLoading(false);
       }
@@ -79,7 +99,13 @@ export default function SearchResults() {
 
   return (
     <section className={styles.page}>
-      <h2 className={styles.title}>{q ? `Results for “${q}”` : "Search"}</h2>
+      <h2 className={styles.title}>
+        {q
+          ? effectiveQuery && effectiveQuery !== q
+            ? `Results for "${effectiveQuery}" (searched for "${q}")`
+            : `Results for "${q}"`
+          : "Search"}
+      </h2>
 
       <div className={styles.selectContainer}>
         <SortSelect value={sort} onChange={setSort} />

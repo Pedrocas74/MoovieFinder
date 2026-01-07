@@ -21,13 +21,14 @@
 
 .titleCard {
   font-size: var(--fs-sm);
-  width: 100%;
-  max-height: 90%;
+  /* width: 100%; */
+  max-height: 50px;
+  text-overflow: ellipsis;
   color: var(--bg-l);
   text-align: center;
   padding: 6px;
   position: absolute;
-  bottom: 70%;
+  bottom: 50%;
   display: block;
 }
 

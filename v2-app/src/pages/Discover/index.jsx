@@ -1,3 +1,4 @@
+import styles from "./Discover.module.css";
 import { useEffect, useState, useMemo, useCallback, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { getMoviesBySource } from "../../services/tmdb";
@@ -5,7 +6,9 @@ import MovieList from "../../components/movie/MovieList";
 import SkeletonMovieList from "../../components/movie/MovieList/SkeletonMovieList";
 import SourceSelect from "../../components/filters/sourceSelect";
 import GenreSelect from "../../components/filters/genreSelect";
-import styles from "./Discover.module.css";
+import { motion, AnimatePresence } from "framer-motion";
+
+import { ArrowUp } from "lucide-react";
 
 export default function Discover() {
   const navigate = useNavigate();
@@ -26,6 +29,8 @@ export default function Discover() {
   const [hasMore, setHasMore] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
   const observerRef = useRef();
+
+  const [passTheLimit, setPassTheLimit] = useState(false);
 
   const loadMovies = useCallback(
     async (currentPage, append = false) => {
@@ -109,6 +114,17 @@ export default function Discover() {
     return list;
   }, [movies, genres, source]);
 
+  useEffect(() => {
+    const onScroll = () => {
+      setPassTheLimit(window.scrollY >= 400);
+    };
+
+    onScroll();
+    window.addEventListener("scroll", onScroll);
+
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   const openMovie = (movie) => {
     navigate(`/movie/${movie.id}`, { state: { movie } });
   };
@@ -116,6 +132,15 @@ export default function Discover() {
   const resetFilters = () => {
     setSource("popular");
     setGenres([]);
+  };
+
+  const navigateToTop = () => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+    return;
   };
 
   return (
@@ -130,7 +155,7 @@ export default function Discover() {
       <button
         type="button"
         onClick={resetFilters}
-        className="btnSecondary"
+        className="btnPrimary"
         style={{
           margin: "0 auto 5vh auto",
         }}
@@ -159,6 +184,22 @@ export default function Discover() {
           )}
         </>
       )}
+
+      <AnimatePresence>
+        {passTheLimit && (
+          <motion.button
+            type="button"
+            className={`${styles.goTopBtn} actionButton`}
+            onClick={navigateToTop}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.7 }}
+            exit={{ opacity: 0 }}
+          >
+            <ArrowUp color="var(--clr-muted)" />
+          </motion.button>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

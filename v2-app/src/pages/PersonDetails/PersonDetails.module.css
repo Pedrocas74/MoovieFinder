@@ -52,6 +52,7 @@
   border-top-right-radius: var(--radius-small);
   border-bottom-right-radius: var(--radius-small);
   background: var(--clr-bg-alt);
+  box-shadow: var(--shadow-card);
 }
 
 .clamped {
@@ -63,10 +64,6 @@
 }
 .toggleBio {
   margin-top: 1rem;
-  
-}
-.toggleBio:hover {
-  text-decoration: underline;
 }
 
 h3 {
@@ -96,9 +93,9 @@ h3 {
     max-height: 210px;
     /* max-width:70ch; */
  }
- .bio {
+ /* .bio {
   
- }
+ } */
  .imgContainer {
     flex: 1;
     max-width: 30vw;

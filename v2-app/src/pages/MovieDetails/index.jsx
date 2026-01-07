@@ -53,7 +53,6 @@ export default function MovieDetails() {
   const [lightboxOpen, setLightboxOpen] = useState(false); //screenshots viewer
   const [activeShot, setActiveShot] = useState(0); //screenshot being displayed
   const [similar, setSimilar] = useState([]); //similar movies row
-  const [similarSort, setSimilarSort] = useState("");
   const [open, setOpen] = useState(false); //snackbar - toast
 
   const { id } = useParams();
@@ -474,8 +473,7 @@ export default function MovieDetails() {
             movies={similar.slice(0, 20)}
             layout="row"
             onMovieClick={handleOpenDetails}
-            sort={similarSort}
-            onSortChange={setSimilarSort}
+
           />
         </>
       )}

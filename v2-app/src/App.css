@@ -6,7 +6,6 @@
 }
 
 :root {
-    /* colors */
     /* LIGHT MODE  */
     --bg-l: hsl(0, 0%, 97%);
     --bg-ll: #ffffff;
@@ -14,8 +13,27 @@
 
     --red: hsl(0, 70%, 33%);
     --red-light: hsl(0, 82%, 43%);
-    --red-dark: hsl(0, 70%, 23%);
+    --red-dark: hsl(0, 70%, 25%);
     --red-border: hsla(0, 70%, 33%, 0.2);
+
+    --button-gradient-light-background: 
+    linear-gradient(
+    to bottom,
+    hsl(0, 70%, 48%) 0%,
+    hsl(0, 70%, 40%) 75%,
+    hsl(0, 70%, 30%) 100%);
+
+     --button-gradient-light-background-hover: linear-gradient(
+    to bottom,
+    hsl(0, 70%, 40%) 0%,
+    hsl(0, 70%, 32%) 75%,
+    hsl(0, 70%, 20%) 100%);
+
+      --button-gradient-light-background-active: linear-gradient(
+    to bottom,
+    hsl(0, 70%, 30%) 0%,
+    hsl(0, 70%, 20%) 75%,
+    hsl(0, 70%, 15%) 100%);
 
     --clr-text-l: #1d1814;
     --muted: #5a5a5a;
@@ -30,11 +48,29 @@
     --purple-dark: hsl(281, 82%, 46%);
     --purple-border: hsla(281, 82%, 56%, 0.129);
 
+    --button-gradient-dark-background: linear-gradient(
+  to bottom,
+  hsl(281, 82%, 60%) 0%,
+  hsl(281, 82%, 52%) 50%,
+  hsl(281, 82%, 44%) 100%
+);
+    --button-gradient-dark-background-hover: linear-gradient(
+  to bottom,
+  hsl(281, 82%, 50%) 0%,
+  hsl(281, 82%, 42%) 50%,
+  hsl(281, 82%, 34%) 100%
+);
+
+    --button-gradient-dark-background-active: linear-gradient(
+  to bottom,
+  hsl(281, 82%, 40%) 0%,
+  hsl(281, 82%, 32%) 50%,
+  hsl(281, 82%, 24%) 100%
+);
+
     --clr-text-d: hsl(0, 0%, 97%);
     --muted-d: #9c9c9c;
 
-    --yellow: #FFF275;
-    --blue: #6699CC;
     /* --------------------------------------  */
 
     --clr-hover: rgba(121, 121, 121, 0.151);
@@ -52,7 +88,7 @@
     --fs-xl: clamp(2.4rem, 4.5vw, 5.5rem);
 
     /* padding */
-    --pd-button: 0.5em 1.5em;
+    --pd-button: 0.6rem 0.75rem;
     --pd-movieCard: 2px 4px;
     --pd-title: 7vh 0 2vh 5%;
     --pd-td: 7vh 0 2vh 0;
@@ -104,6 +140,9 @@
   --clr-card: var(--bg-l);
   --clr-card-border: var(--bg-ld);
   --clr-muted: var(--muted);
+  --button-background: var(--button-gradient-light-background);
+  --button-background-hover: var(--button-gradient-light-background-hover);
+  --button-background-active: var(--button-gradient-light-background-active);
 }
 
 /* DARK MODE */
@@ -118,6 +157,9 @@
   --clr-card: var(--bg-dl);
   --clr-card-border: var(--bg-dd);
   --clr-muted: var(--muted-d);
+  --button-background: var(--button-gradient-dark-background);
+  --button-background-hover: var(--button-gradient-dark-background-hover);
+  --button-background-active: var(--button-gradient-dark-background-active)
 }
 
 html {  
@@ -161,27 +203,23 @@ a:not(#navLinks) {
     transition: var(--transition);
     font-weight: 600;
     text-decoration: none;
-    width: fit-content;
     font-size: var(--fs-button);
     cursor: pointer;
+    width: fit-content;
 }
 
 .btnPrimary {
-  border-radius: var(--radius-button);
-  background: var(--clr-primary);
+  background: var(--button-background);
   color: var(--clr-bg);
-  border: 1px solid transparent;
-  box-shadow: var(--shadow-button);
-  transition: var(--transition);
+  border: none;
+  height: 2.5rem;
 }
 .btnPrimary:hover {
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-card);
-  filter: brightness(1.05);
+  background: var(--button-background-hover);
 }
 .btnPrimary:active {
-  transform: translateY(0);
-  box-shadow: var(--shadow-card-smooth);
+  background: var(--button-background-active);
+  box-shadow: var(--shadow-button);
 }
 .btnPrimary:focus-visible {
   outline: 2px solid var(--clr-primary);
@@ -190,26 +228,21 @@ a:not(#navLinks) {
 
 
 .btnSecondary {
-  border-radius: var(--radius-button);
   background: transparent;
   color: var(--clr-primary-light);
-  border: 1px solid var(--clr-primary-dark);
-  box-shadow: var(--shadow-button);
-  transition: var(--transition);
+  border: 2px solid var(--clr-primary-light);
+
 }
 .btnSecondary:hover {
-  transform: translateY(-1px);
-  background: var(--clr-primary-light);
-  color: var(--clr-bg);
-  box-shadow: var(--shadow-card);
-  filter: brightness(1.05);
+  border-color: var(--clr-primary-dark);
+  color: var(--clr-text);
 }
 .btnSecondary:active {
-  transform: translateY(0);
-  box-shadow: var(--shadow-card-smooth);
+  box-shadow: var(--shadow-button);
+
 }
 .btnSecondary:focus-visible {
-  outline: 2px solid var(--clr-primary);
+  outline: 2px solid var(--clr-text);
   outline-offset: 2px;
 }
 

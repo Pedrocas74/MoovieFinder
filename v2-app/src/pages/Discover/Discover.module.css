@@ -12,7 +12,26 @@
 .filters {
   padding: var(--pd-normal);
   display: flex;
-  gap: 1rem;
+  flex-direction: column;
+  /* gap: 3rem; */
+  gap: 3rem;
   margin-bottom: 2vh;
   flex-wrap: wrap;
+
+}
+
+@media (width >= 448px) {
+  .filters {
+    flex-direction: row;
+    gap: 1rem;
+    margin-bottom: 5vh;
+  }
+}
+
+.goTopBtn {
+  border-color: unset;
+  border-color: var(--clr-muted);
+  position: fixed;
+  top: 50%;
+  left: 2.5%;
 }

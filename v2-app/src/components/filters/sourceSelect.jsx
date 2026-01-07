@@ -8,34 +8,37 @@ export default function SourceSelect({ value, onChange, label = "Source" }) {
     <>
       <FormControl
         sx={{
-          "& .MuiOutlinedInput-notchedOutline": {
-            borderColor: "var(--clr-text)",
-          },
-          "&:hover .MuiOutlinedInput-notchedOutline": {
+        minWidth: 100,
+        maxHeight: 10,
+    
+        "& .MuiOutlinedInput-notchedOutline": {
+          borderColor: "var(--clr-muted)",
+        },
+        "&:hover .MuiOutlinedInput-notchedOutline": {
+          borderColor: "var(--clr-primary)",
+        },
+        "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
+          {
             borderColor: "var(--clr-primary)",
           },
-          "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
-            {
-              borderColor: "var(--clr-primary)",
-            },
 
-          "& .MuiSelect-select": {
-            color: "var(--clr-text)",
-          },
+        "& .MuiSelect-select": {
+          color: "var(--clr-text)",
+        },
 
-          "& .MuiInputLabel-root": {
-            color: "var(--clr-text)",
-          },
-          "& .MuiInputLabel-root.Mui-focused": {
-            color: "var(--clr-primary)",
-          },
+        "& .MuiInputLabel-root": {
+          color: "var(--clr-muted)",
+        },
+        "& .MuiInputLabel-root.Mui-focused": {
+          color: "var(--clr-primary)",
+        },
 
-          "& .MuiSvgIcon-root": {
-            color: "var(--clr-text)",
-          },
-        }}
+        "& .MuiSvgIcon-root": {
+          color: "var(--clr-muted)", 
+        },
+
+      }}
         size="small"
-        fullWidth
       >
         <InputLabel id="source-select-label">{label}</InputLabel>
 
