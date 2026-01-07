@@ -3,13 +3,13 @@
   gap: 1rem;
   grid-template-columns: repeat(auto-fill, minmax(120px, 125px));
   justify-content: center;
-  max-width: 90%;
+  max-width: 70%;
   margin: 0 auto;
 }
 
 @media (min-width: 1024px) {
   .grid {
-    grid-template-columns: repeat(auto-fill, minmax(120px, 170px));
+    grid-template-columns: repeat(auto-fill, minmax(120px, 160px));
     gap: 3rem;
   }
 }
@@ -19,15 +19,14 @@
   gap: clamp(1rem, 1.5rem, 2rem);
   overflow-x: auto;
   padding: 2vh 0 2vh 2.5%;
+
   scroll-behavior: smooth;
   scrollbar-width: none;       
   -ms-overflow-style: none;   
-
   scroll-snap-type: x proximity;  
   scroll-padding-left: 2.5%;
-
   /* prevent weird vertical scroll interference on mobile */
-  touch-action: pan-x;
+  touch-action: auto;
   -webkit-overflow-scrolling: touch;  
 }
 .row::-webkit-scrollbar {
@@ -52,22 +51,17 @@
   cursor: pointer;
   color: var(--clr-text);
   transition: var(--transition);
-  /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); */
   opacity: 0;
 }
 .scrollButton:hover {
-  /* background: var(--clr-primary); */
-  /* color: var(--bg--ll); */
   transform: scale(1.7);
 }
 .scrollButton:active {
   transform: scale(0.95);
 }
-
 .scrollButton:last-of-type {
   right: 10px;
 }
-
 .scrollContainer:hover .scrollButton {
   opacity: 1;
 }

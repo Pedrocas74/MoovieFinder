@@ -1,6 +1,6 @@
-/* .movieDetailsPage {
-
-} */
+.movieDetailsPage {
+  min-height: 100vh;
+}
 
 .backdrop {
   width: 100%;

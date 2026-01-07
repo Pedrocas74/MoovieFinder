@@ -17,6 +17,11 @@ export default function MovieList({
   const [canScrollRight, setCanScrollRight] = useState(true);
   const scrollContainerRef = useRef(null);
 
+  const isTouchDevice = window.matchMedia(
+  "(hover: none) and (pointer: coarse)"
+).matches;
+
+
   const checkScrollButtons = () => {
     if (scrollContainerRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } =
@@ -52,6 +57,8 @@ export default function MovieList({
     }
   }, [layout, movies]);
 
+
+
   if (!movies || movies.length === 0) {
     return (
       <section className={styles.emptyList}>
@@ -66,7 +73,7 @@ export default function MovieList({
       {title && <h2>{title}</h2>}
       {layout === "row" && (
         <div className={styles.scrollContainer}>
-          {canScrollLeft && (
+          {!isTouchDevice && canScrollLeft && (
             <button
               className={`${styles.scrollButton} actionButton ${
                 !canScrollRight ? styles.leftAtEnd : ""
@@ -107,7 +114,7 @@ export default function MovieList({
 
             {tailCard}
           </div>
-          {canScrollRight && (
+          {!isTouchDevice && canScrollRight && (
             <button
               className={`${styles.scrollButton} actionButton`}
               onClick={scrollRight}

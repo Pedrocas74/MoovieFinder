@@ -1,8 +1,8 @@
+import styles from "./PersonDetails.module.css";
 import { useEffect, useState } from "react";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { getPersonDetails, getPersonMovieCredits } from "../../services/tmdb";
 import { profileUrl } from "../../services/tmdbImages";
-import styles from "./PersonDetails.module.css";
 import MovieList from "../../components/movie/MovieList";
 import SkeletonPersonDetails from "./SkeletonPersonDetails";
 

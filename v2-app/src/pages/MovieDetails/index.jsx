@@ -1,3 +1,5 @@
+
+import styles from "./MovieDetails.module.css";
 import { useParams, useLocation, Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
 import {
@@ -8,12 +10,11 @@ import {
   getSimilarMovies,
 } from "../../services/tmdb";
 // import LoadingSVG from "../../components/ui/LoadingSVG";
-import styles from "./MovieDetails.module.css";
+
 import {
   backdropUrl,
   logoUrl,
   screenshotUrl,
-  profileUrl,
 } from "../../services/tmdbImages";
 
 import {

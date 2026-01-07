@@ -34,7 +34,7 @@ export default function Home() {
   const showSkeleton = loading || !minTimePassed;
 
   return (
-    <>
+    <div style={{ minHeight: "100vh"}}>
       {error && (
         <div>
           {error} <button onClick={reload}>Retry</button>
@@ -100,6 +100,6 @@ export default function Home() {
           onMovieClick={handleOpenDetails}
         />
       )}
-    </>
+    </div>
   );
 }

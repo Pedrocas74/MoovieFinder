@@ -1,8 +1,9 @@
+import styles from "./SearchResults.module.css";
 import { useEffect, useState, useMemo } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { searchMovies } from "../../services/tmdb";
 import MovieList from "../../components/movie/MovieList";
-import styles from "./SearchResults.module.css";
+
 
 import SortSelect from "../../components/filters/sortSelect";
 

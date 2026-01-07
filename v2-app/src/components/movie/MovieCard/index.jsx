@@ -182,7 +182,7 @@ export default function MovieCard({
       onPointerCancel={onPointerCancel}
       onPointerLeave={onPointerCancel}
       // stops iOS callout / image selection weirdness
-      style={{ touchAction: "manipulation" }}
+      // style={{ touchAction: "manipulation" }}
     >
       <div
         className={styles.poster}
@@ -191,7 +191,9 @@ export default function MovieCard({
             ? `url(https://image.tmdb.org/t/p/w342${movie.poster_path})`
             : `url(${placeholder_cover})`,
         }}
-      />
+      >{!movie.poster_path && (
+          <span className={styles.titleCard}>{movie.title}</span>
+      )}</div>
 
       {!isTouchDevice && ( //only on computers
         <button
