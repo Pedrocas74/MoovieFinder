@@ -53,7 +53,7 @@
 
     /* padding */
     --pd-button: 0.5em 1.5em;
-    --pd-movieCard: 2px;
+    --pd-movieCard: 2px 4px;
     --pd-title: 7vh 0 2vh 5%;
     --pd-td: 7vh 0 2vh 0;
     --pd-normal: 0 5% 4vh 5%;

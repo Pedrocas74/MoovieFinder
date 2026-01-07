@@ -20,19 +20,17 @@ const MOVE_CANCEL_PX = 10;
 
 const overlayV = {
   hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { duration: 0.12 } },
-  exit: { opacity: 0, transition: { duration: 0.12 } },
+  show: { opacity: 1, transition: { duration: 0.5 } },
+  exit: { opacity: 0, transition: { duration: 0.5 } },
 };
 
 const menuV = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    // transition: { staggerChildren: 0.15, delayChildren: 0.02 },
   },
   exit: {
     opacity: 0,
-    // transition: { staggerChildren: 0.1, staggerDirection: -1 },
   },
 };
 
@@ -176,7 +174,7 @@ export default function MovieCard({
   return (
     <motion.div
       className={`${styles.movieCard} ${isSaved ? styles.saved : ""}`}
-      whileTap={{ scale: 0.98 }}
+      // whileTap={{ scale: 0.98 }}
       onClick={handleCardClick}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
@@ -266,7 +264,7 @@ export default function MovieCard({
                 style={{ "--angle": "150deg" }}
                 variants={itemV}
                 custom={{ angle: 150 }}
-                whileHover={{ background: watched ? "var(--clr-card)" : "var(--clr-primary-dark) "}}
+                // whileHover={{ background: watched ? "var(--clr-card)" : "var(--clr-primary-dark) "}}
 
               >
                 {watched ? (
@@ -295,7 +293,7 @@ export default function MovieCard({
                 style={{ "--angle": "270deg" }}
                 variants={itemV}
                 custom={{ angle: 270 }}
-                whileHover={{ background: inWatchlist ? "var(--clr-card)" : "var(--clr-primary-dark) "}}
+                // whileHover={{ background: inWatchlist ? "var(--clr-card)" : "var(--clr-primary-dark) "}}
               >
                 {inWatchlist ? (
                   <PlaylistAddCheckRoundedIcon
@@ -321,7 +319,7 @@ export default function MovieCard({
                 style={{ "--angle": "30deg" }}
                 variants={itemV}
                 custom={{ angle: 30 }}
-                whileHover={{ background: favorite ? "var(--clr-card)" : "var(--clr-primary-dark) "}}
+                // whileHover={{ background: favorite ? "var(--clr-card)" : "var(--clr-primary-dark) "}}
               >
                 {favorite ? (
                   <FavoriteIcon sx={{ color: "var(--clr-primary)" }} />

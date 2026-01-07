@@ -1,6 +1,6 @@
 .movieCard {
     min-width: 120px;
-    max-width: 125px;
+    max-width: 170px;
     cursor: pointer;
     border: 1.5px solid var(--clr-card-border);
     border-radius: var(--radius-small);
@@ -10,14 +10,14 @@
     padding: 3px;
     /* flex-shrink: 0; */
     position: relative;
-
     scroll-snap-align: center;
 }
-
 .movieCard.saved {
     border-color: var(--clr-primary);
 }
-
+.movieCard:hover {
+  border: 1px solid var(--clr-text);
+}
 
 .poster {
   width: 100%;
@@ -29,8 +29,6 @@
   border-bottom-left-radius: 0px;
   border-bottom-right-radius: 0px;
 }
-
-
 .skeletonImg {
     height: 177px;
 }
@@ -43,8 +41,6 @@
     color: var(--clr-muted);
     margin-top: 3px;
 }
-
-
 /* SEE MORE CARD  */
 .seeMore {
   display: flex;
@@ -68,32 +64,32 @@
   font-weight: 600;
 }
 
-
-
 @media (min-width: 1024px) {
   .movieCard {
-    min-width: 135px;
+    min-width: 175px;
   }
 
   .poster {
-    height: 192px;
+    height: 228px;
   }
 
   .skeletonImg {
-    height: 192px;
+    height: 228px;
   }
 
   .seeMoreContent {
-    height: 192px;
+    height: 228px;
   }
   /* ---------HOVER BUTTON------------ */
   .hoverBtn {
+    border-radius: unset;
+    border-bottom-left-radius: var(--radius-small); 
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 3px;
+    right: 3px;
     cursor: pointer;
     z-index: 100;
-    color: var(--clr-text);
+    color: var(--bg-ll);
     transition: var(--transition);
     display: none;
     width: 40px;
@@ -103,14 +99,13 @@
   .movieCard:hover .hoverBtn {
     display: block;
   }
-
   .hoverBtn:hover {
     background: var(--clr-card);
-    transform: scale(1.05);
+    /* transform: scale(1.05); */
+    color: var(--clr-text);
   }
-
   .hoverBtn:active {
-    transform: scale(0.95);
+    transform: scale(0.97);
   }
 }
 
@@ -165,38 +160,10 @@
   cursor: pointer;
   transition: var(--transition);
   box-shadow: var(--shadow-card-smooth);
-  /* radial positioning */
-  --radius: 44px;
-  transform: translate(
-    calc(cos(var(--angle)) * var(--radius)),
-    calc(sin(var(--angle)) * var(--radius))
-  );
 }
-/* ---------------- */
-/* fallback if cos()/sin() not supported  */
-@supports not (transform: translate(calc(cos(30deg) * 1px), 0)) {
-  .radialBtn {
-    transform: none;
-  }
-  .radialBtn:nth-child(1) { top: 20%; left: 50%; transform: translateX(-50%); }
-  .radialBtn:nth-child(2) { top: 55%; left: 80%; transform: translate(-50%, -50%); }
-  .radialBtn:nth-child(3) { top: 55%; left: 20%; transform: translate(-50%, -50%); }
-}
-/* ----------------- */
 .radialBtn:hover {
-  transform: translate(
-      calc(cos(var(--angle)) * var(--radius)),
-      calc(sin(var(--angle)) * var(--radius))
-    )
-    translateY(-1px);
-  filter: brightness(1.03);
-}
-.radialBtn:active {
-  transform: translate(
-      calc(cos(var(--angle)) * var(--radius)),
-      calc(sin(var(--angle)) * var(--radius))
-    )
-    scale(0.98);
+  border-color: var(--clr-primary-light);
+  background-color: var(--clr-border);
 }
 
 .active {
@@ -208,9 +175,12 @@
   height: 25px;
   border-radius: var(--radius-full);
   border: 0;
-  background: var(--clr-primary);
+  background: var(--clr-hover);
   cursor: pointer;
   opacity: 0.85;
   place-items: center;
   color: var(--clr-text);
+}
+.radialCenter:hover {
+  background: var(--clr-card);
 }

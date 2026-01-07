@@ -2,6 +2,8 @@ import MovieCard from "../MovieCard";
 import styles from "./MovieList.module.css";
 import { useState, useRef, useEffect } from "react";
 
+import { ChevronLeft, ChevronRight } from "lucide-react";
+
 export default function MovieList({
   title,
   movies,
@@ -12,7 +14,7 @@ export default function MovieList({
 }) {
   const [openMenuMovieId, setOpenMenuMovieId] = useState(null); //to only allow one radial menu open at once
   const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
   const scrollContainerRef = useRef(null);
 
   const checkScrollButtons = () => {
@@ -26,13 +28,13 @@ export default function MovieList({
 
   const scrollLeft = () => {
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: -300, behavior: "smooth" });
+      scrollContainerRef.current.scrollBy({ left: -650, behavior: "smooth" });
     }
   };
 
   const scrollRight = () => {
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: 300, behavior: "smooth" });
+      scrollContainerRef.current.scrollBy({ left: 650, behavior: "smooth" });
     }
   };
 
@@ -66,32 +68,20 @@ export default function MovieList({
         <div className={styles.scrollContainer}>
           {canScrollLeft && (
             <button
-              className={styles.scrollButton}
+              className={`${styles.scrollButton} actionButton ${
+                !canScrollRight ? styles.leftAtEnd : ""
+              }`}
               onClick={scrollLeft}
               aria-label="Scroll left"
             >
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M15 18L9 12L15 6"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              <ChevronLeft size={100} color="var(--clr-text)" />
             </button>
           )}
           <div className={styles[layout]} ref={scrollContainerRef}>
             {movies.map((movie, index) => {
               const key = `movielist-${title || "untitled"}-${movie.id}`;
 
-              // Debug: Check for duplicate keys within this list
+              //check for duplicate keys within this list
               const duplicateInList =
                 movies.findIndex(
                   (m, i) =>
@@ -119,25 +109,11 @@ export default function MovieList({
           </div>
           {canScrollRight && (
             <button
-              className={styles.scrollButton}
+              className={`${styles.scrollButton} actionButton`}
               onClick={scrollRight}
               aria-label="Scroll right"
             >
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M9 18L15 12L9 6"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              <ChevronRight size={100} color="var(--clr-text)" />
             </button>
           )}
         </div>
@@ -147,7 +123,7 @@ export default function MovieList({
           {movies.map((movie, index) => {
             const key = `movielist-${title || "untitled"}-${movie.id}`;
 
-            // Debug: Check for duplicate keys within this list
+            //check for duplicate keys within this list
             const duplicateInList =
               movies.findIndex(
                 (m, i) =>
