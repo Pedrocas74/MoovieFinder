@@ -3,6 +3,7 @@ import { useMemo, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import MovieList from "../../components/movie/MovieList";
 import { useLibrary } from "../../context/LibraryContext";
+import ErrorPlaceholder from "../../components/feedback/ErrorPlaceholder";
 
 //tabs
 import Tabs from "@mui/material/Tabs";
@@ -23,12 +24,12 @@ export default function Library() {
   const { watched, watchlist, favorites } = useLibrary();
 
   const [value, setValue] = useState(() => {
-    const saved = localStorage.getItem('libraryTab');
+    const saved = localStorage.getItem("libraryTab");
     return saved ? parseInt(saved, 10) : 0;
   });
 
   useEffect(() => {
-    localStorage.setItem('libraryTab', value);
+    localStorage.setItem("libraryTab", value);
   }, [value]);
 
   const movies = useMemo(() => {
@@ -36,6 +37,32 @@ export default function Library() {
     if (value === 1) return watchlist;
     return favorites;
   }, [value, watched, favorites, watchlist]);
+
+  const emptyCopy = useMemo(() => {
+    if (value === 0) {
+      return {
+        title: "No watched movies yet",
+        message: "Mark movies as watched and they’ll show up here.",
+        actionLabel: "Discover movies",
+        to: "/discover?source=popular",
+      };
+    }
+    if (value === 1) {
+      return {
+        title: "Your watchlist is empty",
+        message:
+          "Add movies to your watchlist to keep track of what to watch next.",
+        actionLabel: "Browse trending",
+        to: "/discover?source=trending",
+      };
+    }
+    return {
+      title: "No favorites yet",
+      message: "Tap the heart icon on a movie to save it here.",
+      actionLabel: "Explore movies",
+      to: "/",
+    };
+  }, [value]);
 
   const handleOpenDetails = (movie) => {
     navigate(`/movie/${movie.id}`, { state: { movie } });
@@ -121,7 +148,13 @@ export default function Library() {
       </Box>
 
       {movies.length === 0 ? (
-        <p>No movies here yet.</p>
+        <ErrorPlaceholder
+          type="empty"
+          title={emptyCopy.title}
+          message={emptyCopy.message}
+          actionLabel={emptyCopy.actionLabel}
+          onAction={() => navigate(emptyCopy.to)}
+        />
       ) : (
         <MovieList
           movies={movies}

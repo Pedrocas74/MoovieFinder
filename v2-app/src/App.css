@@ -21,19 +21,19 @@
     to bottom,
     hsl(0, 70%, 48%) 0%,
     hsl(0, 70%, 40%) 75%,
-    hsl(0, 70%, 30%) 100%);
+    hsl(0, 70%, 38%) 100%);
 
      --button-gradient-light-background-hover: linear-gradient(
     to bottom,
     hsl(0, 70%, 40%) 0%,
     hsl(0, 70%, 32%) 75%,
-    hsl(0, 70%, 20%) 100%);
+    hsl(0, 70%, 36%) 100%);
 
       --button-gradient-light-background-active: linear-gradient(
     to bottom,
     hsl(0, 70%, 30%) 0%,
     hsl(0, 70%, 20%) 75%,
-    hsl(0, 70%, 15%) 100%);
+    hsl(0, 70%, 34%) 100%);
 
     --clr-text-l: #1d1814;
     --muted: #5a5a5a;
@@ -51,21 +51,21 @@
     --button-gradient-dark-background: linear-gradient(
   to bottom,
   hsl(281, 82%, 60%) 0%,
-  hsl(281, 82%, 52%) 50%,
+  hsl(281, 82%, 52%) 75%,
   hsl(281, 82%, 44%) 100%
 );
     --button-gradient-dark-background-hover: linear-gradient(
   to bottom,
   hsl(281, 82%, 50%) 0%,
-  hsl(281, 82%, 42%) 50%,
-  hsl(281, 82%, 34%) 100%
+  hsl(281, 82%, 42%) 75%,
+  hsl(281, 82%, 42%) 100%
 );
 
     --button-gradient-dark-background-active: linear-gradient(
   to bottom,
   hsl(281, 82%, 40%) 0%,
-  hsl(281, 82%, 32%) 50%,
-  hsl(281, 82%, 24%) 100%
+  hsl(281, 82%, 32%) 75%,
+  hsl(281, 82%, 40%) 100%
 );
 
     --clr-text-d: hsl(0, 0%, 97%);
@@ -231,7 +231,7 @@ a:not(#navLinks) {
   background: transparent;
   color: var(--clr-primary-light);
   border: 2px solid var(--clr-primary-light);
-
+  height: 2.5rem;
 }
 .btnSecondary:hover {
   border-color: var(--clr-primary-dark);

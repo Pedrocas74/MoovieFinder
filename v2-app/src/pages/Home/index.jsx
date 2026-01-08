@@ -5,6 +5,7 @@ import SkeletonMovieList from "../../components/movie/MovieList/SkeletonMovieLis
 import { useHomeMovies } from "../../hooks/useHomeMovies";
 import { useRecentlyViewed } from "../../context/RecentlyViewed";
 import SeeMoreCard from "../../components/movie/MovieCard/SeeMoreCard";
+import ErrorPlaceholder from "../../components/feedback/ErrorPlaceholder";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -40,9 +41,14 @@ export default function Home() {
   return (
     <div style={{ minHeight: "100vh" }}>
       {error && (
-        <div>
-          {error} <button onClick={reload}>Retry</button>
-        </div>
+        <ErrorPlaceholder
+          type="unknown"
+          title="Loading Error"
+          message={error}
+          actionLabel="Retry all"
+          onAction={reload}
+          compact
+        />
       )}
 
       {showSkeleton ? (

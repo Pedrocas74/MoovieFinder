@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+
 import Home from "../pages/Home";
 import MovieDetails from "../pages/MovieDetails";
 import PersonDetails from "../pages/PersonDetails";
@@ -6,6 +7,7 @@ import NotFound from "../pages/NotFound";
 import SearchResults from "../pages/SearchResults";
 import Library from "../pages/Library";
 import Discover from "../pages/Discover";
+
 
 export default function AppRoutes({
   searchedMovies,

@@ -1,6 +1,6 @@
 import styles from "./Navbar.module.css";
 import { Link } from "react-router-dom";
-import SearchBar from "./SearchBar";
+import SearchBar from "../SearchBar";
 import { useState } from "react";
 
 import ExploreIcon from "@mui/icons-material/Explore";
@@ -13,9 +13,9 @@ import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import Tooltip from "@mui/material/Tooltip";
 import { styled } from "@mui/material/styles";
 
-import LogoSVG from "./LogoSVG";
-import ThemeToggle from "../ui/ThemeToggle";
-import { useTheme } from "../../context/ThemeContext";
+import LogoSVG from "../LogoSVG";
+import ThemeToggle from "../../ui/ThemeToggle";
+import { useTheme } from "../../../context/ThemeContext";
 
 export default function Navbar({ setSearchedMovies, setLoading, setError }) {
   const [searchOpen, setSearchOpen] = useState(false);
@@ -33,7 +33,7 @@ export default function Navbar({ setSearchedMovies, setLoading, setError }) {
       borderRadius: "var(--radius-button)",
     },
     "& .MuiTooltip-arrow": {
-      color: "var(--clr-primary)",
+      display: "none",
     },
   });
 

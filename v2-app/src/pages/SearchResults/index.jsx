@@ -1,8 +1,10 @@
 import styles from "./SearchResults.module.css";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { searchMovies } from "../../services/tmdb";
 import MovieList from "../../components/movie/MovieList";
+import LoadingSVG from "../../components/ui/LoadingSVG";
+import ErrorPlaceholder from "../../components/feedback/ErrorPlaceholder";
 
 import SortSelect from "../../components/filters/sortSelect";
 
@@ -93,6 +95,19 @@ export default function SearchResults() {
     return list;
   }, [movies, sort]);
 
+  // const runSearch = useCallback(async () => {
+  //   try {
+  //     setLoading(true);
+  //     setError(null);
+  //     const results = await searchMovies(query);
+  //     setMovies(results);
+  //   } catch (e) {
+  //     setError("We couldn’t fetch search results.");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // }, [query]);
+
   const openMovie = (movie) => {
     navigate(`/movie/${movie.id}`, { state: { movie } });
   };
@@ -111,8 +126,15 @@ export default function SearchResults() {
         <SortSelect value={sort} onChange={setSort} />
       </div>
 
-      {loading && <p>Loading...</p>}
-      {!loading && error && <p>{error}</p>}
+      {loading && <LoadingSVG />}
+      {!loading && error && (
+        <ErrorPlaceholder
+          type="network"
+          title="Search failed"
+          message={error || "We couldn’t fetch results. Please try again."}
+          compact
+        />
+      )}
 
       {!loading && !error && (
         <MovieList

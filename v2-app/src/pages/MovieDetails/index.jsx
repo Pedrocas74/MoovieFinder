@@ -7,7 +7,7 @@ import {
   getCredits,
   getTrailer,
   getSimilarMovies,
-  getRecommendedMovies
+  getRecommendedMovies,
 } from "../../services/tmdb";
 // import LoadingSVG from "../../components/ui/LoadingSVG";
 
@@ -44,6 +44,7 @@ import Alert from "@mui/material/Alert";
 
 import MovieList from "../../components/movie/MovieList/index";
 import SkeletonMovieDetails from "./SkeletonMovieDetails";
+import { useHomeMovies } from "../../hooks/useHomeMovies";
 
 export default function MovieDetails() {
   const [logoPath, setLogoPath] = useState(null);
@@ -53,8 +54,7 @@ export default function MovieDetails() {
   const [screenshots, setScreenshots] = useState([]);
   const [lightboxOpen, setLightboxOpen] = useState(false); //screenshots viewer
   const [activeShot, setActiveShot] = useState(0); //screenshot being displayed
-  const [similar, setSimilar] = useState([]); 
-  const [recommended, setRecommended] = useState([]);
+  const [similar, setSimilar] = useState([]);
   const [open, setOpen] = useState(false); //snackbar - toast
 
   const { id } = useParams();
@@ -194,39 +194,61 @@ export default function MovieDetails() {
 
   //recs are fetched and placed first, while sims are used as a filler
   useEffect(() => {
-  if (!movie?.id) return;
+    if (!movie?.id) return;
 
-  let cancelled = false;
+    let cancelled = false;
 
-  (async () => {
-    try {
-      const [recs, sims] = await Promise.all([
-        getRecommendedMovies(movie.id, 1),
-        getSimilarMovies(movie.id, 1),
-      ]);
+    (async () => {
+      try {
+        const [recs, sims] = await Promise.all([
+          getRecommendedMovies(movie.id, 1),
+          getSimilarMovies(movie.id, 1),
+        ]);
 
-      const merged = [...(recs || []), ...(sims || [])]
-        .filter((m) => m && m.id !== movie.id);
+        const merged = [...(recs || []), ...(sims || [])].filter(
+          (m) => m && m.id !== movie.id
+        );
 
-      //de-dupe by id, keeping first occurrence -> recs win
-      const uniq = Array.from(new Map(merged.map((m) => [m.id, m])).values());
+        //de-dupe by id, keeping first occurrence -> recs win
+        const uniq = Array.from(new Map(merged.map((m) => [m.id, m])).values());
 
-      if (!cancelled) setSimilar(uniq);
-    } catch (e) {
-      console.error("Similar/recommendations fetch failed", e);
-      if (!cancelled) setSimilar([]);
-    }
-  })();
+        if (!cancelled) setSimilar(uniq);
+      } catch (e) {
+        console.error("Similar/recommendations fetch failed", e);
+        if (!cancelled) setSimilar([]);
+      }
+    })();
 
-  return () => {
-    cancelled = true;
-  };
-}, [movie?.id]);
-
+    return () => {
+      cancelled = true;
+    };
+  }, [movie?.id]);
 
   if (loading) return <SkeletonMovieDetails />;
-  if (error) return <div>{error}</div>;
-  if (!movie) return <div>Movie not found</div>;
+
+  if (error) {
+    return (
+      <ErrorPlaceholder
+        type="network"
+        title="Couldn’t load movie"
+        message="We had trouble fetching the movie details."
+        actionLabel="Retry"
+        onAction={reload}
+      />
+    );
+  }
+
+  if (!movie) {
+    return (
+      <ErrorPlaceholder
+        type="not-found"
+        title="Movie not found"
+        message="This movie may have been removed or the link is invalid."
+        actionLabel="Go Back"
+        onAction={() => navigate(-1)}
+      />
+    );
+  }
 
   const director = credits?.crew?.find((person) => person.job === "Director");
   const writers = credits?.crew?.filter((person) =>
@@ -432,7 +454,6 @@ export default function MovieDetails() {
                   >
                     {w.name}
                   </Link>
-                  {/* {i < writers.length - 1 && ", "} */}
                 </span>
               ))}
             </dd>
@@ -493,7 +514,6 @@ export default function MovieDetails() {
             movies={similar.slice(0, 20)}
             layout="row"
             onMovieClick={handleOpenDetails}
-
           />
         </>
       )}

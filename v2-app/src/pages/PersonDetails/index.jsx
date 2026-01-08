@@ -46,37 +46,62 @@ export default function PersonDetails() {
     })();
   }, [id]);
 
-  if (loading) return <SkeletonPersonDetails />;
-  if (!person || error) return <div>Person not found</div>;
-
   const knownFor =
     credits?.cast?.sort((a, b) => b.popularity - a.popularity).slice(0, 20) ??
     []; //sort by popularity descendent
 
+  if (loading) return <SkeletonPersonDetails />;
+  if (error) {
+    return (
+      <ErrorPlaceholder
+        type="network"
+        title="Couldn’t load person"
+        message="We had trouble fetching this person’s details."
+        actionLabel="Go Back"
+        onAction={() => navigate(-1)}
+      />
+    );
+  }
+
+  if (!person) {
+    return (
+      <ErrorPlaceholder
+        type="not-found"
+        title="Person not found"
+        message="This person may not exist or the link is incorrect."
+        actionLabel="Go back"
+        onAction={() => navigate(-1)}
+      />
+    );
+  }
+
   return (
     <section className={styles.page}>
       <div className={styles.mainContainer}>
-        <div className={styles.imgContainer}>
-          <img
-            src={profileUrl(person.profile_path, "w342")}
-            srcSet={`
+        {person.profile_path && (
+          <div className={styles.imgContainer}>
+            <img
+              src={profileUrl(person.profile_path, "w342")}
+              srcSet={`
     ${profileUrl(person.profile_path, "w92")} 92w,
     ${profileUrl(person.profile_path, "w185")} 185w,
     ${profileUrl(person.profile_path, "w342")} 342w,
     ${profileUrl(person.profile_path, "original")} 700w
   `}
-            sizes="
+              sizes="
     (max-width: 480px) 120px,
     (max-width: 768px) 160px,
     (max-width: 1200px) 250px,
     350px
   "
-            alt={person.name}
-            className={styles.avatar}
-            loading="eager"
-            decoding="async"
-          />
-        </div>
+              alt={person.name}
+              className={styles.avatar}
+              loading="eager"
+              decoding="async"
+            />
+          </div>
+        )}
+
         <div className={styles.textContainer}>
           <div className={styles.detailsContainer}>
             <h2>{person.name}</h2>
@@ -141,7 +166,6 @@ export default function PersonDetails() {
             movies={knownFor}
             layout="row"
             onMovieClick={(movie) => navigate(`/movie/${movie.id}`)}
- 
           />
         </>
       )}

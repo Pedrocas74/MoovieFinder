@@ -1,0 +1,62 @@
+.wrapper {
+  padding: 5vh 5%;
+  display: grid;
+  place-items: center;
+}
+
+.card {
+  width: min(520px, 100%);
+  background: var(--clr-card);
+  border: 1px solid var(--clr-card-border);
+  border-radius: var(--radius-large);
+  box-shadow: var(--shadow-card-smooth);
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.iconWrap {
+  width: 64px;
+  height: 64px;
+  margin-inline: auto;
+  margin-bottom: 1rem;
+  border-radius: var(--radius-full);
+  display: grid;
+  place-items: center;
+  color: var(--clr-primary);
+  background: color-mix(in srgb, var(--clr-primary) 14%, transparent);
+  border: 1px solid var(--clr-border);
+}
+
+.title {
+  font-size: var(--fs-lg);
+  font-weight: 700;
+}
+
+.message {
+  margin-top: 0.5rem;
+  color: var(--clr-muted);
+  line-height: var(--lh-small);
+}
+
+.actions {
+  margin-top: 1.7rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+
+.actions :global(button) {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* compact version for rows / sections */
+.compact .card {
+  padding: 1rem;
+}
+.compact .iconWrap {
+  width: 48px;
+  height: 48px;
+}

@@ -1,7 +1,8 @@
 import "./App.css";
 import { useState  } from "react";
 import { BrowserRouter } from "react-router-dom";
-import Navbar from "./components/layout/Navbar";
+import ScrollToTop from "./components/navigation/ScrollToTop/ScrollToTop";
+import Navbar from './components/layout/Navbar';
 import AppRoutes from "./routes/AppRoutes";
 import Footer from "./components/layout/Footer";
 import { LibraryProvider } from "./context/LibraryContext";
@@ -15,6 +16,8 @@ export default function App() {
 
   return (
     <BrowserRouter>
+      <ScrollToTop />
+
       <ThemeProvider>
         <RecentlyViewedProvider>
           <LibraryProvider>

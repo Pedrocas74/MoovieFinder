@@ -1,10 +1,17 @@
 .searchContainer {
     position: relative;
+    /* border: 1px solid red; */
 }
 .input {
   height: 100%;
   padding: 0.5em;
-  border: 1px solid red;
+  width: 50vw;
+  /* border: 1px solid red; */
+}
+@media( width >= 1024px) {
+  .input {
+    width: 35vw;
+  }
 }
 .dropdown {
   position: absolute;
@@ -23,7 +30,7 @@
   padding: var(--pd-button);
   cursor: pointer;
   background: transparent;
-  border-radius: var(--radius-button);
+  border-radius: var(--radius-small);
   transition: var(--transition);
   font-size: var(--fs-sm);
   display: flex;

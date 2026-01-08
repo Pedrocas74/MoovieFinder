@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-export default function LoadingSVG({ darkMode }) {
+export default function LoadingSVG() {
   const containerStyle = {
     display: "flex",
     justifyContent: "center",
@@ -12,43 +12,44 @@ export default function LoadingSVG({ darkMode }) {
   const dotStyle = {
     width: "12px",
     height: "12px",
-    backgroundColor: darkMode ? "#b032eb" : "#8f1919",
+    backgroundColor: "var(--clr-primary)",
     borderRadius: "50%",
+    display: "block"
   };
 
   return (
     <div style={containerStyle}>
       <motion.span
         style={dotStyle}
-        animate={{ y: [0, -12] }}
+        animate={{ opacity: [1, 0.4, 1], y: [0, -12, 0] }}
         transition={{
-          duration: 0.4,
+          duration: 0.7,
           repeat: Infinity,
-          repeatType: "mirror",
+          repeatType: "reverse",
           ease: "easeInOut",
           delay: 0,
         }}
       />
       <motion.span
         style={dotStyle}
-        animate={{ y: [0, -12] }}
+        animate={{ opacity: [1, 0.4, 1], y: [0, -12, 0] }}
         transition={{
-          duration: 0.4,
+          duration: 0.7,
           repeat: Infinity,
-          repeatType: "mirror",
+          repeatType: "reverse",
           ease: "easeInOut",
-          delay: 0.2,
+          delay: 0.3,
         }}
       />
       <motion.span
         style={dotStyle}
-        animate={{ y: [0, -12] }}
+        animate={{ opacity: [1, 0.4, 1], y: [0, -12, 0] }}
         transition={{
-          duration: 0.4,
+          duration: 0.7,
           repeat: Infinity,
-          repeatType: "mirror",
+          repeatType: "reverse",
           ease: "easeInOut",
-          delay: 0.4,
+          delay: 0.6,
         }}
       />
     </div>

@@ -6,6 +6,8 @@ import MovieList from "../../components/movie/MovieList";
 import SkeletonMovieList from "../../components/movie/MovieList/SkeletonMovieList";
 import SourceSelect from "../../components/filters/sourceSelect";
 import GenreSelect from "../../components/filters/genreSelect";
+import LoadingSVG from "../../components/ui/LoadingSVG";
+
 import { motion, AnimatePresence } from "framer-motion";
 
 import { ArrowUp } from "lucide-react";
@@ -18,6 +20,7 @@ export default function Discover() {
 
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
+  // const [showLoadingMore, setShowLoadingMore] = useState(false);
   const [error, setError] = useState(null);
   const [source, setSource] = useState(() => {
     return urlSource || sessionStorage.getItem("discover_source") || "popular";
@@ -125,6 +128,22 @@ export default function Discover() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  //show the loadingSVG for at least 2 seconds
+  // useEffect(() => {
+  //   if (!loadingMore) {
+  //     setShowLoadingMore(false);
+  //     return;
+  //   }
+
+  //   setShowLoadingMore(true);
+
+  //   const timer = setTimeout(() => {
+  //     setShowLoadingMore(false);
+  //   }, 2000);
+
+  //   return () => clearTimeout(timer);
+  // }, [loadingMore]);
+
   const openMovie = (movie) => {
     navigate(`/movie/${movie.id}`, { state: { movie } });
   };
@@ -177,9 +196,16 @@ export default function Discover() {
           {hasMore && (
             <div
               ref={observerRef}
-              style={{ height: "20px", background: "transparent" }}
+              style={{
+                height: "20vh",
+                background: "transparent",
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
             >
-              {loadingMore && <p>Loading more...</p>}
+              {loadingMore  && <LoadingSVG />}
             </div>
           )}
         </>

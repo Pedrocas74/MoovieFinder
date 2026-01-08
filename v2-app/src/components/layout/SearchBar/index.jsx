@@ -6,7 +6,7 @@ import {
 } from "@headlessui/react";
 import styles from "./SearchBar.module.css";
 import { useEffect, useState, useRef } from "react";
-import { searchMovies } from "../../services/tmdb";
+import { searchMovies } from "../../../services/tmdb";
 import { useNavigate } from "react-router-dom";
 import placeholder_cover from "/images/placeholder_movie.webp";
 import { TextSearch } from "lucide-react";
@@ -68,7 +68,7 @@ export default function SearchBar({ autoFocus = false, onClose }) {
   const handleFullSearch = () => {
     const q = query.trim();
     if (!q) return;
-    
+
     navigate(`/search?q=${encodeURIComponent(q)}`);
     setQuery("");
     setSuggestions([]);
@@ -186,7 +186,8 @@ export default function SearchBar({ autoFocus = false, onClose }) {
               }}
               style={{ paddingTop: 10, paddingBottom: 10 }}
             >
-              <TextSearch size={20} style={{marginRight: 5}} /> Search for “{query}”
+              <TextSearch size={20} style={{ marginRight: 5 }} /> Search for “
+              {query}”
             </ComboboxOption>
           </ComboboxOptions>
         )}

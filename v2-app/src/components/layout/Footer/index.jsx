@@ -2,10 +2,16 @@ import styles from "./Footer.module.css";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import ContactPhoneIcon from "@mui/icons-material/ContactPhone";
+import { useLocation } from "react-router-dom";
 
 export default function Footer() {
+
+  const location = useLocation();
+  const isAtHomeOrLibrary = location.pathname === "/" || location.pathname === "/library";
+  const isInDiscover = location.pathname === "/discover";
+
   return (
-    <footer>
+    <footer style={{ marginTop: isAtHomeOrLibrary ? "7vh" : 0, display: isInDiscover ? "none" : null}}>
       <div className={styles.footerWrapper}>
         <div className={styles.footerLeft}>
           <span>Powered by </span>
