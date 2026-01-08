@@ -158,9 +158,6 @@ export async function getUpcoming(page = 1, genres = []) {
 }
 
 
-
-
-
 //get "Trending" movies list
 export async function getTrending(page = 1, genres = []) {
   try {
@@ -188,6 +185,17 @@ export async function getSimilarMovies(movieId, page = 1) {
     throw err;
   }
 }
+
+//get recommended movies ---> sometimes is better than similar
+export async function getRecommendedMovies(movieId, page = 1) {
+  const res = await fetch(
+    `${BASE_URL}/movie/${movieId}/recommendations?language=en-US&page=${page}`,
+    options
+  );
+  const data = await res.json();
+  return (data.results || []).filter(m => !m.adult);
+}
+
 
 //get movies by source (trending or popular)
 export async function getMoviesBySource(source, page = 1, genres = []) {

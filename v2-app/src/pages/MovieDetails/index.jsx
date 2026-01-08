@@ -7,6 +7,7 @@ import {
   getCredits,
   getTrailer,
   getSimilarMovies,
+  getRecommendedMovies
 } from "../../services/tmdb";
 // import LoadingSVG from "../../components/ui/LoadingSVG";
 
@@ -52,7 +53,8 @@ export default function MovieDetails() {
   const [screenshots, setScreenshots] = useState([]);
   const [lightboxOpen, setLightboxOpen] = useState(false); //screenshots viewer
   const [activeShot, setActiveShot] = useState(0); //screenshot being displayed
-  const [similar, setSimilar] = useState([]); //similar movies row
+  const [similar, setSimilar] = useState([]); 
+  const [recommended, setRecommended] = useState([]);
   const [open, setOpen] = useState(false); //snackbar - toast
 
   const { id } = useParams();
@@ -190,19 +192,37 @@ export default function MovieDetails() {
     };
   }, [lightboxOpen, closeLightbox, prevShot, nextShot]);
 
+  //recs are fetched and placed first, while sims are used as a filler
   useEffect(() => {
-    if (!movie?.id) return;
+  if (!movie?.id) return;
 
-    (async () => {
-      try {
-        const sims = await getSimilarMovies(movie.id, 1);
-        setSimilar((sims || []).filter((m) => m.id !== movie.id));
-      } catch (e) {
-        console.error("Similar movies fetch failed", e);
-        setSimilar([]);
-      }
-    })();
-  }, [movie?.id]);
+  let cancelled = false;
+
+  (async () => {
+    try {
+      const [recs, sims] = await Promise.all([
+        getRecommendedMovies(movie.id, 1),
+        getSimilarMovies(movie.id, 1),
+      ]);
+
+      const merged = [...(recs || []), ...(sims || [])]
+        .filter((m) => m && m.id !== movie.id);
+
+      //de-dupe by id, keeping first occurrence -> recs win
+      const uniq = Array.from(new Map(merged.map((m) => [m.id, m])).values());
+
+      if (!cancelled) setSimilar(uniq);
+    } catch (e) {
+      console.error("Similar/recommendations fetch failed", e);
+      if (!cancelled) setSimilar([]);
+    }
+  })();
+
+  return () => {
+    cancelled = true;
+  };
+}, [movie?.id]);
+
 
   if (loading) return <SkeletonMovieDetails />;
   if (error) return <div>{error}</div>;
@@ -467,7 +487,7 @@ export default function MovieDetails() {
 
       {similar?.length > 0 && (
         <>
-          <h3 className={styles.sectionTitle2}>Similar movies</h3>
+          <h3 className={styles.sectionTitle2}>Recommendations</h3>
           <MovieList
             // title="Similar movies"
             movies={similar.slice(0, 20)}
