@@ -13,7 +13,7 @@ import PlaylistAddCheckRoundedIcon from "@mui/icons-material/PlaylistAddCheckRou
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const LONG_PRESS_MS = 150;
 const MOVE_CANCEL_PX = 10;
@@ -110,6 +110,12 @@ export default function MovieCard({
 
   const isSaved = watched || inWatchlist || favorite;
 
+  const [pulseId, setPulseId] = useState(null);
+
+  const triggerPulse = useCallback(() => {
+    setPulseId((n) => (n === null ? 0 : n + 1));
+  }, []);
+
   const timerRef = useRef(null);
   const startPtRef = useRef({ x: 0, y: 0 });
   const longPressedRef = useRef(false);
@@ -181,23 +187,33 @@ export default function MovieCard({
     onClick?.(movie);
   };
 
-  const handleToggleWatched = (e) => {
-    e.stopPropagation();
-    toggleWatched(movie);
-    closeMenu();
-  };
+  // const handleToggleWatched = (e) => {
+  //   e.stopPropagation();
+  //   triggerPulse();
+  //   toggleWatched(movie);
+  //   closeMenu();
+  // };
 
-  const handleToggleWatchlist = (e) => {
-    e.stopPropagation();
-    toggleWatchlist(movie);
-    closeMenu();
-  };
+  // const handleToggleWatchlist = (e) => {
+  //   e.stopPropagation();
+  //   triggerPulse();
+  //   toggleWatchlist(movie);
+  //   closeMenu();
+  // };
 
-  const handleToggleFavorite = (e) => {
-    e.stopPropagation();
-    toggleFavorite(movie);
-    closeMenu();
-  };
+  // const handleToggleFavorite = (e) => {
+  //   e.stopPropagation();
+  //   triggerPulse();
+  //   toggleFavorite(movie);
+  //   closeMenu();
+  // };
+  const handleToggle = (fn) => (e) => {
+  e.stopPropagation();
+  triggerPulse();
+  fn(movie);
+  closeMenu();
+};
+
 
   const isTouchDevice = window.matchMedia(
     "(hover: none) and (pointer: coarse)"
@@ -213,6 +229,14 @@ export default function MovieCard({
       onPointerCancel={onPointerCancel}
       onPointerLeave={onPointerCancel}
     >
+      {pulseId !== null && (
+        <span
+          key={pulseId}
+          className={styles.pulseOverlay}
+          aria-hidden="true"
+        />
+      )}
+
       <div
         className={styles.poster}
         style={{
@@ -290,7 +314,7 @@ export default function MovieCard({
                 className={`${styles.radialBtn} ${
                   watched ? styles.active : ""
                 } actionButton`}
-                onClick={handleToggleWatched}
+                onClick={handleToggle(toggleWatched)}
                 aria-pressed={watched}
                 aria-label={watched ? "Remove from watched" : "Add to watched"}
                 title={watched ? "Remove from watched" : "Add to watched"}
@@ -316,7 +340,7 @@ export default function MovieCard({
                         color: "var(--clr-primary)",
                         transition: "color 0.2s ease",
                         "&:hover": {
-                          color: "var(--clr-bg)",
+                          color: "var(--clr-text)",
                         },
                       }}
                     />
@@ -326,7 +350,7 @@ export default function MovieCard({
                         color: "var(--clr-muted)",
                         transition: "color 0.2s ease",
                         "&:hover": {
-                          color: "var(--clr-text)",
+                          color: "var(--clr-bg)",
                         },
                       }}
                     />
@@ -340,7 +364,7 @@ export default function MovieCard({
                 className={`${styles.radialBtn} ${
                   inWatchlist ? styles.active : ""
                 } actionButton`}
-                onClick={handleToggleWatchlist}
+                onClick={handleToggle(toggleWatchlist)}
                 aria-pressed={inWatchlist}
                 aria-label={
                   inWatchlist ? "Remove from watchlist" : "Add to watchlist"
@@ -370,7 +394,7 @@ export default function MovieCard({
                         color: "var(--clr-primary)",
                         transition: "color 0.2s ease",
                         "&:hover": {
-                          color: "var(--clr-bg)",
+                          color: "var(--clr-text)",
                         },
                       }}
                     />
@@ -380,7 +404,7 @@ export default function MovieCard({
                         color: "var(--clr-muted)",
                         transition: "color 0.2s ease",
                         "&:hover": {
-                          color: "var(--clr-text)",
+                          color: "var(--clr-bg)",
                         },
                       }}
                     />
@@ -394,7 +418,7 @@ export default function MovieCard({
                 className={`${styles.radialBtn} ${
                   favorite ? styles.active : ""
                 } actionButton`}
-                onClick={handleToggleFavorite}
+                onClick={handleToggle(toggleFavorite)}
                 aria-pressed={favorite}
                 aria-label={
                   favorite ? "Remove from favorites" : "Add to favorites"
@@ -422,7 +446,7 @@ export default function MovieCard({
                         color: "var(--clr-primary)",
                         transition: "color 0.2s ease",
                         "&:hover": {
-                          color: "var(--clr-bg)",
+                          color: "var(--clr-text)",
                         },
                       }}
                     />
@@ -432,7 +456,7 @@ export default function MovieCard({
                         color: "var(--clr-muted)",
                         transition: "color 0.2s ease",
                         "&:hover": {
-                          color: "var(--clr-text)",
+                          color: "var(--clr-bg)",
                         },
                       }}
                     />
@@ -443,7 +467,7 @@ export default function MovieCard({
               {/* center close dot */}
               <button
                 type="button"
-                className={`${styles.radialCenter} actionButton`}
+                className={`${styles.radialCenter}`}
                 onClick={(e) => {
                   e.stopPropagation();
                   closeMenu();

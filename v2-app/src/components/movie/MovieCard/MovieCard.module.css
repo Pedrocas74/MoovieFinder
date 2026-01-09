@@ -11,6 +11,7 @@
     /* flex-shrink: 0; */
     position: relative;
     scroll-snap-align: center;
+    overflow: hidden;
 }
 .movieCard.saved {
     border-color: var(--clr-primary-light);
@@ -18,10 +19,41 @@
 .movieCard:hover {
   border: 1px solid var(--clr-text);
 }
+/*--------------------- PULSE ANIMATION---------------  */
+.pulseOverlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+
+ background:
+    linear-gradient(
+      to top,
+      rgba(255,255,255,0.35),
+      var(--clr-border-strong)
+      
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.35),
+      var(--clr-border-strong)
+    );
+
+  z-index: 2;
+  opacity: 0;
+  transform: scale(0.96);
+  animation: cardPulse 1s var(--ease-in-out);
+}
+@keyframes cardPulse {
+  0%   { opacity: 0; transform: scale(0.92); }
+  35%  { opacity: 0.5; transform: scale(1.02); }
+  100% { opacity: 0; transform: scale(1.10); }
+}
 
 .titleCard {
   font-size: var(--fs-sm);
-  /* width: 100%; */
   max-height: 50px;
   text-overflow: ellipsis;
   color: var(--bg-l);
@@ -41,6 +73,8 @@
   border-radius: inherit;
   border-bottom-left-radius: 0px;
   border-bottom-right-radius: 0px;
+  position: relative;
+  z-index: 3;
 }
 .skeletonImg {
     height: 177px;
@@ -175,14 +209,12 @@
 }
 
 .radialCenter {
-  width: 30px;
-  height: 30px;
-  border-radius: var(--radius-full);
-  border: 0;
-  background: var(--clr-hover);
-  cursor: pointer;
+  all: unset;
+  font-size: unset;
+  /* height: 20px;
+  padding: 0; */
+  /* border: 0; */
   opacity: 0.85;
-  place-items: center;
   color: var(--clr-text);
   font-size: var(--fs-xl);
 }
