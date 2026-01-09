@@ -18,8 +18,7 @@
   display: flex;
   gap: clamp(1rem, 1.5rem, 2rem);
   overflow-x: auto;
-  padding: 2vh 0 2vh 2.5%;
-
+  padding: 2vh 0 5vh 2.5%;
   scroll-behavior: smooth;
   scrollbar-width: none;       
   -ms-overflow-style: none;   

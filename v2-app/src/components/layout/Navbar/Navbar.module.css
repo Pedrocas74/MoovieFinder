@@ -1,5 +1,5 @@
 .header {
-    border-bottom: 1.5px solid var(--clr-border);
+    border-bottom: 2px solid var(--clr-border);
     height: 10vh;
     display: flex;
     align-items: center;

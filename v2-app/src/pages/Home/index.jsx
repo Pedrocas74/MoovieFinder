@@ -104,6 +104,12 @@ export default function Home() {
             onMovieClick={handleOpenDetails}
             sort={nowPlayingSort}
             onSortChange={setNowPlayingSort}
+            tailCard={
+              <SeeMoreCard
+                label="See all now playing"
+                onClick={() => navigate("/discover?source=now_playing")}
+              />
+            }
           />
         )
       )}

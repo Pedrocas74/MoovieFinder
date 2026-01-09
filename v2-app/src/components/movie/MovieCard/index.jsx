@@ -1,7 +1,7 @@
 import placeholder_cover from "/images/placeholder_movie.webp";
 import styles from "./MovieCard.module.css";
 import { Star } from "lucide-react";
-import { motion, AnimatePresence, delay } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useLibrary } from "../../../context/LibraryContext";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -15,13 +15,13 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 import { useCallback, useEffect, useRef } from "react";
 
-const LONG_PRESS_MS = 450;
+const LONG_PRESS_MS = 150;
 const MOVE_CANCEL_PX = 10;
 
 const overlayV = {
   hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { duration: 0.5 } },
-  exit: { opacity: 0, transition: { duration: 0.5 } },
+  show: { opacity: 1, transition: { duration: 0.2 } },
+  exit: { opacity: 0, transition: { duration: 0.2 } },
 };
 
 const menuV = {
@@ -35,28 +35,58 @@ const menuV = {
 };
 
 const itemV = {
-  hidden: { x: 0, y: 0, scale: 0.6, opacity: 0 },
+  hidden: { x: 0, y: 0, scale: 0.5, opacity: 0 },
   show: (custom) => ({
     x: Math.cos((custom.angle * Math.PI) / 180) * 54,
     y: Math.sin((custom.angle * Math.PI) / 180) * 54,
     scale: 1,
     opacity: 1,
     transition: {
-      x: { type: "spring", stiffness: 140, damping: 16 },
-      y: { type: "spring", stiffness: 140, damping: 16 },
-      scale: { type: "spring", stiffness: 420, damping: 26 },
-      opacity: { duration: 0.3, delay: 0.55 },
+      x: { type: "spring", stiffness: 1000, damping: 1000 },
+      y: { type: "spring", stiffness: 1000, damping: 1000 },
+      scale: { type: "spring", stiffness: 1000, damping: 1000 },
+      opacity: { duration: 0.1, delay: 0.6 },
     },
   }),
-  exit: {
+  exit: (custom) => ({
     x: 0,
     y: 0,
     scale: 0.6,
     opacity: 0,
-    transition: { duration: 0.12 },
+    transition: {
+      duration: 1,
+      delay: custom.angle === 150 ? 0 : custom.angle === 270 ? 0.08 : 0.2,
+    },
+  }),
+};
+
+//spring scale feedback animation for button tap
+const buttonFeedbackV = {
+  tap: {
+    scale: 1.15,
+    boxShadow: "0 0 0 6px rgba(var(--clr-primary-rgb, 255, 107, 107), 0.2)",
+    transition: {
+      type: "spring",
+      stiffness: 400,
+      damping: 10,
+      mass: 0.5,
+    },
   },
 };
 
+//glow pulse animation for button feedback (released after tap)
+const glowPulseV = {
+  initial: {
+    boxShadow: "0 0 0 0px rgba(var(--clr-primary-rgb, 255, 107, 107), 0.4)",
+  },
+  animate: {
+    boxShadow: "0 0 0 8px rgba(var(--clr-primary-rgb, 255, 107, 107), 0)",
+    transition: {
+      duration: 0.4,
+      ease: "easeOut",
+    },
+  },
+};
 
 export default function MovieCard({
   movie,
@@ -169,20 +199,19 @@ export default function MovieCard({
     closeMenu();
   };
 
-  const isTouchDevice = window.innerWidth < 1024;
+  const isTouchDevice = window.matchMedia(
+    "(hover: none) and (pointer: coarse)"
+  ).matches;
 
   return (
     <motion.div
       className={`${styles.movieCard} ${isSaved ? styles.saved : ""}`}
-      // whileTap={{ scale: 0.98 }}
       onClick={handleCardClick}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
       onPointerCancel={onPointerCancel}
       onPointerLeave={onPointerCancel}
-      // stops iOS callout / image selection weirdness
-      // style={{ touchAction: "manipulation" }}
     >
       <div
         className={styles.poster}
@@ -191,9 +220,11 @@ export default function MovieCard({
             ? `url(https://image.tmdb.org/t/p/w342${movie.poster_path})`
             : `url(${placeholder_cover})`,
         }}
-      >{!movie.poster_path && (
+      >
+        {!movie.poster_path && (
           <span className={styles.titleCard}>{movie.title}</span>
-      )}</div>
+        )}
+      </div>
 
       {!isTouchDevice && ( //only on computers
         <button
@@ -222,7 +253,7 @@ export default function MovieCard({
         </p>
       </div>
 
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {menuOpen && (
           <motion.div
             className={styles.radialOverlay}
@@ -266,16 +297,41 @@ export default function MovieCard({
                 style={{ "--angle": "150deg" }}
                 variants={itemV}
                 custom={{ angle: 150 }}
-                // whileHover={{ background: watched ? "var(--clr-card)" : "var(--clr-primary-dark) "}}
-
+                whileTap={buttonFeedbackV.tap}
+                animate={watched ? glowPulseV.animate : {}}
               >
-                {watched ? (
-                  <VisibilityIcon sx={{ color: "var(--clr-primary)" }} />
-                ) : (
-                  <VisibilityOffOutlinedIcon
-                    sx={{ color: "var(--clr-muted)" }}
-                  />
-                )}
+                <motion.div
+                  className={styles.iconWrapper}
+                  animate={watched ? { scale: [0.9, 1] } : { scale: 1 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 10,
+                    duration: 0.15,
+                  }}
+                >
+                  {watched ? (
+                    <VisibilityIcon
+                      sx={{
+                        color: "var(--clr-primary)",
+                        transition: "color 0.2s ease",
+                        "&:hover": {
+                          color: "var(--clr-bg)",
+                        },
+                      }}
+                    />
+                  ) : (
+                    <VisibilityOffOutlinedIcon
+                      sx={{
+                        color: "var(--clr-muted)",
+                        transition: "color 0.2s ease",
+                        "&:hover": {
+                          color: "var(--clr-text)",
+                        },
+                      }}
+                    />
+                  )}
+                </motion.div>
               </motion.button>
 
               {/* Watchlist */}
@@ -295,15 +351,41 @@ export default function MovieCard({
                 style={{ "--angle": "270deg" }}
                 variants={itemV}
                 custom={{ angle: 270 }}
-                // whileHover={{ background: inWatchlist ? "var(--clr-card)" : "var(--clr-primary-dark) "}}
+                whileTap={buttonFeedbackV.tap}
+                animate={inWatchlist ? glowPulseV.animate : {}}
               >
-                {inWatchlist ? (
-                  <PlaylistAddCheckRoundedIcon
-                    sx={{ color: "var(--clr-primary)" }}
-                  />
-                ) : (
-                  <PlaylistAddRoundedIcon sx={{ color: "var(--clr-muted)" }} />
-                )}
+                <motion.div
+                  className={styles.iconWrapper}
+                  animate={inWatchlist ? { scale: [0.9, 1] } : { scale: 1 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 10,
+                    duration: 0.15,
+                  }}
+                >
+                  {inWatchlist ? (
+                    <PlaylistAddCheckRoundedIcon
+                      sx={{
+                        color: "var(--clr-primary)",
+                        transition: "color 0.2s ease",
+                        "&:hover": {
+                          color: "var(--clr-bg)",
+                        },
+                      }}
+                    />
+                  ) : (
+                    <PlaylistAddRoundedIcon
+                      sx={{
+                        color: "var(--clr-muted)",
+                        transition: "color 0.2s ease",
+                        "&:hover": {
+                          color: "var(--clr-text)",
+                        },
+                      }}
+                    />
+                  )}
+                </motion.div>
               </motion.button>
 
               {/* Favorite */}
@@ -321,13 +403,41 @@ export default function MovieCard({
                 style={{ "--angle": "30deg" }}
                 variants={itemV}
                 custom={{ angle: 30 }}
-                // whileHover={{ background: favorite ? "var(--clr-card)" : "var(--clr-primary-dark) "}}
+                whileTap={buttonFeedbackV.tap}
+                animate={favorite ? glowPulseV.animate : {}}
               >
-                {favorite ? (
-                  <FavoriteIcon sx={{ color: "var(--clr-primary)" }} />
-                ) : (
-                  <FavoriteBorderIcon sx={{ color: "var(--clr-muted)" }} />
-                )}
+                <motion.div
+                  className={styles.iconWrapper}
+                  animate={favorite ? { scale: [0.9, 1] } : { scale: 1 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 10,
+                    duration: 0.15,
+                  }}
+                >
+                  {favorite ? (
+                    <FavoriteIcon
+                      sx={{
+                        color: "var(--clr-primary)",
+                        transition: "color 0.2s ease",
+                        "&:hover": {
+                          color: "var(--clr-bg)",
+                        },
+                      }}
+                    />
+                  ) : (
+                    <FavoriteBorderIcon
+                      sx={{
+                        color: "var(--clr-muted)",
+                        transition: "color 0.2s ease",
+                        "&:hover": {
+                          color: "var(--clr-text)",
+                        },
+                      }}
+                    />
+                  )}
+                </motion.div>
               </motion.button>
 
               {/* center close dot */}

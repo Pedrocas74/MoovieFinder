@@ -13,7 +13,7 @@
     scroll-snap-align: center;
 }
 .movieCard.saved {
-    border-color: var(--clr-primary);
+    border-color: var(--clr-primary-light);
 }
 .movieCard:hover {
   border: 1px solid var(--clr-text);
@@ -121,21 +121,6 @@
   }
 }
 
-
-/* ------------------------------------------------ */
-/* positions each action around center */
-/* .radialSlot {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-
-  --radius: 44px;
-  transform: translate(
-    calc(-50% + (cos(var(--angle)) * var(--radius))),
-    calc(-50% + (sin(var(--angle)) * var(--radius)))
-  );
-} */
-
 /* --- Radial menu overlay --- */
 .radialOverlay {
   position: absolute;
@@ -147,7 +132,7 @@
   position: absolute;
   inset: 0;
   border: 0;
-  background: rgba(0, 0, 0, 0.4);
+  background: var(--radial);
   cursor: pointer;
 }
 
@@ -175,16 +160,23 @@
 }
 .radialBtn:hover {
   border-color: var(--clr-primary-light);
-  background-color: var(--clr-primary-dark);
+  background-color: var(--clr-primary-light);
 }
 
 .active {
   border-color: var(--clr-primary);
 }
 
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+}
+
 .radialCenter {
-  width: 25px;
-  height: 25px;
+  width: 30px;
+  height: 30px;
   border-radius: var(--radius-full);
   border: 0;
   background: var(--clr-hover);
@@ -192,6 +184,7 @@
   opacity: 0.85;
   place-items: center;
   color: var(--clr-text);
+  font-size: var(--fs-xl);
 }
 .radialCenter:hover {
   background: var(--clr-card);

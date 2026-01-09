@@ -38,6 +38,8 @@
     --clr-text-l: #1d1814;
     --muted: #5a5a5a;
 
+    --radial-l: rgba(0, 0, 0, 0.4);
+
     /* DARK MODE  */
     --bg-d: hsl(27, 18%, 10%);
     --bg-dl: hsl(27, 18%, 20%);
@@ -70,6 +72,8 @@
 
     --clr-text-d: hsl(0, 0%, 97%);
     --muted-d: #9c9c9c;
+
+    --radial-d: rgba(179, 179, 179, 0.26);
 
     /* --------------------------------------  */
 
@@ -143,6 +147,7 @@
   --button-background: var(--button-gradient-light-background);
   --button-background-hover: var(--button-gradient-light-background-hover);
   --button-background-active: var(--button-gradient-light-background-active);
+  --radial: var(--radial-l);
 }
 
 /* DARK MODE */
@@ -159,7 +164,8 @@
   --clr-muted: var(--muted-d);
   --button-background: var(--button-gradient-dark-background);
   --button-background-hover: var(--button-gradient-dark-background-hover);
-  --button-background-active: var(--button-gradient-dark-background-active)
+  --button-background-active: var(--button-gradient-dark-background-active);
+  --radial: var(--radial-d);
 }
 
 html {  
@@ -172,10 +178,6 @@ body {
   font-family: var(--ff-body);
 }
 
-h1,
-h2 {
-  font-family: var(--ff-heading);
-}
 h2 {
   padding: var(--pd-title);
   font-size: var(--fs-lg);
@@ -194,8 +196,6 @@ p:not(.cardInfo) {
 }
 
 
-
-
 button:not(.actionButton),
 a:not(#navLinks) {
     padding: var(--pd-button);
@@ -212,7 +212,7 @@ a:not(#navLinks) {
   background: var(--button-background);
   color: var(--clr-bg);
   border: none;
-  height: 2.5rem;
+  min-height: 2.5rem;
 }
 .btnPrimary:hover {
   background: var(--button-background-hover);
@@ -230,8 +230,8 @@ a:not(#navLinks) {
 .btnSecondary {
   background: transparent;
   color: var(--clr-primary-light);
-  border: 2px solid var(--clr-primary-light);
-  height: 2.5rem;
+  border: 1px solid var(--clr-primary-light);
+  min-height: 2.5rem;
 }
 .btnSecondary:hover {
   border-color: var(--clr-primary-dark);

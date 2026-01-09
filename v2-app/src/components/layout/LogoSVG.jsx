@@ -4,8 +4,8 @@ export default function LogoSVG() {
       <svg
         role="img"
         aria-hidden="true"
-        width="60"
-        height="18"
+        width="74"
+        height="24"
         viewBox="0 0 30 9"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

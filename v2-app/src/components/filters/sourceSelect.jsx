@@ -60,6 +60,7 @@ export default function SourceSelect({ value, onChange, label = "Source" }) {
           <MenuItem value="trending">Trending</MenuItem>
           <MenuItem value="popular">Popular</MenuItem>
           <MenuItem value="upcoming">Upcoming</MenuItem>
+          <MenuItem value="now_playing">Now Playing</MenuItem>
         </Select>
       </FormControl>
     </>

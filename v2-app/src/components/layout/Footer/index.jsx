@@ -7,11 +7,10 @@ import { useLocation } from "react-router-dom";
 export default function Footer() {
 
   const location = useLocation();
-  const isAtHomeOrLibrary = location.pathname === "/" || location.pathname === "/library";
   const isInDiscover = location.pathname === "/discover";
 
   return (
-    <footer style={{ marginTop: isAtHomeOrLibrary ? "7vh" : 0, display: isInDiscover ? "none" : null}}>
+    <footer style={{ marginTop: isInDiscover ? 0 : "7vh", display: isInDiscover ? "none" : null}}>
       <div className={styles.footerWrapper}>
         <div className={styles.footerLeft}>
           <span>Powered by </span>

@@ -45,6 +45,7 @@ import Alert from "@mui/material/Alert";
 import MovieList from "../../components/movie/MovieList/index";
 import SkeletonMovieDetails from "./SkeletonMovieDetails";
 import { useHomeMovies } from "../../hooks/useHomeMovies";
+// import SeeMoreCard from "../../components/movie/MovieCard/SeeMoreCard";
 
 export default function MovieDetails() {
   const [logoPath, setLogoPath] = useState(null);
@@ -306,7 +307,7 @@ export default function MovieDetails() {
               style={{ background: watched ? "var(--bg-l)" : "transparent" }}
             >
               {watched ? (
-                <VisibilityIcon />
+                <VisibilityIcon sx={{ color: "var(--clr-primary)" }} />
               ) : (
                 <VisibilityOffOutlinedIcon sx={{ color: "var(--bg-ll)" }} />
               )}
@@ -328,7 +329,9 @@ export default function MovieDetails() {
               }}
             >
               {inWatchlist ? (
-                <PlaylistAddCheckRoundedIcon />
+                <PlaylistAddCheckRoundedIcon
+                  sx={{ color: "var(--clr-primary)" }}
+                />
               ) : (
                 <PlaylistAddRoundedIcon sx={{ color: "var(--bg-ll)" }} />
               )}
@@ -514,6 +517,16 @@ export default function MovieDetails() {
             movies={similar.slice(0, 20)}
             layout="row"
             onMovieClick={handleOpenDetails}
+            // tailCard={
+            //   <SeeMoreCard
+            //     label="See all recommendations"
+            //     onClick={() =>
+            //       navigate(
+            //         `/discover?type=${movie?.type || "movie"}&similar=${id}`
+            //       )
+            //     }
+            //   />
+            // }
           />
         </>
       )}
