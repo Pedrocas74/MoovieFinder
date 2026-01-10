@@ -44,7 +44,7 @@ import Alert from "@mui/material/Alert";
 
 import MovieList from "../../components/movie/MovieList/index";
 import SkeletonMovieDetails from "./SkeletonMovieDetails";
-import { useHomeMovies } from "../../hooks/useHomeMovies";
+// import { useHomeMovies } from "../../hooks/useHomeMovies";
 // import SeeMoreCard from "../../components/movie/MovieCard/SeeMoreCard";
 
 export default function MovieDetails() {
@@ -414,15 +414,19 @@ export default function MovieDetails() {
         </li>
       </ul>
       {movie.overview && <p className={styles.overview}>{movie.overview}</p>}
-      {/* <p>Release Date: {movie.release_date ? movie.release_date : "N/A"}</p> */}
 
       {/* GENRES  */}
       {movie.genres?.length > 0 && (
         <div className={styles.genres}>
           {movie.genres.map((genre) => (
-            <span key={genre.id} className={styles.genre}>
+            <Link
+              id="navLinks"
+              key={genre.id}
+              to={`/discover?genre=${genre.id}`}
+              className={styles.genre}
+            >
               {genre.name}
-            </span>
+            </Link>
           ))}
         </div>
       )}
@@ -619,9 +623,12 @@ export default function MovieDetails() {
           <Alert
             severity="info"
             sx={{
-              backgroundColor: "var(--clr-primary)",
+              backgroundColor: "var(--clr-text)",
               color: "var(--clr-bg)",
-              fontWeight: 600,
+              fontWeight: 200,
+              "& .MuiAlert-icon": {
+                color: "var(--clr-primary)",
+              },
             }}
           >
             Trailer not available

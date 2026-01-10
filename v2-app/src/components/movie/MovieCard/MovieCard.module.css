@@ -8,10 +8,11 @@
     transition: var(--transition);
     box-shadow: var(--shadow-card-smooth);
     padding: 3px;
-    /* flex-shrink: 0; */
     position: relative;
+    z-index: 1;
     scroll-snap-align: center;
-    overflow: hidden;
+    
+    touch-action: manipulation;
 }
 .movieCard.saved {
     border-color: var(--clr-primary-light);
@@ -75,6 +76,12 @@
   border-bottom-right-radius: 0px;
   position: relative;
   z-index: 3;
+}
+.movieCard,
+.poster {
+  -webkit-touch-callout: none; /* iOS: disables "Save Image" callout */
+  -webkit-user-select: none;
+  user-select: none;
 }
 .skeletonImg {
     height: 177px;
@@ -159,7 +166,7 @@
 .radialOverlay {
   position: absolute;
   inset: 0;
-  z-index: 50;
+  z-index: 22;
 }
 
 .radialBackdrop {
@@ -181,6 +188,7 @@
 /* each button placed using angle around center */
 .radialBtn {
   position: absolute;
+  /* z-index: 500; */
   width: 42px;
   height: 42px;
   border-radius: var(--radius-max);

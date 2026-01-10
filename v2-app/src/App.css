@@ -7,9 +7,9 @@
 
 :root {
     /* LIGHT MODE  */
-    --bg-l: hsl(0, 0%, 97%);
+    --bg-l: hsl(0, 0%, 94%);
     --bg-ll: #ffffff;
-    --bg-ld: #d9d9d9;
+    --bg-ld: #afafaf;
 
     --red: hsl(0, 70%, 33%);
     --red-light: hsl(0, 82%, 43%);

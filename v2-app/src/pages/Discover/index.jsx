@@ -17,6 +17,7 @@ export default function Discover() {
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const urlSource = params.get("source");
+  const urlGenre = params.get("genre");
 
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -25,9 +26,12 @@ export default function Discover() {
   const [source, setSource] = useState(() => {
     return urlSource || sessionStorage.getItem("discover_source") || "popular";
   });
-  const [genres, setGenres] = useState(
-    JSON.parse(sessionStorage.getItem("discover_genres") || "[]")
-  );
+  const [genres, setGenres] = useState(() => {
+    if (urlGenre) {
+      return [parseInt(urlGenre)];
+    }
+    return JSON.parse(sessionStorage.getItem("discover_genres") || "[]");
+  });
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -205,7 +209,7 @@ export default function Discover() {
                 alignItems: "center",
               }}
             >
-              {loadingMore  && <LoadingSVG />}
+              {loadingMore && <LoadingSVG />}
             </div>
           )}
         </>

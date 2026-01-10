@@ -15,7 +15,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-const LONG_PRESS_MS = 150;
+const LONG_PRESS_MS = 200;
 const MOVE_CANCEL_PX = 10;
 
 const overlayV = {
@@ -187,26 +187,6 @@ export default function MovieCard({
     onClick?.(movie);
   };
 
-  // const handleToggleWatched = (e) => {
-  //   e.stopPropagation();
-  //   triggerPulse();
-  //   toggleWatched(movie);
-  //   closeMenu();
-  // };
-
-  // const handleToggleWatchlist = (e) => {
-  //   e.stopPropagation();
-  //   triggerPulse();
-  //   toggleWatchlist(movie);
-  //   closeMenu();
-  // };
-
-  // const handleToggleFavorite = (e) => {
-  //   e.stopPropagation();
-  //   triggerPulse();
-  //   toggleFavorite(movie);
-  //   closeMenu();
-  // };
   const handleToggle = (fn) => (e) => {
   e.stopPropagation();
   triggerPulse();
@@ -228,6 +208,7 @@ export default function MovieCard({
       onPointerUp={onPointerUp}
       onPointerCancel={onPointerCancel}
       onPointerLeave={onPointerCancel}
+      onContextMenu={(e) => e.preventDefault()}
     >
       {pulseId !== null && (
         <span

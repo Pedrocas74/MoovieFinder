@@ -42,22 +42,22 @@
   padding: 1rem 5%;
   height: fit-content;
   max-height: 300px;
-  border: 11px inset var(--clr-primary);
+  border: 5px inset var(--clr-primary);
   border-left: none;
   transition: var(--transition);
   display: flex;
   flex-direction: column;
   overflow-y: auto;
   overflow-x: hidden;
-  border-top-right-radius: var(--radius-small);
-  border-bottom-right-radius: var(--radius-small);
+  border-top-right-radius: var(--radius-large);
+  border-bottom-right-radius: var(--radius-large);
   background: var(--clr-bg-alt);
   box-shadow: var(--shadow-card);
+  
 }
 
 .clamped {
   display: -webkit-box;
-  -webkit-line-clamp: 4;
   line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;

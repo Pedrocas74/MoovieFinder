@@ -116,6 +116,11 @@
   font-size: var(--fs-sm);
   font-weight: 600;
 }
+.genre:hover,
+.genre:active {
+  background: var(--clr-bg);
+  border-color: var(--clr-primary);
+}
 
 
 
@@ -142,17 +147,19 @@
   font-size: var(--fs-md);
   /* border: 1px solid yellow; */
 }
-@media (width >= 1024px) {
+@media (width >= 768px) {
   .metaList {
     min-width: 40%;
     max-width: 50%;
     margin: 0 auto;
+    grid-template-columns: 1fr 1fr;
   }
   .metaList dt {
     text-align: right;
   }
   .metaList dd {
       padding-left: 2rem;
+      width: max-content;
   }
 }
 
