@@ -8,6 +8,8 @@ import Footer from "./components/layout/Footer";
 import { LibraryProvider } from "./context/LibraryContext";
 import { RecentlyViewedProvider } from "./context/RecentlyViewed";
 import { ThemeProvider } from "./context/ThemeContext";
+import { Analytics } from '@vercel/analytics/react';
+
 
 export default function App() {
   const [searchedMovies, setSearchedMovies] = useState([]);
@@ -17,7 +19,8 @@ export default function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
-
+      {/* vercel analytics  */}
+      <Analytics /> 
       <ThemeProvider>
         <RecentlyViewedProvider>
           <LibraryProvider>

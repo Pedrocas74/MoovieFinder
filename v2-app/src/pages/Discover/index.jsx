@@ -7,6 +7,7 @@ import SkeletonMovieList from "../../components/movie/MovieList/SkeletonMovieLis
 import SourceSelect from "../../components/filters/sourceSelect";
 import GenreSelect from "../../components/filters/genreSelect";
 import LoadingSVG from "../../components/ui/LoadingSVG";
+import ErrorPlaceholder from "../../components/feedback/ErrorPlaceholder";
 
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -21,7 +22,6 @@ export default function Discover() {
 
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
-  // const [showLoadingMore, setShowLoadingMore] = useState(false);
   const [error, setError] = useState(null);
   const [source, setSource] = useState(() => {
     return urlSource || sessionStorage.getItem("discover_source") || "popular";
@@ -132,22 +132,6 @@ export default function Discover() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  //show the loadingSVG for at least 2 seconds
-  // useEffect(() => {
-  //   if (!loadingMore) {
-  //     setShowLoadingMore(false);
-  //     return;
-  //   }
-
-  //   setShowLoadingMore(true);
-
-  //   const timer = setTimeout(() => {
-  //     setShowLoadingMore(false);
-  //   }, 2000);
-
-  //   return () => clearTimeout(timer);
-  // }, [loadingMore]);
-
   const openMovie = (movie) => {
     navigate(`/movie/${movie.id}`, { state: { movie } });
   };
@@ -170,7 +154,11 @@ export default function Discover() {
     <section className={styles.page}>
       <h2 className={styles.title}>Discover Movies</h2>
 
-      <div className={styles.filters}>
+      <div
+        className={styles.filters}
+        role="region"
+        aria-label="Discover filters"
+      >
         <SourceSelect value={source} onChange={setSource} />
         <GenreSelect value={genres} onChange={setGenres} />
       </div>
@@ -186,8 +174,19 @@ export default function Discover() {
         Reset Filters
       </button>
 
-      {loading && <SkeletonMovieList layout="grid" count={20} />}
-      {!loading && error && <p>{error}</p>}
+      <div aria-live="polite" aria-atomic="true">
+        {loading && <SkeletonMovieList layout="grid" count={20} />}
+      </div>
+
+      {!loading && error && (
+        <ErrorPlaceholder
+          type="network"
+          title="Couldn’t load movies"
+          message="We had trouble fetching the movies."
+          actionLabel="Retry"
+          onAction={reload}
+        />
+      )}
 
       {!loading && !error && (
         <>
@@ -200,6 +199,7 @@ export default function Discover() {
           {hasMore && (
             <div
               ref={observerRef}
+              aria-label="Load more trigger"
               style={{
                 height: "20vh",
                 background: "transparent",
@@ -221,12 +221,17 @@ export default function Discover() {
             type="button"
             className={`${styles.goTopBtn} actionButton`}
             onClick={navigateToTop}
+            aria-label="Back to top"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.7 }}
             exit={{ opacity: 0 }}
           >
-            <ArrowUp color="var(--clr-muted)" />
+            <ArrowUp
+              color="var(--clr-muted)"
+              aria-hidden="true"
+              focusable="false"
+            />
           </motion.button>
         )}
       </AnimatePresence>

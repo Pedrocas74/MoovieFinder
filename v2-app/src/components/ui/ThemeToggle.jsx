@@ -1,21 +1,26 @@
 import styles from "./ThemeToggle.module.css";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 
 export default function ThemeToggle({ darkMode, setDarkMode }) {
-
+  const reduceMotion = useReducedMotion();
+  const nextLabel = darkMode ? "Switch to light mode" : "Switch to dark mode";
+  
   return (
     <motion.button
-      aria-label="Toggle dark/light mode"
+      type="button"
+      aria-label={nextLabel}
+      aria-pressed={darkMode}
       onClick={() => setDarkMode(!darkMode)}
       className={`${styles.toggleButton} actionButton`}
+      whileTap={reduceMotion ? undefined : { scale: 0.95 }}
     >
       {darkMode ? (
-        <DarkModeIcon sx={{ color: "var(--clr-text)" }} />
+        <LightModeIcon sx={{ color: "var(--clr-text)" }} aria-hidden="true" focusable="false"  />
       ) : (
-        <LightModeIcon sx={{ color: "var(--clr-text)" }} />
+        <DarkModeIcon sx={{ color: "var(--clr-text)" }} aria-hidden="true" focusable="false"  />
       )}
     </motion.button>
   );

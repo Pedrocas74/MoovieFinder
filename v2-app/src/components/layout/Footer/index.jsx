@@ -9,8 +9,10 @@ export default function Footer() {
   const location = useLocation();
   const isInDiscover = location.pathname === "/discover";
 
+  if(isInDiscover) return null;
+
   return (
-    <footer style={{ marginTop: isInDiscover ? 0 : "7vh", display: isInDiscover ? "none" : null}}>
+    <footer style={{ marginTop: "7vh" }}>
       <div className={styles.footerWrapper}>
         <div className={styles.footerLeft}>
           <span>Powered by </span>
@@ -33,7 +35,7 @@ export default function Footer() {
             aria-label="Visit Pedro Magalhães portfolio website"
             id="navLinks"
           >
-            <ContactPhoneIcon />
+            <ContactPhoneIcon aria-hidden="true" focusable="false" />
           </a>
           <a
             href="https://www.linkedin.com/in/pedro-magalhães-1a3651334/"
@@ -42,7 +44,7 @@ export default function Footer() {
             aria-label="Pedro Magalhães on LinkedIn"
             id="navLinks"
           >
-            <LinkedInIcon />
+            <LinkedInIcon aria-hidden="true" focusable="false" />
           </a>
           <a
             href="https://github.com/Pedrocas74"
@@ -51,7 +53,7 @@ export default function Footer() {
             aria-label="Pedro Magalhães on GitHub"
             id="navLinks"
           >
-            <GitHubIcon />
+            <GitHubIcon aria-hidden="true" focusable="false" />
           </a>
         </div>
       </div>

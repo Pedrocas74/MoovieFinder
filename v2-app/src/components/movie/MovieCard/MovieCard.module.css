@@ -11,7 +11,6 @@
     position: relative;
     z-index: 1;
     scroll-snap-align: center;
-    
     touch-action: manipulation;
 }
 .movieCard.saved {
@@ -118,7 +117,7 @@
   font-weight: 600;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 768px) {
   .movieCard {
     min-width: 160px;
   }
@@ -133,6 +132,7 @@
 
   .seeMoreContent {
     height: 228px;
+  }
   }
   /* ---------HOVER BUTTON------------ */
   .hoverBtn {
@@ -160,7 +160,7 @@
   .hoverBtn:active {
     transform: scale(0.98);
   }
-}
+
 
 /* --- Radial menu overlay --- */
 .radialOverlay {
@@ -188,7 +188,6 @@
 /* each button placed using angle around center */
 .radialBtn {
   position: absolute;
-  /* z-index: 500; */
   width: 42px;
   height: 42px;
   border-radius: var(--radius-max);
@@ -219,9 +218,6 @@
 .radialCenter {
   all: unset;
   font-size: unset;
-  /* height: 20px;
-  padding: 0; */
-  /* border: 0; */
   opacity: 0.85;
   color: var(--clr-text);
   font-size: var(--fs-xl);

@@ -5,6 +5,7 @@ import { getPersonDetails, getPersonMovieCredits } from "../../services/tmdb";
 import { profileUrl } from "../../services/tmdbImages";
 import MovieList from "../../components/movie/MovieList";
 import SkeletonPersonDetails from "./SkeletonPersonDetails";
+import ErrorPlaceholder from "../../components/feedback/ErrorPlaceholder";
 
 import CakeIcon from "@mui/icons-material/Cake";
 import CottageIcon from "@mui/icons-material/Cottage";
@@ -78,7 +79,7 @@ export default function PersonDetails() {
   return (
     <section className={styles.page}>
       <div className={styles.mainContainer}>
-        {person.profile_path && (
+        {person.profile_path ? (
           <div className={styles.imgContainer}>
             <img
               src={profileUrl(person.profile_path, "w342")}
@@ -100,6 +101,18 @@ export default function PersonDetails() {
               decoding="async"
             />
           </div>
+        ) : (
+          <div className={styles.imgContainer}>
+            <img
+              src="/images/avatarPlaceholder.png"
+              className={styles.avatar}
+              alt={`Photo of ${person.name} not found`}
+              loading="eager"
+              decoding="async"
+              role="img"
+              aria-label={`${person.name} profile photo unavailable`}
+            />
+          </div>
         )}
 
         <div className={styles.textContainer}>
@@ -114,10 +127,18 @@ export default function PersonDetails() {
                   marginBottom: "0.7rem",
                 }}
               >
-                <CakeIcon sx={{ color: "var(--clr-border)" }} />
-                <span style={{ paddingLeft: 7 }} className={styles.birthday}>
+                <CakeIcon
+                  sx={{ color: "var(--clr-border)" }}
+                  aria-hidden="true"
+                  focusable="false"
+                />
+                <time
+                  style={{ paddingLeft: 7 }}
+                  className={styles.birthday}
+                  dateTime={person.birthday}
+                >
                   {person.birthday.split("-").reverse().join("-")}
-                </span>
+                </time>
               </div>
             )}
             {person.place_of_birth && (
@@ -129,7 +150,11 @@ export default function PersonDetails() {
                   marginBottom: "1rem",
                 }}
               >
-                <CottageIcon sx={{ color: "var(--clr-border)" }} />
+                <CottageIcon
+                  sx={{ color: "var(--clr-border)" }}
+                  aria-hidden="true"
+                  focusable="false"
+                />
                 <span
                   style={{ paddingLeft: 7 }}
                   className={styles.placeOfBirth}
@@ -142,14 +167,20 @@ export default function PersonDetails() {
 
           {person.biography && (
             <div className={styles.bioContainer}>
-              <p className={`${styles.bio} ${!isOpen ? styles.clamped : ""}`}>
+              <p
+                id="person-bio"
+                className={`${styles.bio} ${!isOpen ? styles.clamped : ""}`}
+              >
                 {person.biography}
               </p>
 
               {person.biography.length > 100 && (
                 <button
+                  type="button"
                   className={`${styles.toggleBio} btnSecondary`}
                   onClick={() => setIsOpen(!isOpen)}
+                  aria-expanded={isOpen}
+                  aria-controls="person-bio"
                 >
                   {isOpen ? "Show less" : "Read more"}
                 </button>

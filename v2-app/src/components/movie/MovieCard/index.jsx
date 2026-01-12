@@ -188,12 +188,11 @@ export default function MovieCard({
   };
 
   const handleToggle = (fn) => (e) => {
-  e.stopPropagation();
-  triggerPulse();
-  fn(movie);
-  closeMenu();
-};
-
+    e.stopPropagation();
+    triggerPulse();
+    fn(movie);
+    closeMenu();
+  };
 
   const isTouchDevice = window.matchMedia(
     "(hover: none) and (pointer: coarse)"
@@ -242,7 +241,7 @@ export default function MovieCard({
               closeMenu();
             }
           }}
-          aria-label="Open quick actions"
+          aria-label={menuOpen ? "Close quick actions" : "Open quick actions"}
           title="Quick actions"
         >
           {menuOpen ? "-" : "+"}
@@ -253,8 +252,14 @@ export default function MovieCard({
         <p className={`${styles.releaseDate} cardInfo`}>
           {movie.release_date?.slice(0, 4)}
         </p>
-        <p className={`${styles.rating} cardInfo`}>
-          <Star size={10} /> {Number(movie.vote_average).toFixed(1)}
+        <p
+          className={`${styles.rating} cardInfo`}
+          aria-label={`Rating ${Number(movie.vote_average).toFixed(
+            1
+          )} out of 10`}
+        >
+          <Star size={10} aria-hidden="true" focusable="false" />{" "}
+          {Number(movie.vote_average).toFixed(1)}
         </p>
       </div>
 
@@ -263,7 +268,8 @@ export default function MovieCard({
           <motion.div
             className={styles.radialOverlay}
             role="dialog"
-            aria-label="Quick actions"
+            aria-modal="true"
+            aria-label={`Quick actions for ${movie.title}`}
             variants={overlayV}
             initial="hidden"
             animate="show"
@@ -324,6 +330,8 @@ export default function MovieCard({
                           color: "var(--clr-text)",
                         },
                       }}
+                      aria-hidden="true"
+                      focusable="false"
                     />
                   ) : (
                     <VisibilityOffOutlinedIcon
@@ -334,6 +342,8 @@ export default function MovieCard({
                           color: "var(--clr-bg)",
                         },
                       }}
+                      aria-hidden="true"
+                      focusable="false"
                     />
                   )}
                 </motion.div>
@@ -378,6 +388,8 @@ export default function MovieCard({
                           color: "var(--clr-text)",
                         },
                       }}
+                      aria-hidden="true"
+                      focusable="false"
                     />
                   ) : (
                     <PlaylistAddRoundedIcon
@@ -388,6 +400,8 @@ export default function MovieCard({
                           color: "var(--clr-bg)",
                         },
                       }}
+                      aria-hidden="true"
+                      focusable="false"
                     />
                   )}
                 </motion.div>
@@ -430,6 +444,8 @@ export default function MovieCard({
                           color: "var(--clr-text)",
                         },
                       }}
+                      aria-hidden="true"
+                      focusable="false"
                     />
                   ) : (
                     <FavoriteBorderIcon
@@ -440,6 +456,8 @@ export default function MovieCard({
                           color: "var(--clr-bg)",
                         },
                       }}
+                      aria-hidden="true"
+                      focusable="false"
                     />
                   )}
                 </motion.div>

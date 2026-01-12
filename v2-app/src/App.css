@@ -262,7 +262,10 @@ a:not(#navLinks) {
   align-items: center;
   cursor: pointer;
 }
-
+.actionButton:focus-visible {
+  outline: 2px solid var(--clr-primary);
+  outline-offset: 2px;
+}
 
 
 

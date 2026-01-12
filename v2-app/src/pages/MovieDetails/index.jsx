@@ -287,8 +287,15 @@ export default function MovieDetails() {
               className="actionButton"
               type="button"
               onClick={handleWatchTrailer}
+              aria-label="Play trailer"
             >
-              <Play size={24} fill="var(--bg-ll)" stroke="transparent" />
+              <Play
+                size={24}
+                fill="var(--bg-ll)"
+                stroke="transparent"
+                aria-hidden="true"
+                focusable="false"
+              />
             </button>
           </AppTooltip>
 
@@ -303,13 +310,22 @@ export default function MovieDetails() {
                 toggleWatched(movie);
               }}
               aria-pressed={watched}
+              aria-label={watched ? "Remove from watched" : "Add to watched"}
               title={watched ? "Remove from watched" : "Add to watched"}
               style={{ background: watched ? "var(--bg-l)" : "transparent" }}
             >
               {watched ? (
-                <VisibilityIcon sx={{ color: "var(--clr-primary)" }} />
+                <VisibilityIcon
+                  sx={{ color: "var(--clr-primary)" }}
+                  aria-hidden="true"
+                  focusable="false"
+                />
               ) : (
-                <VisibilityOffOutlinedIcon sx={{ color: "var(--bg-ll)" }} />
+                <VisibilityOffOutlinedIcon
+                  sx={{ color: "var(--bg-ll)" }}
+                  aria-hidden="true"
+                  focusable="false"
+                />
               )}
             </button>
           </AppTooltip>
@@ -324,6 +340,9 @@ export default function MovieDetails() {
               onClick={() => toggleWatchlist(movie)}
               aria-pressed={inWatchlist}
               title={inWatchlist ? "Remove from watchlist" : "Add to watchlist"}
+              aria-label={
+                inWatchlist ? "Remove from watchlist" : "Add to watchlist"
+              }
               style={{
                 background: inWatchlist ? "var(--bg-l)" : "transparent",
               }}
@@ -331,9 +350,15 @@ export default function MovieDetails() {
               {inWatchlist ? (
                 <PlaylistAddCheckRoundedIcon
                   sx={{ color: "var(--clr-primary)" }}
+                  aria-hidden="true"
+                  focusable="false"
                 />
               ) : (
-                <PlaylistAddRoundedIcon sx={{ color: "var(--bg-ll)" }} />
+                <PlaylistAddRoundedIcon
+                  sx={{ color: "var(--bg-ll)" }}
+                  aria-hidden="true"
+                  focusable="false"
+                />
               )}
             </button>
           </AppTooltip>
@@ -348,12 +373,23 @@ export default function MovieDetails() {
               onClick={() => toggleFavorite(movie)}
               aria-pressed={favorite}
               title={favorite ? "Remove from favorites" : "Add to favorites"}
+              aria-label={
+                favorite ? "Remove from favorites" : "Add to favorites"
+              }
               style={{ background: favorite ? "var(--bg-l)" : "transparent" }}
             >
               {favorite ? (
-                <FavoriteIcon sx={{ color: "var(--clr-primary)" }} />
+                <FavoriteIcon
+                  sx={{ color: "var(--clr-primary)" }}
+                  aria-hidden="true"
+                  focusable="false"
+                />
               ) : (
-                <FavoriteBorderIcon sx={{ color: "var(--bg-ll)" }} />
+                <FavoriteBorderIcon
+                  sx={{ color: "var(--bg-ll)" }}
+                  aria-hidden="true"
+                  focusable="false"
+                />
               )}
             </button>
           </AppTooltip>
@@ -398,7 +434,7 @@ export default function MovieDetails() {
           <h2 className={styles.title}>{movie.title}</h2>
         )}
       </div>
-      <ul className={styles.itemsContainer}>
+      <ul className={styles.itemsContainer} aria-label="Movie stats">
         <li>
           <Hourglass style={{ marginRight: 5 }} size={13} />{" "}
           {movie.runtime ? `${movie.runtime} min` : "N/A"}

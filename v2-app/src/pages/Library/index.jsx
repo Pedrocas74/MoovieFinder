@@ -112,9 +112,9 @@ export default function Library() {
           <Tab
             icon={
               value === 0 ? (
-                <VisibilityIcon sx={{ color: "currentColor" }} />
+                <VisibilityIcon sx={{ color: "currentColor" }} aria-hidden="true" focusable="false"/>
               ) : (
-                <VisibilityOutlinedIcon sx={{ color: "currentColor" }} />
+                <VisibilityOutlinedIcon sx={{ color: "currentColor" }} aria-hidden="true" focusable="false"/>
               )
             }
             label="WATCHED"
@@ -124,9 +124,9 @@ export default function Library() {
           <Tab
             icon={
               value === 1 ? (
-                <PlaylistAddCheckRoundedIcon sx={{ color: "currentColor" }} />
+                <PlaylistAddCheckRoundedIcon sx={{ color: "currentColor" }} aria-hidden="true" focusable="false"/>
               ) : (
-                <PlaylistAddRoundedIcon sx={{ color: "currentColor" }} />
+                <PlaylistAddRoundedIcon sx={{ color: "currentColor" }} aria-hidden="true" focusable="false"/>
               )
             }
             label="WATCHLIST"
@@ -136,9 +136,9 @@ export default function Library() {
           <Tab
             icon={
               value === 2 ? (
-                <FavoriteIcon sx={{ color: "currentColor" }} />
+                <FavoriteIcon sx={{ color: "currentColor" }} aria-hidden="true" focusable="false"/>
               ) : (
-                <FavoriteBorderIcon sx={{ color: "currentColor" }} />
+                <FavoriteBorderIcon sx={{ color: "currentColor" }} aria-hidden="true" focusable="false"/>
               )
             }
             label="FAVORITES"

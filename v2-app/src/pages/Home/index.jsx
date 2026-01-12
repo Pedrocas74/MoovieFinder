@@ -9,9 +9,7 @@ import SeeMoreCard from "../../components/movie/MovieCard/SeeMoreCard";
 import ErrorPlaceholder from "../../components/feedback/ErrorPlaceholder";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import CloseIcon from "@mui/icons-material/Close";
+
 
 export default function Home() {
   const navigate = useNavigate();
@@ -62,14 +60,15 @@ export default function Home() {
     return () => clearTimeout(t);
   }, [isTouchDevice, showSkeleton, error]);
 
-  const dismissHint = () => {
-    localStorage.setItem("moo_hint_longpress_v1", "1");
-    setShowHint(false);
-  };
+  // const dismissHint = () => {
+  //   localStorage.setItem("moo_hint_longpress_v1", "1");
+  //   setShowHint(false);
+  // };
 
   return (
     <div style={{ minHeight: "100vh" }}>
       {error && (
+        <div role="alert" aria-live="assertive">
         <ErrorPlaceholder
           type="unknown"
           title="Loading Error"
@@ -78,6 +77,7 @@ export default function Home() {
           onAction={reload}
           compact
         />
+        </div>
       )}
 
       {showSkeleton ? (
@@ -157,8 +157,9 @@ export default function Home() {
       {showHint && isTouchDevice && (
         <Snackbar
           open={open}
-          autoHideDuration={3000}
+          autoHideDuration={4000}
           onClose={() => setShowHint(false)}
+          // onClose={dismissHint}
         >
           <Alert
             severity="info"

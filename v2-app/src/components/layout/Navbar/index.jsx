@@ -1,5 +1,5 @@
 import styles from "./Navbar.module.css";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import SearchBar from "../SearchBar";
 import { useState } from "react";
 
@@ -42,8 +42,8 @@ export default function Navbar({ setSearchedMovies, setLoading, setError }) {
       <nav className={styles.navbar}>
         {!searchOpen && (
           <>
-            <Link to="/" id="navLinks" aria-label="Moo Logo">
-              <LogoSVG />
+            <Link to="/" id="navLinks" aria-label="Home">
+              <LogoSVG aria-hidden="true" focusable="false" />
             </Link>
 
             <div className={styles.btnContainer}>
@@ -53,43 +53,50 @@ export default function Navbar({ setSearchedMovies, setLoading, setError }) {
                 type="button"
                 aria-label="Open search"
               >
-                <SearchOutlinedIcon sx={{ color: "var(--clr-text)" }} />
+                <SearchOutlinedIcon sx={{ color: "var(--clr-text)" }} aria-hidden="true"/>
               </button>
 
               <ThemeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
 
               <AppTooltip title="Discover" arrow>
-                <Link
+                <NavLink
                   to="/discover"
                   id="navLinks"
                   onMouseEnter={() => setIsExploreHover(true)}
                   onMouseLeave={() => setIsExploreHover(false)}
                   aria-label="Discover"
+                  aria-current={
+                    location.pathname === "/discover" ? "page" : undefined
+                  }
                 >
                   {isExploreHover ? (
-                    <ExploreIcon sx={{ color: "var(--clr-text)" }} />
+                    <ExploreIcon sx={{ color: "var(--clr-text)" }} aria-hidden="true"/>
                   ) : (
-                    <ExploreOutlinedIcon sx={{ color: "var(--clr-text)" }} />
+                    <ExploreOutlinedIcon sx={{ color: "var(--clr-text)" }} aria-hidden="true"/>
                   )}
-                </Link>
+                </NavLink>
               </AppTooltip>
 
               <AppTooltip title="Library" arrow>
-                <Link
+                <NavLink
                   to="/library"
                   id="navLinks"
                   onMouseEnter={() => setIsLibraryHover(true)}
                   onMouseLeave={() => setIsLibraryHover(false)}
                   aria-label="Library"
+                  aria-current={
+                    location.pathname === "/library" ? "page" : undefined
+                  }
                 >
                   {isLibraryHover ? (
-                    <VideoLibraryIcon sx={{ color: "var(--clr-text)" }} />
+                    <VideoLibraryIcon sx={{ color: "var(--clr-text)" }} aria-hidden="true" />
                   ) : (
                     <VideoLibraryOutlinedIcon
                       sx={{ color: "var(--clr-text)" }}
+                      aria-hidden="true"
                     />
                   )}
-                </Link>
+                </NavLink>
               </AppTooltip>
             </div>
           </>
@@ -97,8 +104,8 @@ export default function Navbar({ setSearchedMovies, setLoading, setError }) {
 
         {searchOpen && (
           <div className={styles.searchOverlay}>
-            <Link to="/" id="navLinks">
-              <LogoSVG />
+            <Link to="/" id="navLinks" aria-label="Home">
+              <LogoSVG aria-hidden="true" focusable="false"/>
             </Link>
 
             <SearchBar
@@ -115,7 +122,7 @@ export default function Navbar({ setSearchedMovies, setLoading, setError }) {
               type="button"
               aria-label="Close search"
             >
-              <CloseOutlinedIcon sx={{ color: "var(--clr-text)" }} />
+              <CloseOutlinedIcon sx={{ color: "var(--clr-text)" }} aria-hidden="true"/>
             </button>
           </div>
         )}

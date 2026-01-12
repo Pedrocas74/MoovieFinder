@@ -10,8 +10,6 @@ import Discover from "../pages/Discover";
 
 
 export default function AppRoutes({
-  searchedMovies,
-  setSearchedMovies,
   error,
   setError,
   loading,

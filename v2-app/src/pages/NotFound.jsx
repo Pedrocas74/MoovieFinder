@@ -6,16 +6,15 @@ export default function NotFound() {
 
   return (
     <div style={{ minHeight: "100vh", display: "grid", placeItems: "center" }}>
-    <ErrorPlaceholder
-      type="not-found"
-      title="404 — Page not found"
-      message="The page you’re looking for doesn’t exist or may have been moved."
-      actionLabel="Go home"
-      onAction={() => navigate("/")}
-      secondaryLabel="Go back"
-      onSecondaryAction={() => navigate(-1)}
-      
-    />
+      <ErrorPlaceholder
+        type="not-found"
+        title="404 — Page not found"
+        message="The page you’re looking for doesn’t exist or may have been moved."
+        actionLabel="Go home"
+        onAction={() => navigate("/")}
+        secondaryLabel="Go back"
+        onSecondaryAction={() => navigate(-1)}
+      />
     </div>
   );
 }

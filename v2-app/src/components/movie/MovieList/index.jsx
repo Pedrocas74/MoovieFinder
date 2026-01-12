@@ -102,6 +102,7 @@ export default function MovieList({
 
   return (
     <section className={styles.movieList}>
+      {/* add a sort filter select in case it's a row of movies  */}
       {title && layout === "row" && (
         <div className={styles.header}>
           <h2>{title}</h2>
@@ -119,7 +120,7 @@ export default function MovieList({
               onClick={scrollLeft}
               aria-label="Scroll left"
             >
-              <ChevronLeft size={100} color="var(--clr-text)" />
+              <ChevronLeft size={100} color="var(--clr-text)" aria-hidden="true" focusable="false"/>
             </button>
           )}
           <div className={styles[layout]} ref={scrollContainerRef}>
@@ -158,7 +159,7 @@ export default function MovieList({
               onClick={scrollRight}
               aria-label="Scroll right"
             >
-              <ChevronRight size={100} color="var(--clr-text)" />
+              <ChevronRight size={100} color="var(--clr-text)" aria-hidden="true" focusable="false"/>
             </button>
           )}
         </div>
