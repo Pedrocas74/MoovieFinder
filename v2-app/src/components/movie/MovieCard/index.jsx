@@ -4,13 +4,13 @@ import { Star } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLibrary } from "../../../context/LibraryContext";
 
-import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityIcon from "@mui/icons-material/Visibility"; //watched
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 
 import PlaylistAddRoundedIcon from "@mui/icons-material/PlaylistAddRounded";
-import PlaylistAddCheckRoundedIcon from "@mui/icons-material/PlaylistAddCheckRounded";
+import PlaylistAddCheckRoundedIcon from "@mui/icons-material/PlaylistAddCheckRounded"; //on watchlist
 
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteIcon from "@mui/icons-material/Favorite"; //favorite
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -120,6 +120,8 @@ export default function MovieCard({
   const startPtRef = useRef({ x: 0, y: 0 });
   const longPressedRef = useRef(false);
 
+  const [showIcons, setShowIcons] = useState(false);
+
   const clearLongPressTimer = useCallback(() => {
     if (timerRef.current) clearTimeout(timerRef.current);
     timerRef.current = null;
@@ -208,6 +210,8 @@ export default function MovieCard({
       onPointerCancel={onPointerCancel}
       onPointerLeave={onPointerCancel}
       onContextMenu={(e) => e.preventDefault()}
+      onHoverStart={() => setShowIcons(true)}
+      onHoverEnd={() => setShowIcons(false)}
     >
       {pulseId !== null && (
         <span
@@ -230,7 +234,8 @@ export default function MovieCard({
         )}
       </div>
 
-      {!isTouchDevice && ( //only on computers
+
+      {!isTouchDevice && ( //only display hoverBtn on computers
         <button
           className={`${styles.hoverBtn} actionButton`}
           onClick={(e) => {
@@ -252,6 +257,28 @@ export default function MovieCard({
         <p className={`${styles.releaseDate} cardInfo`}>
           {movie.release_date?.slice(0, 4)}
         </p>
+
+      
+        {!isTouchDevice && (
+        <div style={{
+          visibility: showIcons ? "visible" : "hidden"
+        }} className={styles.iconsContainer}>
+            <VisibilityIcon className={styles.cardIcon} sx={{
+              color: watched ? "var(--clr-primary)" : "var(--radial)",
+              fontSize: "var(--fs-xs)",
+            }} />
+            <PlaylistAddCheckRoundedIcon className={styles.cardIcon} sx={{
+              color: inWatchlist ? "var(--clr-primary)" : "var(--radial)",
+              fontSize: "var(--fs-cardIcon)"
+            }}/>
+            <FavoriteIcon className={styles.cardIcon} sx={{
+              color: favorite ? "var(--clr-primary)" : "var(--radial)",
+              fontSize: "var(--fs-xs)"
+            }}/>
+        </div>
+      )}
+
+
         <p
           className={`${styles.rating} cardInfo`}
           aria-label={`Rating ${Number(movie.vote_average).toFixed(

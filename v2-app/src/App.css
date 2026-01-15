@@ -86,6 +86,7 @@
 
     --ff-body: "Inter", serif;
     /* font sizes  */
+    --fs-cardIcon: clamp(0.85rem, 2vw, 1rem);
     --fs-xs: clamp(0.75rem, 1vw, 0.85rem);
     --fs-sm: clamp(0.85rem, 1.2vw, 1rem);
     --fs-button: clamp(0.95rem, 1.3vw, 1.1rem);

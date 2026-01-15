@@ -94,6 +94,19 @@
     color: var(--clr-muted);
     margin-top: 3px;
 }
+   /* saved action icons  */
+.iconsContainer {
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-large);
+  display: inline-flex;
+  width: clamp(35%, 40%, 45%);
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+
+
+
 /* SEE MORE CARD  */
 .seeMore {
   display: flex;
