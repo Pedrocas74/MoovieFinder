@@ -7,10 +7,18 @@
   margin: 0 auto;
 }
 
+@media(width >= 768px) {
+  .grid {
+    gap: 4rem;
+    max-width: 80%;
+  }
+}
+
 @media (min-width: 1024px) {
   .grid {
     grid-template-columns: repeat(auto-fill, minmax(120px, 160px));
     gap: 3rem;
+    max-width: 70%;
   }
 }
 

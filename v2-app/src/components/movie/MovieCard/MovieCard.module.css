@@ -102,6 +102,7 @@
   width: clamp(35%, 40%, 45%);
   justify-content: space-evenly;
   align-items: center;
+  pointer-events: none;
 }
 
 
