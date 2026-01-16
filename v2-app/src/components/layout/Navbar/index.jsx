@@ -17,6 +17,8 @@ import LogoSVG from "../LogoSVG";
 import ThemeToggle from "../../ui/ThemeToggle";
 import { useTheme } from "../../../context/ThemeContext";
 
+import { Transition } from "@headlessui/react";
+
 export default function Navbar({ setSearchedMovies, setLoading, setError }) {
   const [searchOpen, setSearchOpen] = useState(false);
   const [isExploreHover, setIsExploreHover] = useState(false);
@@ -40,12 +42,11 @@ export default function Navbar({ setSearchedMovies, setLoading, setError }) {
   return (
     <header className={styles.header}>
       <nav className={styles.navbar}>
+        <Link to="/" id="navLinks" aria-label="Home">
+          <LogoSVG aria-hidden="true" focusable="false" />
+        </Link>
+        <div className={styles.right}>
         {!searchOpen && (
-          <>
-            <Link to="/" id="navLinks" aria-label="Home">
-              <LogoSVG aria-hidden="true" focusable="false" />
-            </Link>
-
             <div className={styles.btnContainer}>
               <button
                 className={`${styles.iconButton} actionButton`}
@@ -53,7 +54,10 @@ export default function Navbar({ setSearchedMovies, setLoading, setError }) {
                 type="button"
                 aria-label="Open search"
               >
-                <SearchOutlinedIcon sx={{ color: "var(--clr-text)" }} aria-hidden="true"/>
+                <SearchOutlinedIcon
+                  sx={{ color: "var(--clr-text)" }}
+                  aria-hidden="true"
+                />
               </button>
 
               <ThemeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
@@ -70,9 +74,15 @@ export default function Navbar({ setSearchedMovies, setLoading, setError }) {
                   }
                 >
                   {isExploreHover ? (
-                    <ExploreIcon sx={{ color: "var(--clr-text)" }} aria-hidden="true"/>
+                    <ExploreIcon
+                      sx={{ color: "var(--clr-text)" }}
+                      aria-hidden="true"
+                    />
                   ) : (
-                    <ExploreOutlinedIcon sx={{ color: "var(--clr-text)" }} aria-hidden="true"/>
+                    <ExploreOutlinedIcon
+                      sx={{ color: "var(--clr-text)" }}
+                      aria-hidden="true"
+                    />
                   )}
                 </NavLink>
               </AppTooltip>
@@ -89,7 +99,10 @@ export default function Navbar({ setSearchedMovies, setLoading, setError }) {
                   }
                 >
                   {isLibraryHover ? (
-                    <VideoLibraryIcon sx={{ color: "var(--clr-text)" }} aria-hidden="true" />
+                    <VideoLibraryIcon
+                      sx={{ color: "var(--clr-text)" }}
+                      aria-hidden="true"
+                    />
                   ) : (
                     <VideoLibraryOutlinedIcon
                       sx={{ color: "var(--clr-text)" }}
@@ -99,15 +112,19 @@ export default function Navbar({ setSearchedMovies, setLoading, setError }) {
                 </NavLink>
               </AppTooltip>
             </div>
-          </>
         )}
 
         {searchOpen && (
+          <Transition
+          show={searchOpen}
+          enter={styles.enter}
+          enterFrom={styles.enterFrom}
+          enterTo={styles.enterTo}
+          leave={styles.leave}
+          leaveFrom={styles.leaveFrom}
+          leaveTo={styles.leaveTo}
+        >
           <div className={styles.searchOverlay}>
-            <Link to="/" id="navLinks" aria-label="Home">
-              <LogoSVG aria-hidden="true" focusable="false"/>
-            </Link>
-
             <SearchBar
               autoFocus
               onClose={() => setSearchOpen(false)}
@@ -122,10 +139,15 @@ export default function Navbar({ setSearchedMovies, setLoading, setError }) {
               type="button"
               aria-label="Close search"
             >
-              <CloseOutlinedIcon sx={{ color: "var(--clr-text)" }} aria-hidden="true"/>
+              <CloseOutlinedIcon
+                sx={{ color: "var(--clr-text)" }}
+                aria-hidden="true"
+              />
             </button>
           </div>
+          </Transition>
         )}
+        </div>
       </nav>
     </header>
   );

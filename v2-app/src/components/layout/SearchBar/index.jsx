@@ -3,7 +3,9 @@ import {
   ComboboxInput,
   ComboboxOption,
   ComboboxOptions,
+  Transition,
 } from "@headlessui/react";
+import { Fragment } from "react";
 import styles from "./SearchBar.module.css";
 import { useEffect, useState, useRef } from "react";
 import { searchMovies } from "../../../services/tmdb";
@@ -122,12 +124,21 @@ export default function SearchBar({ autoFocus = false, onClose }) {
               onClose?.();
             }
           }}
-          onBlur={() => {
-            onClose?.();
-          }}
+          // onBlur={() => {
+          //   onClose?.();
+          // }}
         />
 
-        {suggestions.length > 0 && (
+        <Transition
+          as={Fragment}
+          show={suggestions.length > 0}
+          enter={styles.enter}
+          enterFrom={styles.enterFrom}
+          enterTo={styles.enterTo}
+          leave={styles.leave}
+          leaveFrom={styles.leaveFrom}
+          leaveTo={styles.leaveTo}
+        >
           <ComboboxOptions className={styles.dropdown}>
             {suggestions
               .map((movie, index) => {
@@ -190,7 +201,7 @@ export default function SearchBar({ autoFocus = false, onClose }) {
               {query}”
             </ComboboxOption>
           </ComboboxOptions>
-        )}
+        </Transition>
       </div>
     </Combobox>
   );
