@@ -17,8 +17,6 @@ import LogoSVG from "../LogoSVG";
 import ThemeToggle from "../../ui/ThemeToggle";
 import { useTheme } from "../../../context/ThemeContext";
 
-import { Transition } from "@headlessui/react";
-
 export default function Navbar({ setSearchedMovies, setLoading, setError }) {
   const [searchOpen, setSearchOpen] = useState(false);
   const [isExploreHover, setIsExploreHover] = useState(false);
@@ -42,7 +40,7 @@ export default function Navbar({ setSearchedMovies, setLoading, setError }) {
   return (
     <header className={styles.header}>
       <nav className={styles.navbar}>
-        <Link to="/" id="navLinks" aria-label="Home">
+        <Link to="/" id="navLinks" className={styles.logo} aria-label="Home">
           <LogoSVG aria-hidden="true" focusable="false" />
         </Link>
         <div className={styles.right}>
@@ -115,15 +113,6 @@ export default function Navbar({ setSearchedMovies, setLoading, setError }) {
         )}
 
         {searchOpen && (
-          <Transition
-          show={searchOpen}
-          enter={styles.enter}
-          enterFrom={styles.enterFrom}
-          enterTo={styles.enterTo}
-          leave={styles.leave}
-          leaveFrom={styles.leaveFrom}
-          leaveTo={styles.leaveTo}
-        >
           <div className={styles.searchOverlay}>
             <SearchBar
               autoFocus
@@ -134,7 +123,7 @@ export default function Navbar({ setSearchedMovies, setLoading, setError }) {
             />
 
             <button
-              className={`${styles.iconButton} actionButton`}
+              className={`${styles.iconButton} actionButton ${styles.closeBtn}`}
               onClick={() => setSearchOpen(false)}
               type="button"
               aria-label="Close search"
@@ -145,7 +134,6 @@ export default function Navbar({ setSearchedMovies, setLoading, setError }) {
               />
             </button>
           </div>
-          </Transition>
         )}
         </div>
       </nav>

@@ -1,15 +1,26 @@
 .searchContainer {
     position: relative;
-    /* border: 1px solid red; */
-}
-.input {
-  padding: 0.4rem 1.2rem;
-  border-radius: var(--radius-large);
-  border: 2px solid var(--clr-primary);
-  
-  /* width: 50vw; */
+    width: 70%;
 }
 
+.input {
+  padding: 0.5rem 1.2rem;
+  border-radius: var(--radius-large);
+  border: 2px solid var(--clr-primary);
+  width: 100%;
+}
+
+@media (width >= 1024px) {
+  .searchContainer {
+    width: 50%;
+  }
+  .input {
+    padding: 0.6rem 1.5rem;
+    font-size: var(--fs-sm);
+  }
+
+}
+/* ----------------------- */
 .dropdown {
   position: absolute;
   top: 100%;

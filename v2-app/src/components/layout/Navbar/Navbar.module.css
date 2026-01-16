@@ -7,7 +7,7 @@
 }
 
 .navbar {
-    border: 1px solid blue;
+    position: relative;
     display: flex;
     width: 90%;
     justify-content: space-between;
@@ -16,24 +16,33 @@
 
     z-index: 2000;
 }
+.logo {
+  flex: 0;
+}
+.right {
+    flex: 1;
+    display: flex;
+    justify-content: right;
+}
+
 .searchOverlay {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     width: 100%;
     background: var(--clr-bg);
-    
-
-
-    transform-origin: top;
-    will-change: opacity, transform;
 }
-.iconButton, a {
+.iconButton, 
+a {
     all: unset;
     height: 24px;
     cursor: pointer;
     display: flex;
     align-items: center;
+}
+.closeBtn {
+    position: absolute;
+    right: 0;
 }
 
 .btnContainer {
@@ -41,7 +50,7 @@
     align-items: center;
     justify-content: space-between;
     transition: var(--transition);
-    border: 1px solid white;
+    width: clamp(130px, 25%, 170px);
 }
 
 
