@@ -3,24 +3,83 @@
     width: 70%;
 }
 
-.input {
-  padding: 0.5rem 1.2rem;
-  border-radius: var(--radius-large);
-  border: 2px solid var(--clr-primary);
-  width: 100%;
+
+/* ----------BORDER ANIMATION---------------- */
+.inputFrame {
+  position: relative;
+  border-radius: var(--radius-button);
+  padding: 2px; /* border thickness */
 }
+
+/* the animated "border" */
+.inputFrame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    var(--clr-bg),
+    var(--clr-primary),
+    var(--clr-bg),
+    var(--clr-primary),
+    var(--clr-bg)
+  );
+  background-size: 300% 300%;
+  animation: borderWave 15s ease-in-out infinite;
+}
+
+.inputFrame::after {
+  content: "";
+  position: absolute;
+  inset: 2px;            
+  border-radius: calc(var(--radius-button) - 2px);
+  background: var(--clr-bg);
+}
+
+
+.input {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  border: 0;
+  outline: none;
+  border-radius: calc(var(--radius-button) - 2px);
+  background: transparent;
+  color: var(--clr-text);
+  padding: 0.75rem 1rem;
+  font-size: var(--fs-sm);
+  color: var(--clr-text);
+  font-weight: 700;
+}
+
+@keyframes borderWave {
+  0%   { background-position: 0% 50%; filter: saturate(1); }
+  50%  { background-position: 100% 50%; filter: saturate(1.2); }
+  100% { background-position: 0% 50%; filter: saturate(1); }
+}
+.inputFrame:focus-within::before {
+  animation-duration: 10s;
+  filter: saturate(1.25) brightness(1.05);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--clr-primary) 25%, transparent);
+}
+@media (prefers-reduced-motion: reduce) {
+  .inputFrame::before { animation: none; }
+}
+
+/* ----------------------- */
 
 @media (width >= 1024px) {
   .searchContainer {
-    width: 50%;
+    width: 40%;
   }
   .input {
-    padding: 0.6rem 1.5rem;
+    padding: 0.7rem 1.5rem;
     font-size: var(--fs-sm);
   }
 
 }
-/* ----------------------- */
+
 .dropdown {
   position: absolute;
   top: 100%;
@@ -80,8 +139,6 @@
   height: 1px;
   background: rgba(77, 77, 77, 0.3);
 }
-
-
 
 
 /* ANIMATION SEARCHBAR ENTRY & EXIT  */

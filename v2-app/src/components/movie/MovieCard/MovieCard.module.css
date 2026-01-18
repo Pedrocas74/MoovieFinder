@@ -1,5 +1,5 @@
 .movieCard {
-    min-width: 120px;
+    min-width: 130px;
     max-width: 170px;
     cursor: pointer;
     border: 1.5px solid var(--clr-card-border);

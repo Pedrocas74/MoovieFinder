@@ -2,6 +2,7 @@ import styles from "./Navbar.module.css";
 import { Link, NavLink } from "react-router-dom";
 import SearchBar from "../SearchBar";
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 import ExploreIcon from "@mui/icons-material/Explore";
 import ExploreOutlinedIcon from "@mui/icons-material/ExploreOutlined";
@@ -44,8 +45,16 @@ export default function Navbar({ setSearchedMovies, setLoading, setError }) {
           <LogoSVG aria-hidden="true" focusable="false" />
         </Link>
         <div className={styles.right}>
-        {!searchOpen && (
-            <div className={styles.btnContainer}>
+          <AnimatePresence mode="wait" initial={false}>
+          {!searchOpen ? (
+            <motion.div
+              key="buttons"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0}}
+              transition={{ ease: "easeInOut", duration: 0.15 }}
+              className={styles.btnContainer}
+            >
               <button
                 className={`${styles.iconButton} actionButton`}
                 onClick={() => setSearchOpen(true)}
@@ -109,32 +118,38 @@ export default function Navbar({ setSearchedMovies, setLoading, setError }) {
                   )}
                 </NavLink>
               </AppTooltip>
-            </div>
-        )}
+            </motion.div>
+          ) : (
+              <motion.div
+                key="search"
+                initial={{ opacity: 0, y: -25 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -25 }}
+                transition={{ ease: "easeInOut", type: "spring", bounce: 0.4 }}
+                className={styles.searchOverlay}
+              >
+                <SearchBar
+                  autoFocus
+                  onClose={() => setSearchOpen(false)}
+                  setSearchedMovies={setSearchedMovies}
+                  setLoading={setLoading}
+                  setError={setError}
+                />
 
-        {searchOpen && (
-          <div className={styles.searchOverlay}>
-            <SearchBar
-              autoFocus
-              onClose={() => setSearchOpen(false)}
-              setSearchedMovies={setSearchedMovies}
-              setLoading={setLoading}
-              setError={setError}
-            />
-
-            <button
-              className={`${styles.iconButton} actionButton ${styles.closeBtn}`}
-              onClick={() => setSearchOpen(false)}
-              type="button"
-              aria-label="Close search"
-            >
-              <CloseOutlinedIcon
-                sx={{ color: "var(--clr-text)" }}
-                aria-hidden="true"
-              />
-            </button>
-          </div>
-        )}
+                <button
+                  className={`${styles.iconButton} actionButton ${styles.closeBtn}`}
+                  onClick={() => setSearchOpen(false)}
+                  type="button"
+                  aria-label="Close search"
+                >
+                  <CloseOutlinedIcon
+                    sx={{ color: "var(--clr-text)" }}
+                    aria-hidden="true"
+                  />
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </nav>
     </header>

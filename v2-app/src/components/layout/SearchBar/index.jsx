@@ -95,40 +95,41 @@ export default function SearchBar({ autoFocus = false, onClose }) {
         setQuery("");
         setSuggestions([]);
         setSelected(null);
-        onClose?.();
+        // onClose?.();
       }}
     >
       <div className={styles.searchContainer}>
-        <ComboboxInput
-          className={styles.input}
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search movies..."
-          ref={inputRef}
-          autoComplete="off"
-          autoCorrect="off"
-          autoCapitalize="off"
-          spellCheck={false}
-          name="movie-search"
-          onKeyDown={(e) => {
-            if (e.key === "Escape") {
-              setQuery("");
-              setSuggestions([]);
-              setSelected(null);
-              onClose?.(); //close overlay on Esc
-            } else if (e.key === "Enter" && query.trim() && !selected) {
-              navigate(`/search?q=${encodeURIComponent(query.trim())}`);
-              setQuery("");
-              setSuggestions([]);
-              setSelected(null);
-              onClose?.();
-            }
-          }}
-          // onBlur={() => {
-          //   onClose?.();
-          // }}
-        />
-
+        <div className={styles.inputFrame}>
+          <ComboboxInput
+            className={styles.input}
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search movies..."
+            ref={inputRef}
+            autoComplete="off"
+            autoCorrect="off"
+            autoCapitalize="off"
+            spellCheck={false}
+            name="movie-search"
+            onKeyDown={(e) => {
+              if (e.key === "Escape") {
+                setQuery("");
+                setSuggestions([]);
+                setSelected(null);
+                onClose?.(); //close overlay on Esc
+              } else if (e.key === "Enter" && query.trim() && !selected) {
+                navigate(`/search?q=${encodeURIComponent(query.trim())}`);
+                setQuery("");
+                setSuggestions([]);
+                setSelected(null);
+                onClose?.();
+              }
+            }}
+            // onBlur={() => {
+            //   onClose?.();
+            // }}
+          />
+        </div>
         <Transition
           as={Fragment}
           show={suggestions.length > 0}
