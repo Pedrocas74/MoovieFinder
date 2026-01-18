@@ -6,9 +6,16 @@
   -webkit-tap-highlight-color: transparent;
   transition: var(--transition);
   cursor: pointer;
+  padding: 2px;
+  
 }
 .toggleButton:focus {
   outline: none ;
 }
+.toggleButton:hover {
+  background-color: var(--clr-hover);
+  border-radius: var(--radius-max);
+}
+
 
 

@@ -12,8 +12,6 @@
     width: 90%;
     justify-content: space-between;
     align-items: center;
-
-
     z-index: 2000;
 }
 .logo {
@@ -39,10 +37,18 @@ a {
     cursor: pointer;
     display: flex;
     align-items: center;
+    padding: 2px;
+    transition: var(--transition);
 }
 .closeBtn {
     position: absolute;
     right: 0;
+    transition: var(--transition);
+}
+.iconButton:hover,
+.closeBtn:hover {
+    background-color: var(--clr-hover);
+    border-radius: var(--radius-max);
 }
 
 .btnContainer {

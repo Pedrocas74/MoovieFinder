@@ -40,6 +40,8 @@
     --muted: #5a5a5a;
 
     --radial-l: rgba(0, 0, 0, 0.4);
+    --hover-d: #b1b1b1;
+    --hover-l: rgba(0, 0, 0, 0.08);
 
     /* DARK MODE  */
     --bg-d: hsl(27, 18%, 10%);
@@ -76,6 +78,7 @@
     --muted-d: #9c9c9c;
 
     --radial-d: rgba(179, 179, 179, 0.26);
+    --hover-d: rgba(255, 255, 255, 0.12);
 
     /* --------------------------------------  */
 
@@ -151,6 +154,7 @@
   --button-background-hover: var(--button-gradient-light-background-hover);
   --button-background-active: var(--button-gradient-light-background-active);
   --radial: var(--radial-l);
+  --clr-hover: var(--hover-l);
 }
 
 /* DARK MODE */
@@ -170,6 +174,7 @@
   --button-background-hover: var(--button-gradient-dark-background-hover);
   --button-background-active: var(--button-gradient-dark-background-active);
   --radial: var(--radial-d);
+  --clr-hover: var(--hover-d);
 }
 
 html {  
@@ -287,6 +292,5 @@ a:not(#navLinks) {
   outline: 2px solid var(--clr-primary);
   outline-offset: 2px;
 }
-
 
 

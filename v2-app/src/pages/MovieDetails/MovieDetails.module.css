@@ -72,6 +72,9 @@
   flex-direction: column;
   gap: 10px;
 }
+.actionButtons button:hover {
+  background-color: var(--clr-hover);
+}
 
 
 .itemsContainer {
