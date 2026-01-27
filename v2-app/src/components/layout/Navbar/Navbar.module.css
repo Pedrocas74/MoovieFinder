@@ -4,6 +4,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    position: sticky;
+    top: 0;
+    z-index: 2000;
+    background-color: var(--clr-bg);
 }
 
 .navbar {
@@ -12,7 +16,6 @@
     width: 90%;
     justify-content: space-between;
     align-items: center;
-    z-index: 2000;
 }
 .logo {
   flex: 0;

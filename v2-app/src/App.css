@@ -14,7 +14,7 @@
     --red: hsl(0, 70%, 33%);
     --red-light: hsl(0, 82%, 43%);
     --red-dark: hsl(0, 70%, 25%);
-    --red-border: hsla(0, 70%, 33%, 0.2);
+    --red-border: hsla(0, 70%, 33%, 0.3);
     --red-border-strong: hsla(0, 70%, 33%, 0.8);
 
     --button-gradient-light-background: 
@@ -51,7 +51,7 @@
     --purple: hsl(281, 82%, 56%);
     --purple-light: hsl(281, 82%, 66%);
     --purple-dark: hsl(281, 82%, 46%);
-    --purple-border: hsla(281, 82%, 56%, 0.129);
+    --purple-border: hsla(281, 82%, 56%, 0.3);
     --purple-border-strong: hsla(281, 82%, 56%, 0.5);
 
     --button-gradient-dark-background: linear-gradient(
