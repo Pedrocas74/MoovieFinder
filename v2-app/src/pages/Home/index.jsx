@@ -1,4 +1,4 @@
-import styles from "./Home.module.css";
+// import styles from "./Home.module.css";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import MovieList from "../../components/movie/MovieList";
@@ -59,11 +59,6 @@ export default function Home() {
     const t = setTimeout(() => setShowHint(true), 800); //delay
     return () => clearTimeout(t);
   }, [isTouchDevice, showSkeleton, error]);
-
-  // const dismissHint = () => {
-  //   localStorage.setItem("moo_hint_longpress_v1", "1");
-  //   setShowHint(false);
-  // };
 
   return (
     <div style={{ minHeight: "100vh" }}>

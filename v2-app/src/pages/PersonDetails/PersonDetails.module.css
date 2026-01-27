@@ -2,16 +2,11 @@
   min-height: 100vh;
 }
 .mainContainer {
-  /* border: 1px solid blue; */
   display: flex;
   flex-direction: column;
 }
-/* .textContainer {
-  
-} */
 
 .imgContainer {
-  /* border: 5px solid purple; */
   width: 100%;
   display: flex;
   justify-content: center;
@@ -25,8 +20,7 @@
   border-radius: var(--radius-small);
   background: var(--bg-l);
   align-self: center;
-  margin-top: 1rem;
-  
+  margin-top: var(--space-l);
 }
 
 .birthday,
@@ -37,12 +31,12 @@
 }
 
 .bioContainer {
-  margin-top: 1rem;
+  margin-top: var(--space-m);
   max-width: 70ch;
-  padding: 1rem 5%;
+  padding: var(--space-l) 5%;
   height: fit-content;
-  max-height: 300px;
-  border: 5px inset var(--clr-primary);
+  max-height: 320px;
+  border: 3px inset var(--clr-primary);
   border-left: none;
   transition: var(--transition);
   display: flex;
@@ -53,28 +47,22 @@
   border-bottom-right-radius: var(--radius-large);
   background: var(--clr-bg-alt);
   box-shadow: var(--shadow-card);
-  
 }
 
 .clamped {
   display: -webkit-box;
-  line-clamp: 4;
+  line-clamp: 3;
+  -webkit-line-clamp: 3; 
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 .toggleBio {
-  margin-top: 1rem;
+  margin-top: var(--space-m);
 }
 
 h3 {
   margin: var(--pd-title);
 }
-
-/* @media (width >= 768px) {
-  .mainContainer {
-    flex-direction: row-reverse;
-  }
-} */
 
 
 @media (width >= 750px) {
@@ -86,25 +74,19 @@ h3 {
     flex: 2;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    
+    justify-content: center;
  }
  .bioContainer {
-    max-height: 210px;
-    /* max-width:70ch; */
+    max-height: 220px;
  }
- /* .bio {
-  
- } */
  .imgContainer {
     flex: 1;
     max-width: 30vw;
-    
  }
  .avatar {
     width: 100%;
     height: 100%;
-    margin-top: 1rem;
+    margin-top: 0;
  }
 
 }

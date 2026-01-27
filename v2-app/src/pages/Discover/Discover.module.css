@@ -13,8 +13,7 @@
   padding: var(--pd-normal);
   display: flex;
   flex-direction: column;
-  /* gap: 3rem; */
-  gap: 3rem;
+  gap: var(--space-xxl);
   margin-bottom: 2vh;
   flex-wrap: wrap;
 
@@ -23,7 +22,7 @@
 @media (width >= 448px) {
   .filters {
     flex-direction: row;
-    gap: 1rem;
+    gap: var(--space-m);
     margin-bottom: 5vh;
   }
 }
@@ -34,4 +33,11 @@
   position: fixed;
   top: 50%;
   left: 2.5%;
+}
+.goTopBtn:hover {
+  background: var(--clr-hover);
+  transform: scale(1.1);
+}
+.goTopBtn:active {
+  background-color: var(--clr-muted);
 }

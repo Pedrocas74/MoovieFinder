@@ -46,80 +46,92 @@ export default function Navbar({ setSearchedMovies, setLoading, setError }) {
         </Link>
         <div className={styles.right}>
           <AnimatePresence mode="wait" initial={false}>
-          {!searchOpen ? (
-            <motion.div
-              key="buttons"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0}}
-              transition={{ ease: "easeInOut", duration: 0.15 }}
-              className={styles.btnContainer}
-            >
-              <button
-                className={`${styles.iconButton} actionButton`}
-                onClick={() => setSearchOpen(true)}
-                type="button"
-                aria-label="Open search"
+            {!searchOpen ? (
+              <motion.div
+                key="buttons"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ ease: "easeInOut", duration: 0.15 }}
+                className={styles.btnContainer}
               >
-                <SearchOutlinedIcon
-                  sx={{ color: "var(--clr-text)" }}
-                  aria-hidden="true"
-                />
-              </button>
-
-              <ThemeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
-
-              <AppTooltip title="Discover" arrow>
-                <NavLink
-                  to="/discover"
-                  id="navLinks"
-                  onMouseEnter={() => setIsExploreHover(true)}
-                  onMouseLeave={() => setIsExploreHover(false)}
-                  aria-label="Discover"
-                  aria-current={
-                    location.pathname === "/discover" ? "page" : undefined
-                  }
+                <button
+                  className={`${styles.iconButton} actionButton`}
+                  onClick={() => setSearchOpen(true)}
+                  type="button"
+                  aria-label="Open search"
                 >
-                  {isExploreHover ? (
-                    <ExploreIcon
-                      sx={{ color: "var(--clr-text)" }}
-                      aria-hidden="true"
-                    />
-                  ) : (
-                    <ExploreOutlinedIcon
-                      sx={{ color: "var(--clr-text)" }}
-                      aria-hidden="true"
-                    />
-                  )}
-                </NavLink>
-              </AppTooltip>
+                  <SearchOutlinedIcon
+                    sx={{ color: "var(--clr-text)" }}
+                    aria-hidden="true"
+                  />
+                </button>
 
-              <AppTooltip title="Library" arrow>
-                <NavLink
-                  to="/library"
-                  id="navLinks"
-                  onMouseEnter={() => setIsLibraryHover(true)}
-                  onMouseLeave={() => setIsLibraryHover(false)}
-                  aria-label="Library"
-                  aria-current={
-                    location.pathname === "/library" ? "page" : undefined
-                  }
+                <ThemeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
+
+                <AppTooltip
+                  title="Discover"
+                  arrow
+                  PopperProps={{
+                    sx: { zIndex: 2001 },
+                  }}
                 >
-                  {isLibraryHover ? (
-                    <VideoLibraryIcon
-                      sx={{ color: "var(--clr-text)" }}
-                      aria-hidden="true"
-                    />
-                  ) : (
-                    <VideoLibraryOutlinedIcon
-                      sx={{ color: "var(--clr-text)" }}
-                      aria-hidden="true"
-                    />
-                  )}
-                </NavLink>
-              </AppTooltip>
-            </motion.div>
-          ) : (
+                  <NavLink
+                    to="/discover"
+                    id="navLinks"
+                    onMouseEnter={() => setIsExploreHover(true)}
+                    onMouseLeave={() => setIsExploreHover(false)}
+                    aria-label="Discover"
+                    aria-current={
+                      location.pathname === "/discover" ? "page" : undefined
+                    }
+                  >
+                    {isExploreHover ? (
+                      <ExploreIcon
+                        sx={{ color: "var(--clr-text)" }}
+                        aria-hidden="true"
+                      />
+                    ) : (
+                      <ExploreOutlinedIcon
+                        sx={{ color: "var(--clr-text)" }}
+                        aria-hidden="true"
+                      />
+                    )}
+                  </NavLink>
+                </AppTooltip>
+
+                <AppTooltip
+                  title="Library"
+                  arrow
+                  PopperProps={{
+                    sx: { zIndex: 2001 },
+                  }}
+                >
+                  <NavLink
+                    to="/library"
+                    id="navLinks"
+                    onMouseEnter={() => setIsLibraryHover(true)}
+                    onMouseLeave={() => setIsLibraryHover(false)}
+                    aria-label="Library"
+                    aria-current={
+                      location.pathname === "/library" ? "page" : undefined
+                    }
+                  >
+                    {isLibraryHover ? (
+                      <VideoLibraryIcon
+                        sx={{ color: "var(--clr-text)" }}
+                        aria-hidden="true"
+                      />
+                    ) : (
+                      <VideoLibraryOutlinedIcon
+                        sx={{ color: "var(--clr-text)" }}
+                        aria-hidden="true"
+                      />
+                    )}
+                  </NavLink>
+                </AppTooltip>
+              </motion.div>
+            ) : (
               <motion.div
                 key="search"
                 initial={{ opacity: 0, y: -25 }}
