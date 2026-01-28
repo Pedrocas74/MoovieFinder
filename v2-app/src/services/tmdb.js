@@ -161,7 +161,7 @@ export async function getUpcoming(page = 1, genres = []) {
 //get "Trending" movies list
 export async function getTrending(page = 1, genres = []) {
   try {
-    const url = `${BASE_URL}/trending/movie/day?language=en-US&region=US&page=${page}`;
+    const url = `${BASE_URL}/trending/movie/day?include_adult=false&language=en-US&region=US&page=${page}`;
     const res = await fetch(url, options);
     const data = await res.json();
     return (data.results || []).filter(movie => !movie.adult);
@@ -175,7 +175,7 @@ export async function getTrending(page = 1, genres = []) {
 export async function getSimilarMovies(movieId, page = 1) {
   try {
     const res = await fetch(
-      `${BASE_URL}/movie/${movieId}/similar?language=en-US&region=US&page=${page}`,
+      `${BASE_URL}/movie/${movieId}/similar?include_adult=false&language=en-US&region=US&page=${page}`,
       options
     );
     const data = await res.json();
@@ -188,12 +188,16 @@ export async function getSimilarMovies(movieId, page = 1) {
 
 //get recommended movies ---> sometimes is better than similar
 export async function getRecommendedMovies(movieId, page = 1) {
+  try {
   const res = await fetch(
-    `${BASE_URL}/movie/${movieId}/recommendations?language=en-US&page=${page}`,
+    `${BASE_URL}/movie/${movieId}/recommendations?include_adult=false&language=en-US&page=${page}`,
     options
   );
   const data = await res.json();
   return (data.results || []).filter(m => !m.adult);
+  } catch (err) {
+    throw err;
+  }
 }
 
 

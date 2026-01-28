@@ -259,9 +259,9 @@ export default function MovieCard({
         </p>
 
       
-        {!isTouchDevice && (
+        
         <div style={{
-          visibility: showIcons ? "visible" : "hidden"
+          visibility: isTouchDevice? "visible" : showIcons ? "visible" : "hidden"
         }} className={styles.iconsContainer}>
             <VisibilityIcon className={styles.cardIcon} sx={{
               color: watched ? "var(--clr-primary)" : "var(--radial)",
@@ -276,7 +276,7 @@ export default function MovieCard({
               fontSize: "var(--fs-xs)"
             }}/>
         </div>
-      )}
+      
 
 
         <p
