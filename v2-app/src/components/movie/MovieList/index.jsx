@@ -16,15 +16,17 @@ export default function MovieList({
   onSortChange,
 }) {
   const [openMenuMovieId, setOpenMenuMovieId] = useState(null); //to only allow one radial menu open at once
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
-  const scrollContainerRef = useRef(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false); //state to when the user already scrolled to the right of the list
+  const [canScrollRight, setCanScrollRight] = useState(true); //similar to top comment, but to the left
+  const scrollContainerRef = useRef(null); //reference of the entire movielist scrollable container
 
   const isTouchDevice = window.matchMedia(
-    "(hover: none) and (pointer: coarse)"
+    //check if user is using a touch device
+    "(hover: none) and (pointer: coarse)",
   ).matches;
 
   const sortedMovies = useMemo(() => {
+    //movielists results for all the sort options
     let list = [...movies];
 
     if (sort === "most_rated")
@@ -35,50 +37,41 @@ export default function MovieList({
 
     if (sort === "recent")
       return list.sort((a, b) =>
-        (b.release_date ?? "").localeCompare(a.release_date ?? "")
+        (b.release_date ?? "").localeCompare(a.release_date ?? ""),
       );
 
     if (sort === "oldest")
       return list.sort((a, b) =>
-        (a.release_date ?? "").localeCompare(b.release_date ?? "")
+        (a.release_date ?? "").localeCompare(b.release_date ?? ""),
       );
 
     if (sort === "crescent")
       return list.sort((a, b) =>
-        (a.title ?? a.name ?? "").localeCompare(b.title ?? b.name ?? "")
+        (a.title ?? a.name ?? "").localeCompare(b.title ?? b.name ?? ""),
       );
 
     if (sort === "decrescent")
       return list.sort((a, b) =>
-        (b.title ?? a.name ?? "").localeCompare(a.title ?? a.name ?? "")
+        (b.title ?? a.name ?? "").localeCompare(a.title ?? a.name ?? ""),
       );
 
     return list;
   }, [movies, sort]);
 
+  //reads the scroll position from the container and updates the horizontal scrolling allowance states below
   const checkScrollButtons = () => {
     if (scrollContainerRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } =
         scrollContainerRef.current;
-      setCanScrollLeft(scrollLeft > 0);
-      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 1);
+      setCanScrollLeft(scrollLeft > 0); //show left arrow when already scrolled to right
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 1); //inverse
     }
   };
 
-  const scrollLeft = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: -650, behavior: "smooth" });
-    }
-  };
-
-  const scrollRight = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: 650, behavior: "smooth" });
-    }
-  };
-
+  //wires up event listeners so the arrow logic stays correct as things change
   useEffect(() => {
     const container = scrollContainerRef.current;
+    //only runs when the container exists and it's a row
     if (container && layout === "row") {
       checkScrollButtons();
       container.addEventListener("scroll", checkScrollButtons);
@@ -90,6 +83,33 @@ export default function MovieList({
       };
     }
   }, [layout, sortedMovies]);
+
+  //when the sort changes, reset horizontal scroll to the start
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (container && layout === "row") {
+      //jump or smooth scroll to the left entirely
+      try {
+        container.scrollTo({ left: 0, behavior: "smooth" });
+      } catch {
+        container.scrollLeft = 0;
+      }
+    }
+  }, [sort, layout]);
+
+  const scrollLeft = () => {
+    //scroll handler for left arrow button
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: -650, behavior: "smooth" });
+    }
+  };
+
+  const scrollRight = () => {
+    //scroll handler for right arrow button
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: 650, behavior: "smooth" });
+    }
+  };
 
   if (!sortedMovies || sortedMovies.length === 0) {
     return (
@@ -120,7 +140,12 @@ export default function MovieList({
               onClick={scrollLeft}
               aria-label="Scroll left"
             >
-              <ChevronLeft size={100} color="var(--clr-text)" aria-hidden="true" focusable="false"/>
+              <ChevronLeft
+                size={100}
+                color="var(--clr-text)"
+                aria-hidden="true"
+                focusable="false"
+              />
             </button>
           )}
           <div className={styles[layout]} ref={scrollContainerRef}>
@@ -132,7 +157,7 @@ export default function MovieList({
                 sortedMovies.findIndex(
                   (m, i) =>
                     i !== index &&
-                    `movielist-${title || "untitled"}-${m.id}` === key
+                    `movielist-${title || "untitled"}-${m.id}` === key,
                 ) !== -1;
 
               if (duplicateInList) {
@@ -159,7 +184,12 @@ export default function MovieList({
               onClick={scrollRight}
               aria-label="Scroll right"
             >
-              <ChevronRight size={100} color="var(--clr-text)" aria-hidden="true" focusable="false"/>
+              <ChevronRight
+                size={100}
+                color="var(--clr-text)"
+                aria-hidden="true"
+                focusable="false"
+              />
             </button>
           )}
         </div>
@@ -174,7 +204,7 @@ export default function MovieList({
               sortedMovies.findIndex(
                 (m, i) =>
                   i !== index &&
-                  `movielist-${title || "untitled"}-${m.id}` === key
+                  `movielist-${title || "untitled"}-${m.id}` === key,
               ) !== -1;
 
             if (duplicateInList) {

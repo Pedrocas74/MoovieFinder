@@ -15,16 +15,16 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-const LONG_PRESS_MS = 200;
-const MOVE_CANCEL_PX = 10;
+const LONG_PRESS_MS = 200;  //200ms to open the radial menu by press holding the card
+const MOVE_CANCEL_PX = 10;  //during the press holding, if the finger moves 10px somewhere, radial menu opening is canceled
 
-const overlayV = {
+const overlayV = {  //background overlay behind radial menu
   hidden: { opacity: 0 },
   show: { opacity: 1, transition: { duration: 0.2 } },
   exit: { opacity: 0, transition: { duration: 0.2 } },
 };
 
-const menuV = {
+const menuV = { //colective of the quick actions 
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
@@ -34,7 +34,7 @@ const menuV = {
   },
 };
 
-const itemV = {
+const itemV = { //each quick action button from the radial menu
   hidden: { x: 0, y: 0, scale: 0.5, opacity: 0 },
   show: (custom) => ({
     x: Math.cos((custom.angle * Math.PI) / 180) * 54,
@@ -104,15 +104,16 @@ export default function MovieCard({
     isFavorite,
   } = useLibrary();
 
-  const watched = isWatched(movie.id);
+  //categories 
+  const watched = isWatched(movie.id);  
   const inWatchlist = isInWatchlist(movie.id);
   const favorite = isFavorite(movie.id);
-
+  //if is saved in any of the categories
   const isSaved = watched || inWatchlist || favorite;
 
-  const [pulseId, setPulseId] = useState(null);
+  const [pulseId, setPulseId] = useState(null); //pulse colored animation when quick action is pressed
 
-  const triggerPulse = useCallback(() => {
+  const triggerPulse = useCallback(() => { //using an incrementing id ensures the animation reliably retriggers on repeated presses
     setPulseId((n) => (n === null ? 0 : n + 1));
   }, []);
 
@@ -120,9 +121,9 @@ export default function MovieCard({
   const startPtRef = useRef({ x: 0, y: 0 });
   const longPressedRef = useRef(false);
 
-  const [showIcons, setShowIcons] = useState(false);
-
-  const clearLongPressTimer = useCallback(() => {
+  const [showIcons, setShowIcons] = useState(false); //categories icons from the bottom of the card
+ 
+  const clearLongPressTimer = useCallback(() => {  //set long press timer to null
     if (timerRef.current) clearTimeout(timerRef.current);
     timerRef.current = null;
   }, []);
@@ -161,14 +162,13 @@ export default function MovieCard({
     timerRef.current = setTimeout(() => {
       openMenu();
       // prevent the normal click after long press
-      // (also helps on iOS Safari)
       try {
         e.preventDefault?.();
       } catch {}
     }, LONG_PRESS_MS);
   };
 
-  const onPointerMove = (e) => {
+  const onPointerMove = (e) => { 
     if (!timerRef.current) return;
     const dx = e.clientX - startPtRef.current.x;
     const dy = e.clientY - startPtRef.current.y;
@@ -183,7 +183,7 @@ export default function MovieCard({
     clearLongPressTimer();
   };
 
-  const handleCardClick = () => {
+  const handleCardClick = () => { 
     // don’t navigate if we just long-pressed or menu is open
     if (menuOpen || longPressedRef.current) return;
     onClick?.(movie);
@@ -213,7 +213,7 @@ export default function MovieCard({
       onHoverStart={() => setShowIcons(true)}
       onHoverEnd={() => setShowIcons(false)}
     >
-      {pulseId !== null && (
+      {pulseId !== null && ( //pulse effect
         <span
           key={pulseId}
           className={styles.pulseOverlay}

@@ -16,8 +16,10 @@
 .movieCard.saved {
     border-color: var(--clr-primary-light);
 }
-.movieCard:hover {
+@media (hover: hover) and (pointer: fine) {
+  .movieCard:hover {
   border: 1px solid var(--clr-text);
+}
 }
 /*--------------------- PULSE ANIMATION---------------  */
 .pulseOverlay {

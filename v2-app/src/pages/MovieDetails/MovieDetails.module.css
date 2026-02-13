@@ -271,7 +271,6 @@
 .lightboxNavLeft,
 .lightboxNavRight {
   border: none;
-  border-radius: var(--radius-full);
   cursor: pointer;
   background: var(--clr-muted);
   color: var(--clr-text);
