@@ -21,7 +21,7 @@ export default function PersonDetails() {
   const [error, setError] = useState(null);
   const [isOpen, setIsOpen] = useState(false); //to open biography extra info
 
-  useEffect(() => {
+  useEffect(() => { //fetch person's details 
     (async () => {
       try {
         setLoading(true);
@@ -36,7 +36,7 @@ export default function PersonDetails() {
     })();
   }, [id]);
 
-  useEffect(() => {
+  useEffect(() => { //fetch person's "known for" movielist
     (async () => {
       try {
         const c = await getPersonMovieCredits(id);
@@ -64,7 +64,7 @@ export default function PersonDetails() {
     );
   }
 
-  if (!person) {
+  if (!person) { //missing information fallback UI
     return (
       <ErrorPlaceholder
         type="not-found"

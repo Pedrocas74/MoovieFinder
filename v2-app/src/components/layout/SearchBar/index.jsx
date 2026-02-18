@@ -21,43 +21,35 @@ export default function SearchBar({ autoFocus = false, onClose }) {
 
   const inputRef = useRef(null);
 
-  useEffect(() => {
+  useEffect(() => {   //autofocus on input field when searchIsOpen
     if (autoFocus) {
       setTimeout(() => inputRef.current?.focus(), 0);
     }
   }, [autoFocus]);
 
-  //debounced suggestions
+  //debounced SEARCH SUGGESTIONS
   useEffect(() => {
-    const q = query.trim();
+    const q = query.trim(); //trims the query and bails early if it’s empty
     if (!q) {
       setSuggestions([]);
       return;
     }
 
-    const t = setTimeout(async () => {
-      try {
+    const t = setTimeout(async () => { //this prevents calling searchMovies on every keystroke instantly
+      try { //fetches results
         const results = await searchMovies(q);
 
         const seen = new Set();
-        const unique = results.filter((movie) => {
+        const unique = results.filter((movie) => {  //removes duplicates by movie.id
           if (!movie.id || seen.has(movie.id)) {
             return false;
           }
-          seen.add(movie.id);
+          seen.add(movie.id); 
           return true;
         });
 
-        setSuggestions(unique.slice(0, 6));
+        setSuggestions(unique.slice(0, 6)); //limits suggestions to 6 items
 
-        //check for duplicates
-        const ids = unique.map((m) => m.id);
-        const duplicateIds = ids.filter(
-          (id, index) => ids.indexOf(id) !== index
-        );
-        if (duplicateIds.length > 0) {
-          console.warn("Duplicate movie IDs found:", duplicateIds);
-        }
       } catch (error) {
         console.error("Error fetching suggestions:", error);
         setSuggestions([]);
@@ -67,7 +59,8 @@ export default function SearchBar({ autoFocus = false, onClose }) {
     return () => clearTimeout(t);
   }, [query]);
 
-  const handleFullSearch = () => {
+  //last option from search suggestions -> navigate to SEARCH RESULTS page using a specific untoutched query
+  const handleFullSearch = () => {  
     const q = query.trim();
     if (!q) return;
 
@@ -87,7 +80,7 @@ export default function SearchBar({ autoFocus = false, onClose }) {
       autoCapitalize="off"
       spellCheck={false}
       name="movie-search"
-      onChange={(value) => {
+      onChange={(value) => { //when a suggestion is chosen, navigate to its moviedetails page 
         if (!value || value.__type === "search") return;
 
         navigate(`/movie/${value.id}`, { state: { movie: value } });
@@ -95,17 +88,16 @@ export default function SearchBar({ autoFocus = false, onClose }) {
         setQuery("");
         setSuggestions([]);
         setSelected(null);
-        // onClose?.();
       }}
     >
       <div className={styles.searchContainer}>
         <div className={styles.inputFrame}>
           <ComboboxInput
+            ref={inputRef}
             className={styles.input}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search movies..."
-            ref={inputRef}
             autoComplete="off"
             autoCorrect="off"
             autoCapitalize="off"
@@ -118,19 +110,16 @@ export default function SearchBar({ autoFocus = false, onClose }) {
                 setSelected(null);
                 onClose?.(); //close overlay on Esc
               } else if (e.key === "Enter" && query.trim() && !selected) {
-                navigate(`/search?q=${encodeURIComponent(query.trim())}`);
+                navigate(`/search?q=${encodeURIComponent(query.trim())}`); //navigate to SEARCH RESULTS page on ENTER press
                 setQuery("");
                 setSuggestions([]);
                 setSelected(null);
                 onClose?.();
               }
             }}
-            // onBlur={() => {
-            //   onClose?.();
-            // }}
           />
         </div>
-        <Transition
+        <Transition  //smooth entrance/exit transition of the dropdown menu (search suggestions)
           as={Fragment}
           show={suggestions.length > 0}
           enter={styles.enter}
@@ -141,17 +130,18 @@ export default function SearchBar({ autoFocus = false, onClose }) {
           leaveTo={styles.leaveTo}
         >
           <ComboboxOptions className={styles.dropdown}>
+            {/* render the search suggestions from the suggestions array  */}
             {suggestions
               .map((movie, index) => {
                 const isDuplicate =
-                  suggestions.findIndex((m) => m.id === movie.id) !== index;
-                if (isDuplicate) {
+                  suggestions.findIndex((m) => m.id === movie.id) !== index; //returns the index of the first movie in the array with that id 
+                if (isDuplicate) {                   //if that first index is not the current index, then this item is a duplicate 
                   console.warn(
                     "Rendering duplicate movie:",
                     movie.id,
                     movie.title
                   );
-                  return null;
+                  return null; //render nothing in case its a duplicate
                 }
 
                 return (
@@ -177,7 +167,7 @@ export default function SearchBar({ autoFocus = false, onClose }) {
                         }
                         alt={movie.title}
                         onError={(e) => {
-                          e.target.onerror = null; //prevent infinite loop
+                          e.target.onerror = null; //prevent infinite loop if the placeholder image also fails
                           e.target.src = placeholder_cover;
                         }}
                       />
@@ -185,11 +175,12 @@ export default function SearchBar({ autoFocus = false, onClose }) {
                   </ComboboxOption>
                 );
               })
-              .filter(Boolean)}
+              .filter(Boolean) //remove the NULLs returned for duplicates
+              }
 
             <div className={styles.separator} />
 
-            <ComboboxOption
+            <ComboboxOption //last option from dropdown menu 
               value={{ __type: "search" }}
               className={`${styles.item} ${styles.searchAll}`}
               onMouseDown={(e) => {

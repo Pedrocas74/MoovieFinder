@@ -18,6 +18,7 @@ export default function App() {
 
   return (
     <BrowserRouter>
+      {/* always scroll to top of the page during router navigation */}
       <ScrollToTop />
       {/* vercel analytics  */}
       <Analytics /> 

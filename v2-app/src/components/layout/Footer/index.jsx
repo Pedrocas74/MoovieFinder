@@ -7,9 +7,8 @@ import { useLocation } from "react-router-dom";
 export default function Footer() {
 
   const location = useLocation();
-  const isInDiscover = location.pathname === "/discover";
 
-  if(isInDiscover) return null;
+  if(location.pathname === "/discover") return null;
 
   return (
     <footer style={{ marginTop: "7vh" }}>

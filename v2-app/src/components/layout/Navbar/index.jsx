@@ -1,5 +1,5 @@
 import styles from "./Navbar.module.css";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import SearchBar from "../SearchBar";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -20,9 +20,12 @@ import { useTheme } from "../../../context/ThemeContext";
 
 export default function Navbar({ setSearchedMovies, setLoading, setError }) {
   const [searchOpen, setSearchOpen] = useState(false);
-  const [isExploreHover, setIsExploreHover] = useState(false);
-  const [isLibraryHover, setIsLibraryHover] = useState(false);
   const { darkMode, setDarkMode } = useTheme();
+
+  let location = useLocation();
+  let isInDiscover = location.pathname === "/discover";
+  let isInLibrary = location.pathname === "/library";
+
 
   const AppTooltip = styled(({ className, ...props }) => (
     <Tooltip {...props} classes={{ popper: className }} />
@@ -46,7 +49,7 @@ export default function Navbar({ setSearchedMovies, setLoading, setError }) {
         </Link>
         <div className={styles.right}>
           <AnimatePresence mode="wait" initial={false}>
-            {!searchOpen ? (
+            {!searchOpen ? ( //initial nav display
               <motion.div
                 key="buttons"
                 initial={{ opacity: 0 }}
@@ -66,7 +69,8 @@ export default function Navbar({ setSearchedMovies, setLoading, setError }) {
                     aria-hidden="true"
                   />
                 </button>
-
+                
+                {/* THEME BUTTON  */}
                 <ThemeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
 
                 <AppTooltip
@@ -79,16 +83,14 @@ export default function Navbar({ setSearchedMovies, setLoading, setError }) {
                   <NavLink
                     to="/discover"
                     id="navLinks"
-                    onMouseEnter={() => setIsExploreHover(true)}
-                    onMouseLeave={() => setIsExploreHover(false)}
                     aria-label="Discover"
                     aria-current={
-                      location.pathname === "/discover" ? "page" : undefined
+                      isInDiscover ? "page" : undefined
                     }
                   >
-                    {isExploreHover ? (
+                    {isInDiscover ? (
                       <ExploreIcon
-                        sx={{ color: "var(--clr-text)" }}
+                        sx={{ color: "var(--clr-primary)" }}
                         aria-hidden="true"
                       />
                     ) : (
@@ -110,16 +112,14 @@ export default function Navbar({ setSearchedMovies, setLoading, setError }) {
                   <NavLink
                     to="/library"
                     id="navLinks"
-                    onMouseEnter={() => setIsLibraryHover(true)}
-                    onMouseLeave={() => setIsLibraryHover(false)}
                     aria-label="Library"
                     aria-current={
-                      location.pathname === "/library" ? "page" : undefined
+                      isInLibrary ? "page" : undefined
                     }
                   >
-                    {isLibraryHover ? (
+                    {isInLibrary ? (
                       <VideoLibraryIcon
-                        sx={{ color: "var(--clr-text)" }}
+                        sx={{ color: "var(--clr-primary)" }}
                         aria-hidden="true"
                       />
                     ) : (
@@ -131,7 +131,7 @@ export default function Navbar({ setSearchedMovies, setLoading, setError }) {
                   </NavLink>
                 </AppTooltip>
               </motion.div>
-            ) : (
+            ) : ( //Search Bar is shown
               <motion.div
                 key="search"
                 initial={{ opacity: 0, y: -25 }}

@@ -111,6 +111,7 @@ export default function MovieList({
     }
   };
 
+  //fallback
   if (!sortedMovies || sortedMovies.length === 0) {
     return (
       <section className={styles.emptyList}>

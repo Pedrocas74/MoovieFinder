@@ -14,7 +14,7 @@ export default function GenreSelect({
 }) {
   const [genres, setGenres] = useState([]);
 
-  useEffect(() => {
+  useEffect(() => { //fetch the array of genres
     (async () => {
       try {
         const genreList = await getGenres();
@@ -25,15 +25,15 @@ export default function GenreSelect({
     })();
   }, []);
 
-  const handleChange = (event) => {
-    const selectedIds = event.target.value;
+  const handleChange = (e) => { //change selection of genres 
+    const selectedIds = e.target.value;
     onChange(selectedIds);
   };
 
-  const renderValue = (selected) => {
-    if (selected.length === 0) return "Select genres";
+  const renderValue = (selected) => { //display the names of the selected genres
+    if (selected.length === 0) return "Select genres"; //keep unused
     const selectedNames = genres
-      .filter((genre) => selected.includes(genre.id))
+      .filter((genre) => selected.includes(genre.id)) 
       .map((genre) => genre.name);
     return selectedNames.join(", ");
   };
@@ -89,11 +89,14 @@ export default function GenreSelect({
         backgroundColor: "var(--clr-bg)",
         color: "var(--clr-text)",
         border: "1px solid var(--clr-border)",
+        maxWidth: "50%",
+        maxHeight: "60%"
       },
     },
   }}
 
-      >
+      > 
+      {/* display all the genres from the genresList */}
         {genres.map((genre) => (
           <MenuItem key={genre.id} value={genre.id}>
             <Checkbox checked={value.includes(genre.id)} />

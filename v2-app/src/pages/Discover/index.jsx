@@ -14,7 +14,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUp } from "lucide-react";
 
 export default function Discover() {
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const urlSource = params.get("source");
@@ -24,20 +24,20 @@ export default function Discover() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [source, setSource] = useState(() => {
+    //memorize source filter chosen across navigation
     return urlSource || sessionStorage.getItem("discover_source") || "popular";
   });
   const [genres, setGenres] = useState(() => {
     if (urlGenre) {
-      return [parseInt(urlGenre)];
+      return [parseInt(urlGenre)];  //urlGenre comes as a string representing an index number, which has to be converted into an integer
     }
-    return JSON.parse(sessionStorage.getItem("discover_genres") || "[]");
+    return JSON.parse(sessionStorage.getItem("discover_genres") || "[]"); //memorize genres chosen across navigation
   });
-  const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
-  const [loadingMore, setLoadingMore] = useState(false);
-  const observerRef = useRef();
-
-  const [passTheLimit, setPassTheLimit] = useState(false);
+  const [page, setPage] = useState(1); //current page number that is being fetched
+  const [hasMore, setHasMore] = useState(true);  //tracks whether there are more results available to load
+  const [loadingMore, setLoadingMore] = useState(false); //TRUE whenever it's fetching the next page (activate loadingSVG)
+  const observerRef = useRef(); 
+  const [passTheLimit, setPassTheLimit] = useState(false); //sets true when the user scrolls down 400px
 
   const loadMovies = useCallback(
     async (currentPage, append = false) => {
@@ -50,10 +50,12 @@ export default function Discover() {
           setHasMore(false);
         } else {
           setHasMore(true);
-          setMovies((prev) => (append ? [...prev, ...results] : results));
-          if (!append) setPage(1);
+          //add results of load more to the end of the previous movielist
+          //OR just fresh load results
+          setMovies((prev) => (append ? [...prev, ...results] : results)); 
+          if (!append) setPage(1); //when doing a fresh load, reset to page 1
         }
-      } catch {
+      } catch { 
         setError("Unable to fetch movies.");
         if (!append) setMovies([]);
       } finally {
@@ -61,17 +63,18 @@ export default function Discover() {
         setLoadingMore(false);
       }
     },
-    [source, genres]
+    [source, genres],
   );
 
+  //new filter selection handler -> resets everything and restarts fresh
   useEffect(() => {
     setMovies([]);
     setPage(1);
     setHasMore(true);
-    loadMovies(1, false);
+    loadMovies(1);
   }, [source, genres, loadMovies]);
 
-  useEffect(() => {
+  useEffect(() => { //everytime source/genre changes, the new source/genre chosen replaces the old on the sessionStorage (during the current tab session)
     sessionStorage.setItem("discover_source", source);
     navigate(`/discover?source=${source}`, { replace: true });
   }, [source]);
@@ -82,48 +85,48 @@ export default function Discover() {
 
   const loadMore = useCallback(() => {
     if (!hasMore || loading || loadingMore) return;
-    const nextPage = page + 1;
-    setPage(nextPage);
-    loadMovies(nextPage, true);
+    const nextPage = page + 1; 
+    setPage(nextPage); //goes to next page
+    loadMovies(nextPage, true); //fetches movies from next page
   }, [hasMore, loading, loadingMore, page, loadMovies]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting) {
+        //entries[0] because is just one element to be observed
+        if (entries[0].isIntersecting && hasMore && !loadingMore) { //sets TRUE whenever the div element (observed element) enters the viewport
           loadMore();
         }
       },
-      { threshold: 0 }
+      { threshold: 0 }, //as soon as any pixel is visible
     );
 
     if (observerRef.current) {
       observer.observe(observerRef.current);
     }
 
-    return () => {
-      if (observerRef.current) {
-        observer.unobserve(observerRef.current);
-      }
+    return () => { //cleanup 
+      observer.disconnect();
     };
-  }, [loadMore]);
+  }, [loadMore, hasMore, loadingMore]);
 
   const filteredMovies = useMemo(() => {
-    let list = [...movies];
+    let list = [...movies]; //shallow copy of the movies 
 
-    //filter by genres if any selected (client-side for trending)
-    if (genres.length > 0 && source === "trending") {
+    // filter by genres if any selected (client-side for trending)
+    if (genres.length > 0 && source === "trending") { //API endpoint 
       list = list.filter((movie) =>
-        genres.some((genreId) => movie.genre_ids?.includes(genreId))
+        //keep movies that match ANY selected genre
+        genres.some((genreId) => movie.genre_ids?.includes(genreId)),
       );
     }
-
     return list;
   }, [movies, genres, source]);
 
+
   useEffect(() => {
     const onScroll = () => {
-      setPassTheLimit(window.scrollY >= 400);
+      setPassTheLimit(window.scrollY >= 400); //after scrolling 400px, the btnToTop is displayed
     };
 
     onScroll();
@@ -132,15 +135,18 @@ export default function Discover() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  //navigation to individual movieDetails on card click
   const openMovie = (movie) => {
     navigate(`/movie/${movie.id}`, { state: { movie } });
   };
 
+  //reseting filters after "reset btn" click
   const resetFilters = () => {
     setSource("popular");
     setGenres([]);
   };
 
+  //on top arrow button click 
   const navigateToTop = () => {
     window.scrollTo({
       top: 0,
@@ -163,21 +169,26 @@ export default function Discover() {
         <GenreSelect value={genres} onChange={setGenres} />
       </div>
 
-      <button
-        type="button"
-        onClick={resetFilters}
-        className="btnPrimary"
-        style={{
-          margin: "0 auto 5vh auto",
-        }}
-      >
-        Reset Filters
-      </button>
+      <div style={{ textAlign: "center" }}>
+        {(urlSource !== "popular" || genres.length > 0) && (  //if source or genre selectors are untouched (source = popular AND no genres chosen)
+          <button //display reset filters btn
+            type="button"
+            onClick={resetFilters}
+            className="btnPrimary"
+            style={{
+              margin: "0 auto var(--space-xl) auto",
+            }}
+          >
+            Reset Filters
+          </button>
+        )}
+      </div>
 
       <div aria-live="polite" aria-atomic="true">
         {loading && <SkeletonMovieList layout="grid" count={20} />}
       </div>
-
+      
+      {/* fallback */}
       {!loading && error && (
         <ErrorPlaceholder
           type="network"
@@ -196,7 +207,9 @@ export default function Discover() {
             onMovieClick={openMovie}
             emptyMessage="No movies found."
           />
-          {hasMore && (
+          {/* trigger to loadMore in case there is more to load  */}
+          {/* whenever it enters on the viewport  */}
+          {hasMore && (   
             <div
               ref={observerRef}
               aria-label="Load more trigger"
@@ -215,6 +228,7 @@ export default function Discover() {
         </>
       )}
 
+      {/* top arrow button  */}
       <AnimatePresence>
         {passTheLimit && (
           <motion.button

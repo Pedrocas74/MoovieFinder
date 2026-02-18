@@ -8,7 +8,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility"; //watched
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 
 import PlaylistAddRoundedIcon from "@mui/icons-material/PlaylistAddRounded";
-import PlaylistAddCheckRoundedIcon from "@mui/icons-material/PlaylistAddCheckRounded"; //on watchlist
+import PlaylistAddCheckRoundedIcon from "@mui/icons-material/PlaylistAddCheckRounded"; //in watchlist
 
 import FavoriteIcon from "@mui/icons-material/Favorite"; //favorite
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -152,7 +152,7 @@ export default function MovieCard({
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [menuOpen, closeMenu]);
 
-  const onPointerDown = (e) => {
+  const onPointerDown = (e) => { 
     // only left mouse / primary touch
     if (e.pointerType === "mouse" && e.button !== 0) return;
 
@@ -189,7 +189,7 @@ export default function MovieCard({
     onClick?.(movie);
   };
 
-  const handleToggle = (fn) => (e) => {
+  const handleToggle = (fn) => (e) => { 
     e.stopPropagation();
     triggerPulse();
     fn(movie);

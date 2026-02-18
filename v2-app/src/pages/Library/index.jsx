@@ -9,7 +9,7 @@ import ErrorPlaceholder from "../../components/feedback/ErrorPlaceholder";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-
+//icons
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 
@@ -21,24 +21,22 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 export default function Library() {
   const navigate = useNavigate();
-  const { watched, watchlist, favorites } = useLibrary();
+  const { watched, watchlist, favorites } = useLibrary(); //from library context (movies that are saved in each category)
 
-  const [value, setValue] = useState(() => {
+  const [value, setValue] = useState(() => { //to remember the value of the library tab that was chosen
     const saved = localStorage.getItem("libraryTab");
     return saved ? parseInt(saved, 10) : 0;
   });
 
-  useEffect(() => {
+  useEffect(() => { //to update the library tab value
     localStorage.setItem("libraryTab", value);
   }, [value]);
 
-  const movies = useMemo(() => {
-    if (value === 0) return watched;
-    if (value === 1) return watchlist;
-    return favorites;
-  }, [value, watched, favorites, watchlist]);
+  //to render the right movielist according to tabs value
+  const movies = value === 0 ? watched : value === 1 ? watchlist : favorites;
 
-  const emptyCopy = useMemo(() => {
+
+  const emptyCopy = useMemo(() => { 
     if (value === 0) {
       return {
         title: "No watched movies yet",

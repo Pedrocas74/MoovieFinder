@@ -109,12 +109,12 @@
     /* padding */
     --pd-button: 0.6rem 0.75rem;
     --pd-movieCard: 2px 4px;
-    --pd-title: 7vh 0 2vh 5%;
-    --pd-td: 7vh 0 2vh 0;
-    --pd-normal: 0 5% 4vh 5%;
+    --pd-title: var(--space-xxl) 0 var(--space-s) 5%;
+    --pd-td: var(--space-xxl) 0 var(--space-s) 0;
+    --pd-normal: 0 5% var(--space-l) 5%;
     
     /* line height */
-    --lh-small: 1.6;
+    --lh-small: 1.5;
     --lh-big: 1.8;
 
     /* border-radius */

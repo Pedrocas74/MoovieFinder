@@ -48,15 +48,15 @@ import SkeletonMovieDetails from "./SkeletonMovieDetails";
 // import SeeMoreCard from "../../components/movie/MovieCard/SeeMoreCard";
 
 export default function MovieDetails() {
-  const [logoPath, setLogoPath] = useState(null);
+  const [logoPath, setLogoPath] = useState(null); 
   const [credits, setCredits] = useState(null);
-  const [trailerKey, setTrailerKey] = useState(null);
+  const [trailerKey, setTrailerKey] = useState(null); //key for each movie's trailer
   const [showTrailer, setShowTrailer] = useState(false);
-  const [screenshots, setScreenshots] = useState([]);
+  const [screenshots, setScreenshots] = useState([]); 
   const [lightboxOpen, setLightboxOpen] = useState(false); //screenshots viewer
   const [activeShot, setActiveShot] = useState(0); //screenshot being displayed
-  const [similar, setSimilar] = useState([]);
-  const [open, setOpen] = useState(false); //snackbar - toast
+  const [similar, setSimilar] = useState([]); //list of movielist
+  const [open, setOpen] = useState(false); //toast notification -> trailer not existing
 
   const { id } = useParams();
   const location = useLocation();
@@ -65,7 +65,7 @@ export default function MovieDetails() {
   const [loading, setLoading] = useState(!movie);
   const [error, setError] = useState(null);
 
-  const {
+  const { //from library context
     toggleWatched,
     toggleWatchlist,
     toggleFavorite,
@@ -81,7 +81,7 @@ export default function MovieDetails() {
     setError(null);
   }, [id, location.state?.movie]);
 
-  useEffect(() => {
+  useEffect(() => { //fetch movie details by id
     const fetchMovie = async () => {
       try {
         setLoading(true);
@@ -99,10 +99,10 @@ export default function MovieDetails() {
     fetchMovie();
   }, [id]);
 
-  useEffect(() => {
+  useEffect(() => { 
     if (!movie?.id) return;
 
-    (async () => {
+    (async () => { //choose and attribute images (logo, screenshots) that were fetched
       try {
         const images = await getMovieImages(movie.id);
 
@@ -120,7 +120,7 @@ export default function MovieDetails() {
     })();
   }, [movie?.id]);
 
-  useEffect(() => {
+  useEffect(() => { //fetch credits 
     if (!movie?.id) return;
 
     (async () => {
@@ -133,52 +133,53 @@ export default function MovieDetails() {
     })();
   }, [movie?.id]);
 
-  async function handleWatchTrailer() {
+  async function handleWatchTrailer() { //
     try {
-      const data = await getTrailer(movie.id);
-
-      const trailer =
+      const data = await getTrailer(movie.id); //fetch videos for this movie
+      //picks the best trailer
+      const trailer = //if a youtube video whose type is exactly "Trailer" doesn't exist -> any Youtube video (teaser/clip)
         data?.results?.find(
           (v) => v.site === "YouTube" && v.type === "Trailer"
         ) || data?.results?.find((v) => v.site === "YouTube");
 
-      if (!trailer) {
+      if (!trailer) { //toaster notification in case there are no videos to show
         setOpen(true);
         return;
       }
-      setTrailerKey(trailer.key);
-      setShowTrailer(true);
+      setTrailerKey(trailer.key); //key is embedded on iframe 
+      setShowTrailer(true); //show trailer
     } catch (e) {
       console.error(e);
     }
   }
 
+  //from Recently viewed context 
   const { addRecentlyViewed } = useRecentlyViewed();
 
-  useEffect(() => {
+  useEffect(() => { //after navigating to a movieDetails page -> add the movie to recently reviewed list
     if (movie?.id) addRecentlyViewed(movie);
   }, [movie?.id, addRecentlyViewed]);
 
-  const openLightbox = useCallback((index) => {
+  const openLightbox = useCallback((index) => { //to open screenshots viewer
     setActiveShot(index);
     setLightboxOpen(true);
   }, []);
 
-  const closeLightbox = useCallback(() => setLightboxOpen(false), []);
+  const closeLightbox = useCallback(() => setLightboxOpen(false), []); //to close screenshots viewer
 
-  const prevShot = useCallback(() => {
+  const prevShot = useCallback(() => { //to go back to previous screenshot
     setActiveShot((i) => (i - 1 + screenshots.length) % screenshots.length);
   }, [screenshots.length]);
 
-  const nextShot = useCallback(() => {
+  const nextShot = useCallback(() => { //to go to next screenshot
     setActiveShot((i) => (i + 1) % screenshots.length);
   }, [screenshots.length]);
 
-  useEffect(() => {
+  useEffect(() => { //add key down events to navigate inside screenshots viewer
     if (!lightboxOpen) return;
 
     const onKeyDown = (e) => {
-      if (e.key === "Escape") closeLightbox();
+      if (e.key === "Escape") closeLightbox(); 
       if (e.key === "ArrowLeft") prevShot();
       if (e.key === "ArrowRight") nextShot();
     };
@@ -522,7 +523,7 @@ export default function MovieDetails() {
           </>
         )}
       </dl>
-
+        {/* SCREENSHOTS  */}
       {screenshots.length > 0 && (
         <section className={styles.screenshotsSection}>
           <h3 className={styles.sectionTitle1}>Screenshots</h3>
@@ -557,20 +558,11 @@ export default function MovieDetails() {
             movies={similar.slice(0, 20)}
             layout="row"
             onMovieClick={handleOpenDetails}
-            // tailCard={
-            //   <SeeMoreCard
-            //     label="See all recommendations"
-            //     onClick={() =>
-            //       navigate(
-            //         `/discover?type=${movie?.type || "movie"}&similar=${id}`
-            //       )
-            //     }
-            //   />
-            // }
           />
         </>
       )}
 
+      {/* SCREENSHOTS VIEWER  */}
       {lightboxOpen && screenshots[activeShot] && (
         <div
           className={styles.lightboxOverlay}
@@ -623,6 +615,7 @@ export default function MovieDetails() {
         </div>
       )}
 
+      {/* TRAILER VIEWER  */}
       {showTrailer && (
         <div
           className={styles.trailerOverlay}
@@ -650,7 +643,7 @@ export default function MovieDetails() {
         </div>
       )}
 
-      {!showTrailer && (
+      {!showTrailer && ( 
         <Snackbar
           open={open}
           autoHideDuration={3000}

@@ -41,11 +41,11 @@ export function RecentlyViewedProvider({ children }) {
     }
   }, [recent]);
 
-  const addRecentlyViewed = useCallback((movie) => {
+  const addRecentlyViewed = useCallback((movie) => { //add movie to the front of the list and remove any duplicate 
     const m = normalizeMovie(movie);
     if (!m) return;
 
-    setRecent((prev) => {
+    setRecent((prev) => { 
       const without = prev.filter((x) => x.id !== m.id);
       return [m, ...without].slice(0, MAX);
     });

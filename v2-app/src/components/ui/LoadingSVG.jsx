@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-export default function LoadingSVG() {
+export default function LoadingSVG() { //spinner
   const containerStyle = {
     display: "flex",
     justifyContent: "center",

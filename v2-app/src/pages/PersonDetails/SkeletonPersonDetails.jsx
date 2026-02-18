@@ -56,7 +56,7 @@ export default function SkeletonPersonDetails() {
               />
             </div>
           </div>
-          <div className={styles.bioContainer} style={{ border: "11px inset var(--clr-primary)"}}>
+          <div className={styles.bioContainer} style={{ border: "3px inset var(--clr-primary)"}}>
             <Skeleton variant="text" width="100%" height={16} />
             <Skeleton variant="text" width="100%" height={16} />
             <Skeleton variant="text" width="100%" height={16} />

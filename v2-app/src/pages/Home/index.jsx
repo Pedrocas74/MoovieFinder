@@ -14,27 +14,26 @@ import Alert from "@mui/material/Alert";
 export default function Home() {
   const navigate = useNavigate();
 
-  const { trending, nowPlaying, upcoming, loading, error, reload } =
-    useHomeMovies();
 
-  const { recent } = useRecentlyViewed();
+  const { trending, nowPlaying, upcoming, loading, error, reload } = useHomeMovies();
 
-  const [trendingSort, setTrendingSort] = useState("");
+  const { recent } = useRecentlyViewed(); //context for recently clicked movies 
+
+  const [trendingSort, setTrendingSort] = useState(""); 
   const [upcomingSort, setUpcomingSort] = useState("");
   const [nowPlayingSort, setNowPlayingSort] = useState("");
   const [recentSort, setRecentSort] = useState("");
 
-  const [showHint, setShowHint] = useState(false);
+  const [showHint, setShowHint] = useState(false); //to dislay the info notification
 
-  const handleOpenDetails = (movie) => {
+  const handleOpenDetails = (movie) => { //navigation to movieDetails from clicking a moviecard
     navigate(`/movie/${movie.id}`, { state: { movie } });
   };
 
-  const MIN_SKELETON_MS = 1200;
-  const [minTimePassed, setMinTimePassed] = useState(false);
-  const showSkeleton = loading || !minTimePassed;
+  const MIN_SKELETON_MS = 1200; //minimum time for displaying the loading skeletons
+  const [minTimePassed, setMinTimePassed] = useState(false); //
 
-  useEffect(() => {
+  useEffect(() => { //to read if the time passed as soons as the component renders
     if (!loading) return;
 
     setMinTimePassed(false);
@@ -42,6 +41,8 @@ export default function Home() {
 
     return () => clearTimeout(t);
   }, []);
+
+  const showSkeleton = loading || !minTimePassed; //to display the skeleton when true
 
   const isTouchDevice = window.matchMedia(
     "(hover: none) and (pointer: coarse)"
@@ -62,6 +63,7 @@ export default function Home() {
 
   return (
     <div style={{ minHeight: "100vh" }}>
+      {/* fallback  */}
       {error && (
         <div role="alert" aria-live="assertive">
         <ErrorPlaceholder
@@ -74,9 +76,9 @@ export default function Home() {
         />
         </div>
       )}
-
+      
       {showSkeleton ? (
-        <SkeletonMovieList title="Trending" />
+        <SkeletonMovieList title="Trending" /> 
       ) : (
         trending.length > 0 && (
           <MovieList

@@ -15,12 +15,12 @@ export default function SearchResults() {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [sort, setSort] = useState("");
-  const [effectiveQuery, setEffectiveQuery] = useState("");
+  const [sort, setSort] = useState(""); //sort selected 
+  const [effectiveQuery, setEffectiveQuery] = useState(""); //subtracted query that returned results in case the initial one didn't
 
   const q = (params.get("q") || "").trim();
 
-  useEffect(() => {
+  useEffect(() => {  
     if (!q) {
       setMovies([]);
       setError(null);
@@ -95,20 +95,7 @@ export default function SearchResults() {
     return list;
   }, [movies, sort]);
 
-  // const runSearch = useCallback(async () => {
-  //   try {
-  //     setLoading(true);
-  //     setError(null);
-  //     const results = await searchMovies(query);
-  //     setMovies(results);
-  //   } catch (e) {
-  //     setError("We couldn’t fetch search results.");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // }, [query]);
-
-  const openMovie = (movie) => {
+  const openMovie = (movie) => { 
     navigate(`/movie/${movie.id}`, { state: { movie } });
   };
 
