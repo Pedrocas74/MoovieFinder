@@ -83,13 +83,12 @@
 .dropdown {
   position: absolute;
   top: 100%;
-  left: 0;
-  right: 0;
   background: var(--clr-bg);
-  border-radius: var(--radius-large);
-  margin-top: 6px;
+  border-radius: var(--radius-small);
+  margin-top: var(--space-xs);
   box-shadow: 0 8px 20px rgba(0,0,0,0.15);
   z-index: 2000;
+  width: 100%;
 }
 
 .item {
@@ -99,7 +98,7 @@
   background: transparent;
   border-radius: var(--radius-small);
   transition: var(--transition);
-  font-size: var(--fs-sm);
+  font-size: var(--fs-button);
   display: flex;
   align-items: center;
 }
@@ -118,6 +117,7 @@
   text-wrap: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  max-width: 75%;
 }
 .year {
   font-size: var(--fs-xs);
@@ -125,8 +125,8 @@
 }
 
 .coverContainer {
-  max-width: 30px;
-  width: 25px;
+  max-width: 40px;
+  width: 35px;
   height: auto;
 }
 .coverContainer img {
@@ -139,7 +139,16 @@
   height: 1px;
   background: rgba(77, 77, 77, 0.3);
 }
-
+/* -----------DARK OVERLAY----------  */
+.darkOverlay {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 90%;
+  background-color: var(--clr-darkOverlay);
+  z-index: 1999;
+}
 
 /* ANIMATION SEARCHBAR ENTRY & EXIT  */
 /* ENTER */

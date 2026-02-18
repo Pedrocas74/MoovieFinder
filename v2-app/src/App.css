@@ -80,6 +80,9 @@
     --radial-d: rgba(179, 179, 179, 0.26);
     --hover-d: rgba(255, 255, 255, 0.12);
 
+    /* background color when searchbar mounts  */
+    --clr-darkOverlay: rgba(0, 0, 0, 0.70); 
+
     /* --------------------------------------  */
 
     --clr-hover: rgba(121, 121, 121, 0.151);
@@ -99,11 +102,11 @@
 
     /* spacing  */
     --space-xxs: 0.25rem; 
-    --space-xs:  0.5rem;  
-    --space-s:   0.75rem; 
-    --space-m:   1rem;    
-    --space-l:   1.5rem;  
-    --space-xl:  2rem;    
+    --space-xs: 0.5rem;  
+    --space-s: 0.75rem; 
+    --space-m: 1rem;    
+    --space-l: 1.5rem;  
+    --space-xl: 2rem;    
     --space-xxl: 3rem;    
 
     /* padding */
