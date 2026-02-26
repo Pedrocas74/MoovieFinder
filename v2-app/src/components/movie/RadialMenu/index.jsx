@@ -11,7 +11,9 @@ import PlaylistAddCheckRoundedIcon from "@mui/icons-material/PlaylistAddCheckRou
 import FavoriteIcon from "@mui/icons-material/Favorite"; //favorite
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 //hooks
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+//custom hooks
+import { useClickOutside } from "../../../hooks/useClickOutside";
 
 // Animation variants
 const overlayV = {
@@ -99,6 +101,11 @@ export default function RadialMenu({
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [isOpen, onClose]);
 
+  const menuRef = useRef(null);
+  useClickOutside(menuRef, () => { //close radial menu, if user clicks outside the card
+    onClose();
+  })
+
   const handleToggle = (fn) => (e) => {
     e.stopPropagation();
     fn();
@@ -109,6 +116,7 @@ export default function RadialMenu({
     <AnimatePresence mode="wait">
       {isOpen && (
         <motion.div
+          ref={menuRef}
           className={styles.radialOverlay}
           role="dialog"
           aria-modal="true"
