@@ -41,7 +41,7 @@
 
     --radial-l: rgba(0, 0, 0, 0.4);
     --hover-d: #b1b1b1;
-    --hover-l: rgba(0, 0, 0, 0.08);
+    --hover-l: rgba(14, 13, 13, 0.2);
 
     /* DARK MODE  */
     --bg-d: hsl(27, 18%, 10%);
@@ -78,14 +78,14 @@
     --muted-d: #9c9c9c;
 
     --radial-d: rgba(179, 179, 179, 0.26);
-    --hover-d: rgba(255, 255, 255, 0.12);
+    --hover-d: rgba(255, 255, 255, 0.22);
 
     /* background color when searchbar mounts  */
     --clr-darkOverlay: rgba(0, 0, 0, 0.70); 
 
     /* --------------------------------------  */
 
-    --clr-hover: rgba(121, 121, 121, 0.151);
+    --clr-hover: rgba(121, 121, 121, 0.2);
     --clr-white-low: rgba(255, 255, 255, 0.158);
 
     /* font families */

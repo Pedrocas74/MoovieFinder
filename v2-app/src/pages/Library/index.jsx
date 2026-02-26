@@ -1,10 +1,12 @@
 import styles from "./Library.module.css";
+//hooks
 import { useMemo, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+//custom components
 import MovieList from "../../components/movie/MovieList";
-import { useLibrary } from "../../context/LibraryContext";
 import ErrorPlaceholder from "../../components/feedback/ErrorPlaceholder";
-
+//context
+import { useLibrary } from "../../context/LibraryContext";
 //tabs
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";

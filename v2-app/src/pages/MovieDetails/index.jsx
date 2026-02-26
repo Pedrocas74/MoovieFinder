@@ -104,7 +104,7 @@ export default function MovieDetails() {
 
     (async () => { //choose and attribute images (logo, screenshots) that were fetched
       try {
-        const images = await getMovieImages(movie.id);
+        const images = await getMovieImages(movie.id); //fetch all the images from the current movie whenever user enters the MovieDetails page
 
         const bestLogo =
           images.logos?.find((l) => l.iso_639_1 === "en") ??
@@ -120,7 +120,7 @@ export default function MovieDetails() {
     })();
   }, [movie?.id]);
 
-  useEffect(() => { //fetch credits 
+  useEffect(() => { //fetch credits (Cast)
     if (!movie?.id) return;
 
     (async () => {
@@ -227,7 +227,6 @@ export default function MovieDetails() {
   }, [movie?.id]);
 
   if (loading) return <SkeletonMovieDetails />;
-
   if (error) {
     return (
       <ErrorPlaceholder

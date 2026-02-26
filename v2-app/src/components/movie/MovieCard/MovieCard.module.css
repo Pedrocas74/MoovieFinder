@@ -1,25 +1,25 @@
 .movieCard {
-    min-width: 130px;
-    max-width: 170px;
-    cursor: pointer;
-    border: 1.5px solid var(--clr-card-border);
-    border-radius: var(--radius-small);
-    background: var(--clr-card);
-    transition: var(--transition);
-    box-shadow: var(--shadow-card-smooth);
-    padding: 3px;
-    position: relative;
-    z-index: 1;
-    scroll-snap-align: center;
-    touch-action: manipulation;
+  min-width: 130px;
+  max-width: 170px;
+  cursor: pointer;
+  border: 1.5px solid var(--clr-card-border);
+  border-radius: var(--radius-small);
+  background: var(--clr-card);
+  transition: var(--transition);
+  box-shadow: var(--shadow-card-smooth);
+  padding: 3px;
+  position: relative;
+  z-index: 1;
+  scroll-snap-align: center;
+  touch-action: manipulation;
 }
 .movieCard.saved {
-    border-color: var(--clr-primary-light);
+  border-color: var(--clr-primary-light);
 }
 @media (hover: hover) and (pointer: fine) {
   .movieCard:hover {
-  border: 1px solid var(--clr-text);
-}
+    border: 1px solid var(--clr-text);
+  }
 }
 /*--------------------- PULSE ANIMATION---------------  */
 .pulseOverlay {
@@ -30,16 +30,15 @@
   border-radius: inherit;
   pointer-events: none;
 
- background:
+  background:
     linear-gradient(
       to top,
-      rgba(255,255,255,0.35),
+      rgba(255, 255, 255, 0.35),
       var(--clr-border-strong)
-      
     ),
     linear-gradient(
       to bottom,
-      rgba(255,255,255,0.35),
+      rgba(255, 255, 255, 0.35),
       var(--clr-border-strong)
     );
 
@@ -49,21 +48,32 @@
   animation: cardPulse 1s var(--ease-in-out);
 }
 @keyframes cardPulse {
-  0%   { opacity: 0; transform: scale(0.92); }
-  35%  { opacity: 0.5; transform: scale(1.02); }
-  100% { opacity: 0; transform: scale(1.10); }
+  0% {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  35% {
+    opacity: 0.5;
+    transform: scale(1.02);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.1);
+  }
 }
 
 .titleCard {
   font-size: var(--fs-sm);
-  max-height: 50px;
   text-overflow: ellipsis;
+  width: 95%;
+  max-height: 45px;
   color: var(--bg-l);
   text-align: center;
-  padding: 6px;
+  padding: var(--pd-movieCard);
   position: absolute;
-  bottom: 50%;
-  display: block;
+  bottom: 12%;
+  transform: translateX(50%);
+  right: 50%;
 }
 
 .poster {
@@ -85,18 +95,18 @@
   user-select: none;
 }
 .skeletonImg {
-    height: 177px;
+  height: 177px;
 }
 .dateAndRate {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: var(--fs-xs);
-    padding: var(--pd-movieCard);
-    color: var(--clr-muted);
-    margin-top: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: var(--fs-xs);
+  padding: var(--pd-movieCard);
+  color: var(--clr-muted);
+  margin-top: 3px;
 }
-   /* saved action icons  */
+/* saved action icons  */
 .iconsContainer {
   border: 1px solid var(--clr-border);
   border-radius: var(--radius-large);
@@ -106,9 +116,6 @@
   align-items: center;
   pointer-events: none;
 }
-
-
-
 
 /* SEE MORE CARD  */
 .seeMore {
@@ -149,25 +156,25 @@
   .seeMoreContent {
     height: 228px;
   }
-  }
-  /* ---------HOVER BUTTON------------ */
-  .hoverBtn {
-    border-radius: unset;
-    border-bottom-left-radius: var(--radius-small); 
-    border-right: none;
-    border-top: none;
-    position: absolute;
-    top: 3px;
-    right: 3px;
-    cursor: pointer;
-    z-index: 100;
-    color: var(--bg-ll);
-    transition: var(--transition);
-    display: none;
-    width: 40px;
-    font-size: var(--fs-md);
-  }
-
+}
+/* ---------HOVER BUTTON------------ */
+.hoverBtn {
+  border-radius: unset;
+  border-bottom-left-radius: var(--radius-small);
+  border-right: none;
+  border-top: none;
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  cursor: pointer;
+  z-index: 100;
+  color: var(--bg-ll);
+  transition: var(--transition);
+  display: none;
+  width: 40px;
+  font-size: var(--fs-md);
+}
+@media (hover: hover) and (pointer: fine) {
   .movieCard:hover .hoverBtn {
     display: block;
   }
@@ -175,10 +182,11 @@
     background: var(--clr-card);
     color: var(--clr-text);
   }
-  .hoverBtn:active {
-    transform: scale(0.98);
-  }
-
+}
+.hoverBtn:active {
+  transform: scale(0.98);
+  background: var(--clr-hover);
+}
 
 /* --- Radial menu overlay --- */
 .radialOverlay {
@@ -236,7 +244,6 @@
 .radialCenter {
   all: unset;
   font-size: unset;
-  opacity: 0.85;
   color: var(--clr-text);
   font-size: var(--fs-xl);
 }

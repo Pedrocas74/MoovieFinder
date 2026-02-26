@@ -128,7 +128,7 @@
   padding: 2.5rem 5%;
 }
 .metaList dt {
-  font-weight: 100;
+  font-weight: 200;
   color: var(--clr-muted);
   border-right: 1px solid var(--clr-muted);
   padding-right: var(--space-m);

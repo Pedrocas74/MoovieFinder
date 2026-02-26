@@ -1,0 +1,63 @@
+/* --- Radial menu overlay --- */
+.radialOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 22;
+}
+
+.radialBackdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: var(--radial);
+  cursor: pointer;
+  border-radius: 0px;
+}
+
+/* container centered over the card */
+.radialMenu {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+/* each button placed using angle around center */
+.radialBtn {
+  position: absolute;
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-max);
+  border: 1px solid var(--clr-card-border);
+  background: var(--clr-bg);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: var(--shadow-card-smooth);
+}
+.radialBtn:hover {
+  border-color: var(--clr-primary-light);
+  background-color: var(--clr-primary-light);
+}
+
+.active {
+  border-color: var(--clr-primary);
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+}
+
+.radialCenter {
+  all: unset;
+  font-size: unset;
+  color: var(--bg-ll);
+  font-size: var(--fs-xl);
+}
+.radialCenter:hover {
+  background: var(--clr-primary);
+}
