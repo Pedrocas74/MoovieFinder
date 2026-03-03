@@ -1,18 +1,18 @@
 import styles from "./MovieDetails.module.css";
+//navigation
 import { useParams, useLocation, Link, useNavigate } from "react-router-dom";
+//hooks
 import { useState, useEffect, useCallback } from "react";
+//API services
 import {
   getMovieDetails,
   getMovieImages,
   getCredits,
-  getTrailer,
   getSimilarMovies,
   getRecommendedMovies,
 } from "../../services/tmdb";
-// import LoadingSVG from "../../components/ui/LoadingSVG";
-
 import { backdropUrl, logoUrl, screenshotUrl } from "../../services/tmdbImages";
-
+//icons
 import {
   Star,
   Hourglass,
@@ -22,41 +22,36 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
-
 import PlaylistAddRoundedIcon from "@mui/icons-material/PlaylistAddRounded";
 import PlaylistAddCheckRoundedIcon from "@mui/icons-material/PlaylistAddCheckRounded";
-
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-
+//contexts
 import { useLibrary } from "../../context/LibraryContext";
 import { useRecentlyViewed } from "../../context/RecentlyViewed";
-
 //tooltip
 import { styled } from "@mui/material/styles";
 import Tooltip from "@mui/material/Tooltip";
 //Snackbar and Alert / toast
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-
+//custom components
 import MovieList from "../../components/movie/MovieList/index";
 import SkeletonMovieDetails from "./SkeletonMovieDetails";
-// import { useHomeMovies } from "../../hooks/useHomeMovies";
-// import SeeMoreCard from "../../components/movie/MovieCard/SeeMoreCard";
+//custom hooks
+import { useTrailer } from "../../hooks/useTrailer";
 
 export default function MovieDetails() {
   const [logoPath, setLogoPath] = useState(null); 
   const [credits, setCredits] = useState(null);
-  const [trailerKey, setTrailerKey] = useState(null); //key for each movie's trailer
-  const [showTrailer, setShowTrailer] = useState(false);
+
   const [screenshots, setScreenshots] = useState([]); 
   const [lightboxOpen, setLightboxOpen] = useState(false); //screenshots viewer
   const [activeShot, setActiveShot] = useState(0); //screenshot being displayed
   const [similar, setSimilar] = useState([]); //list of movielist
-  const [open, setOpen] = useState(false); //toast notification -> trailer not existing
+  const [open, setOpen] = useState(false); //toast notification in case noTrailer 
 
   const { id } = useParams();
   const location = useLocation();
@@ -133,26 +128,6 @@ export default function MovieDetails() {
     })();
   }, [movie?.id]);
 
-  async function handleWatchTrailer() { //
-    try {
-      const data = await getTrailer(movie.id); //fetch videos for this movie
-      //picks the best trailer
-      const trailer = //if a youtube video whose type is exactly "Trailer" doesn't exist -> any Youtube video (teaser/clip)
-        data?.results?.find(
-          (v) => v.site === "YouTube" && v.type === "Trailer"
-        ) || data?.results?.find((v) => v.site === "YouTube");
-
-      if (!trailer) { //toaster notification in case there are no videos to show
-        setOpen(true);
-        return;
-      }
-      setTrailerKey(trailer.key); //key is embedded on iframe 
-      setShowTrailer(true); //show trailer
-    } catch (e) {
-      console.error(e);
-    }
-  }
-
   //from Recently viewed context 
   const { addRecentlyViewed } = useRecentlyViewed();
 
@@ -226,6 +201,8 @@ export default function MovieDetails() {
     };
   }, [movie?.id]);
 
+  const { trailerKey, showTrailer, setShowTrailer, noTrailer, fetchTrailer } = useTrailer();
+
   if (loading) return <SkeletonMovieDetails />;
   if (error) {
     return (
@@ -286,7 +263,7 @@ export default function MovieDetails() {
             <button
               className="actionButton"
               type="button"
-              onClick={handleWatchTrailer}
+              onClick={() => fetchTrailer(movie.id)}
               aria-label="Play trailer"
             >
               <Play
@@ -642,7 +619,7 @@ export default function MovieDetails() {
         </div>
       )}
 
-      {!showTrailer && ( 
+      {noTrailer && ( 
         <Snackbar
           open={open}
           autoHideDuration={3000}
