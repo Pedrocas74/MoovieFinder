@@ -4,6 +4,8 @@ import { useState, useRef, useEffect, useMemo } from "react";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import SortSelect from "../../filters/sortSelect";
+//utils
+import { sortMovies } from "../../../utils/sortMovies";
 
 export default function MovieList({
   title,
@@ -25,38 +27,10 @@ export default function MovieList({
     "(hover: none) and (pointer: coarse)",
   ).matches;
 
+  //activates after change on sortSelect component
   const sortedMovies = useMemo(() => {
-    //movielists results for all the sort options
-    let list = [...movies];
-
-    if (sort === "most_rated")
-      return list.sort((a, b) => (b.vote_average ?? 0) - (a.vote_average ?? 0));
-
-    if (sort === "lowest_rated")
-      return list.sort((a, b) => (a.vote_average ?? 0) - (b.vote_average ?? 0));
-
-    if (sort === "recent")
-      return list.sort((a, b) =>
-        (b.release_date ?? "").localeCompare(a.release_date ?? ""),
-      );
-
-    if (sort === "oldest")
-      return list.sort((a, b) =>
-        (a.release_date ?? "").localeCompare(b.release_date ?? ""),
-      );
-
-    if (sort === "crescent")
-      return list.sort((a, b) =>
-        (a.title ?? a.name ?? "").localeCompare(b.title ?? b.name ?? ""),
-      );
-
-    if (sort === "decrescent")
-      return list.sort((a, b) =>
-        (b.title ?? a.name ?? "").localeCompare(a.title ?? a.name ?? ""),
-      );
-
-    return list;
-  }, [movies, sort]);
+  return sortMovies(movies, sort);
+}, [movies, sort]);
 
   //reads the scroll position from the container and updates the horizontal scrolling allowance states below
   const checkScrollButtons = () => {
