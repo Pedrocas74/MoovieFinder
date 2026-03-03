@@ -22,8 +22,11 @@ export default function App() {
       <ScrollToTop />
       {/* vercel analytics  */}
       <Analytics /> 
+      {/* theme mode light/dark context  */}
       <ThemeProvider>
+        {/* add a movie to recently viewed list after clicking on its card  */}
         <RecentlyViewedProvider>
+          {/* manage library context */}
           <LibraryProvider>
             <Navbar
               setSearchedMovies={setSearchedMovies}

@@ -1,6 +1,6 @@
 import styles from "./MovieCard.module.css";
 //hooks
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 //motion
 import { motion } from "framer-motion";
 //context
@@ -61,6 +61,7 @@ export default function MovieCard({
   }, []);
 
   const openMenu = useCallback(() => {
+    console.log("OPEN");
     longPressedRef.current = true;
     onOpenMenu?.();
 
@@ -71,6 +72,7 @@ export default function MovieCard({
   }, []);
 
   const closeMenu = useCallback(() => {
+    console.log("CLOSE");
     onCloseMenu?.();
   }, [onCloseMenu]);
 
@@ -152,9 +154,19 @@ export default function MovieCard({
       {!isTouchDevice && ( //only display hoverBtn on computers
         <button
           className={`${styles.hoverBtn} actionButton`}
+          onPointerDown={(e) => {
+            e.stopPropagation();  //hover button now blocks low‑level pointer/mouse events (useClickOutside hook)
+          }}
+          onMouseDown={(e) => {
+            e.stopPropagation();
+          }}
           onClick={(e) => {
-            if (!menuOpen) {
+            try {
               e.stopPropagation();
+              e.preventDefault?.();
+            } catch {}
+
+            if (!menuOpen) {
               openMenu();
             } else {
               closeMenu();

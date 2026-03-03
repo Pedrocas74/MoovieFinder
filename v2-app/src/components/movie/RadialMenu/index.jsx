@@ -113,7 +113,7 @@ export default function RadialMenu({
   };
 
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence mode="sync">
       {isOpen && (
         <motion.div
           ref={menuRef}

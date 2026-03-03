@@ -100,14 +100,14 @@ export default function MovieList({
   const scrollLeft = () => {
     //scroll handler for left arrow button
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: -650, behavior: "smooth" });
+      scrollContainerRef.current.scrollBy({ left: -400, behavior: "smooth" });
     }
   };
 
   const scrollRight = () => {
     //scroll handler for right arrow button
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: 650, behavior: "smooth" });
+      scrollContainerRef.current.scrollBy({ left: 400, behavior: "smooth" });
     }
   };
 
