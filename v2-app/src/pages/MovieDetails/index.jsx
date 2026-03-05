@@ -1,8 +1,7 @@
 import styles from "./MovieDetails.module.css";
-//navigation
-import { useParams, useLocation, Link, useNavigate } from "react-router-dom";
 //hooks
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
+import { useParams, useLocation, Link, useNavigate } from "react-router-dom";
 //API services
 import {
   getMovieDetails,
@@ -11,17 +10,9 @@ import {
   getSimilarMovies,
   getRecommendedMovies,
 } from "../../services/tmdb";
-import { backdropUrl, logoUrl, screenshotUrl } from "../../services/tmdbImages";
+import { backdropUrl, logoUrl } from "../../services/tmdbImages";
 //icons
-import {
-  Star,
-  Hourglass,
-  Calendar,
-  Play,
-  X,
-  ChevronLeft,
-  ChevronRight,
-} from "lucide-react";
+import { Star, Hourglass, Calendar, Play, X } from "lucide-react";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import PlaylistAddRoundedIcon from "@mui/icons-material/PlaylistAddRounded";
@@ -40,18 +31,17 @@ import Alert from "@mui/material/Alert";
 //custom components
 import MovieList from "../../components/movie/MovieList/index";
 import SkeletonMovieDetails from "./SkeletonMovieDetails";
+import ScreenshotsCarousel from "../../components/images/ScreenshotsCarousel";
 //custom hooks
 import { useTrailer } from "../../hooks/useTrailer";
+import { useScreenshots } from "../../hooks/useScreenshots";
 
 export default function MovieDetails() {
-  const [logoPath, setLogoPath] = useState(null); 
+  const [logoPath, setLogoPath] = useState(null);
   const [credits, setCredits] = useState(null);
 
-  const [screenshots, setScreenshots] = useState([]); 
-  const [lightboxOpen, setLightboxOpen] = useState(false); //screenshots viewer
-  const [activeShot, setActiveShot] = useState(0); //screenshot being displayed
   const [similar, setSimilar] = useState([]); //list of movielist
-  const [open, setOpen] = useState(false); //toast notification in case noTrailer 
+  const [open, setOpen] = useState(false); //toast notification in case noTrailer
 
   const { id } = useParams();
   const location = useLocation();
@@ -60,7 +50,8 @@ export default function MovieDetails() {
   const [loading, setLoading] = useState(!movie);
   const [error, setError] = useState(null);
 
-  const { //from library context
+  const {
+    //from library context
     toggleWatched,
     toggleWatchlist,
     toggleFavorite,
@@ -76,7 +67,8 @@ export default function MovieDetails() {
     setError(null);
   }, [id, location.state?.movie]);
 
-  useEffect(() => { //fetch movie details by id
+  useEffect(() => {
+    //fetch movie details by id
     const fetchMovie = async () => {
       try {
         setLoading(true);
@@ -94,10 +86,11 @@ export default function MovieDetails() {
     fetchMovie();
   }, [id]);
 
-  useEffect(() => { 
+  useEffect(() => {
     if (!movie?.id) return;
 
-    (async () => { //choose and attribute images (logo, screenshots) that were fetched
+    (async () => {
+      //choose and attribute images (logo, screenshots) that were fetched
       try {
         const images = await getMovieImages(movie.id); //fetch all the images from the current movie whenever user enters the MovieDetails page
 
@@ -107,7 +100,7 @@ export default function MovieDetails() {
           images.logos?.[0];
 
         setLogoPath(bestLogo?.file_path ?? null);
-        setScreenshots((images.backdrops || []).slice(5, 17));
+        // setScreenshots((images.backdrops || []).slice(5, 17));
       } catch (e) {
         console.error("Logo fetch failed:", e);
         setLogoPath(null);
@@ -115,7 +108,8 @@ export default function MovieDetails() {
     })();
   }, [movie?.id]);
 
-  useEffect(() => { //fetch credits (Cast)
+  useEffect(() => {
+    //fetch credits (Cast)
     if (!movie?.id) return;
 
     (async () => {
@@ -128,46 +122,13 @@ export default function MovieDetails() {
     })();
   }, [movie?.id]);
 
-  //from Recently viewed context 
+  //from Recently viewed context
   const { addRecentlyViewed } = useRecentlyViewed();
 
-  useEffect(() => { //after navigating to a movieDetails page -> add the movie to recently reviewed list
+  useEffect(() => {
+    //after navigating to a movieDetails page -> add the movie to recently reviewed list
     if (movie?.id) addRecentlyViewed(movie);
   }, [movie?.id, addRecentlyViewed]);
-
-  const openLightbox = useCallback((index) => { //to open screenshots viewer
-    setActiveShot(index);
-    setLightboxOpen(true);
-  }, []);
-
-  const closeLightbox = useCallback(() => setLightboxOpen(false), []); //to close screenshots viewer
-
-  const prevShot = useCallback(() => { //to go back to previous screenshot
-    setActiveShot((i) => (i - 1 + screenshots.length) % screenshots.length);
-  }, [screenshots.length]);
-
-  const nextShot = useCallback(() => { //to go to next screenshot
-    setActiveShot((i) => (i + 1) % screenshots.length);
-  }, [screenshots.length]);
-
-  useEffect(() => { //add key down events to navigate inside screenshots viewer
-    if (!lightboxOpen) return;
-
-    const onKeyDown = (e) => {
-      if (e.key === "Escape") closeLightbox(); 
-      if (e.key === "ArrowLeft") prevShot();
-      if (e.key === "ArrowRight") nextShot();
-    };
-
-    document.addEventListener("keydown", onKeyDown);
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-
-    return () => {
-      document.removeEventListener("keydown", onKeyDown);
-      document.body.style.overflow = prevOverflow;
-    };
-  }, [lightboxOpen, closeLightbox, prevShot, nextShot]);
 
   //recs are fetched and placed first, while sims are used as a filler
   useEffect(() => {
@@ -183,7 +144,7 @@ export default function MovieDetails() {
         ]);
 
         const merged = [...(recs || []), ...(sims || [])].filter(
-          (m) => m && m.id !== movie.id
+          (m) => m && m.id !== movie.id,
         );
 
         //de-dupe by id, keeping first occurrence -> recs win
@@ -201,7 +162,9 @@ export default function MovieDetails() {
     };
   }, [movie?.id]);
 
-  const { trailerKey, showTrailer, setShowTrailer, noTrailer, fetchTrailer } = useTrailer();
+  const { trailerKey, showTrailer, setShowTrailer, noTrailer, fetchTrailer } =
+    useTrailer();
+  const { screenshots } = useScreenshots(id);
 
   if (loading) return <SkeletonMovieDetails />;
   if (error) {
@@ -230,7 +193,7 @@ export default function MovieDetails() {
 
   const director = credits?.crew?.find((person) => person.job === "Director");
   const writers = credits?.crew?.filter((person) =>
-    ["Writer", "Screenplay", "Story"].includes(person.job)
+    ["Writer", "Screenplay", "Story"].includes(person.job),
   );
   const cast = credits?.cast?.slice(0, 7) ?? [];
   const watched = isWatched(movie.id);
@@ -499,30 +462,12 @@ export default function MovieDetails() {
           </>
         )}
       </dl>
-        {/* SCREENSHOTS  */}
+      {/* SCREENSHOTS  */}
       {screenshots.length > 0 && (
         <section className={styles.screenshotsSection}>
           <h3 className={styles.sectionTitle1}>Screenshots</h3>
 
-          <div className={styles.screenshotsRow}>
-            {screenshots.map((img, idx) => (
-              <button
-                key={img.file_path}
-                type="button"
-                className={`${styles.screenshotBtn} actionButton`}
-                onClick={() => openLightbox(idx)}
-                aria-label={`Open screenshot ${idx + 1} fullscreen`}
-              >
-                <img
-                  src={screenshotUrl(img.file_path, "w780")}
-                  alt={`${movie.title} screenshot ${idx + 1}`}
-                  className={styles.screenshot}
-                  loading="lazy"
-                  decoding="async"
-                />
-              </button>
-            ))}
-          </div>
+          <ScreenshotsCarousel images={screenshots} />
         </section>
       )}
 
@@ -536,59 +481,6 @@ export default function MovieDetails() {
             onMovieClick={handleOpenDetails}
           />
         </>
-      )}
-
-      {/* SCREENSHOTS VIEWER  */}
-      {lightboxOpen && screenshots[activeShot] && (
-        <div
-          className={styles.lightboxOverlay}
-          role="dialog"
-          aria-modal="true"
-          aria-label="Screenshot viewer"
-          onClick={closeLightbox}
-        >
-          <div
-            className={styles.lightboxInner}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              type="button"
-              className={styles.lightboxClose}
-              onClick={closeLightbox}
-              aria-label="Close viewer"
-            >
-              <X size={20} />
-            </button>
-
-            <button
-              type="button"
-              className={styles.lightboxNavLeft}
-              onClick={prevShot}
-              aria-label="Previous screenshot"
-            >
-              <ChevronLeft size={20} />
-            </button>
-
-            <img
-              className={styles.lightboxImg}
-              src={screenshotUrl(screenshots[activeShot].file_path, "original")}
-              alt={`${movie.title} screenshot ${activeShot + 1}`}
-            />
-
-            <button
-              type="button"
-              className={styles.lightboxNavRight}
-              onClick={nextShot}
-              aria-label="Next screenshot"
-            >
-              <ChevronRight size={20} />
-            </button>
-
-            <div className={styles.lightboxCounter}>
-              {activeShot + 1} / {screenshots.length}
-            </div>
-          </div>
-        </div>
       )}
 
       {/* TRAILER VIEWER  */}
@@ -619,7 +511,7 @@ export default function MovieDetails() {
         </div>
       )}
 
-      {noTrailer && ( 
+      {noTrailer && (
         <Snackbar
           open={open}
           autoHideDuration={3000}

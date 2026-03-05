@@ -15,7 +15,7 @@ import PlaylistAddCheckRoundedIcon from "@mui/icons-material/PlaylistAddCheckRou
 import FavoriteIcon from "@mui/icons-material/Favorite"; //favorite
 import RadialMenu from "../RadialMenu";
 
-const LONG_PRESS_MS = 200; //200ms to open the radial menu by press holding the card
+const LONG_PRESS_MS = 270; //270ms to open the radial menu by press holding the card
 const MOVE_CANCEL_PX = 10; //during the press holding, if the finger moves 10px somewhere, radial menu opening is canceled
 
 export default function MovieCard({

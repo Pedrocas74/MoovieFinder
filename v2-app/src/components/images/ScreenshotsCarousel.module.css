@@ -1,0 +1,62 @@
+.embla {
+  overflow: hidden;
+  width: 100%;
+}
+
+.embla_container {
+  display: flex;
+  touch-action: pan-x pinch-zoom;
+}.embla_container:hover {
+  cursor: grab;
+}.embla_container:active {
+  cursor: grabbing;
+}
+
+.screenshotImg {
+  width: auto;
+  height: clamp(250px, 10vh, 300px);
+  object-fit: cover;
+  display: block;
+  padding: 0 var(--space-s);
+}
+
+.btnContainer {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-l);
+  margin-top: var(--space-s);
+}
+.btnContainer button {
+  padding: var(--pd-button-circle);
+  border-radius: var(--radius-full);
+}
+.progress {
+  position: relative;
+  height: 4px;
+  background: var(--clr-border);
+  margin-top: var(--space-s);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+.progressBar {
+  height: 100%;
+  background: var(--clr-text);
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 0.2s linear;
+}
+
+
+
+/* INDIVIDUAL SKELETONS  */
+.skeleton {
+  width: 468px;
+  height: clamp(250px, 20vh, 300px);
+  background: var(--clr-border);
+}
+.hidden {
+  display: none;
+}
+.visible {
+  display: block;
+}

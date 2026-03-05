@@ -33,21 +33,21 @@ export default function SkeletonMovieDetails() {
 
       <Skeleton
         variant="text"
-        width="90%"
+        width="70%"
         height={24}
-        style={{ margin: "0 5%" }}
+        style={{ margin: "0 auto", padding: "0 5%" }}
       />
       <Skeleton
         variant="text"
-        width="85%"
+        width="70%"
         height={24}
-        style={{ margin: "0 5%" }}
+        style={{ margin: "0 auto", padding: "0 5%" }}
       />
       <Skeleton
         variant="text"
-        width="80%"
+        width="70%"
         height={24}
-        style={{ margin: "0 5%" }}
+        style={{ margin: "0 auto", padding: "0 5%" }}
       />
 
       <div className={styles.genres}>
@@ -76,16 +76,14 @@ export default function SkeletonMovieDetails() {
           variant="text"
           width={180}
           height={34}
-          style={{ margin: "7vh 0 2vh 0" }}
         />
         <div className={styles.screenshotsRow}>
           {Array.from({ length: 6 }).map((_, i) => (
             <Skeleton
               key={i}
               variant="rectangular"
-              width={240}
-              height={160}
-              style={{ borderRadius: "var(--radius-small)" }}
+              width={468}
+              height="clamp(250px, 10vh, 300px)"
             />
           ))}
         </div>
