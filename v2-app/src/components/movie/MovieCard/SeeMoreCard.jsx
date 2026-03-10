@@ -1,5 +1,7 @@
 import styles from "./MovieCard.module.css";
+//motion
 import { motion } from "framer-motion";
+//icons
 import { ArrowRight } from "lucide-react";
 
 export default function SeeMoreCard({ label, onClick }) {

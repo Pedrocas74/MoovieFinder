@@ -9,10 +9,9 @@ import placeholder_cover from "/images/placeholder_movie.webp";
 //icons
 import { Star } from "lucide-react";
 import VisibilityIcon from "@mui/icons-material/Visibility"; //watched
-
 import PlaylistAddCheckRoundedIcon from "@mui/icons-material/PlaylistAddCheckRounded"; //in watchlist
-
 import FavoriteIcon from "@mui/icons-material/Favorite"; //favorite
+//custom components
 import RadialMenu from "../RadialMenu";
 
 const LONG_PRESS_MS = 270; //270ms to open the radial menu by press holding the card

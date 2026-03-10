@@ -9,7 +9,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 const IMG_BASE = "https://image.tmdb.org/t/p/original";
 
 export default function ScreenshotsCarousel({ images }) {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false });
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false, axis: "x" });
 
   const [scrollProgress, setScrollProgress] = useState(0); 
   const [loadedImages, setLoadedImages] = useState({}); //to track loaded images

@@ -1,14 +1,15 @@
 .embla {
   overflow: hidden;
   width: 100%;
+  touch-action: pan-y;
 }
-
 .embla_container {
   display: flex;
-  touch-action: pan-x pinch-zoom;
-}.embla_container:hover {
+}
+.embla_container:hover {
   cursor: grab;
-}.embla_container:active {
+}
+.embla_container:active {
   cursor: grabbing;
 }
 
@@ -45,8 +46,6 @@
   transform: scaleX(0);
   transition: transform 0.2s linear;
 }
-
-
 
 /* INDIVIDUAL SKELETONS  */
 .skeleton {

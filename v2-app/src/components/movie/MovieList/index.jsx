@@ -1,8 +1,10 @@
-import MovieCard from "../MovieCard";
 import styles from "./MovieList.module.css";
+//hooks
 import { useState, useRef, useEffect, useMemo } from "react";
-
+//icons
 import { ChevronLeft, ChevronRight } from "lucide-react";
+//custom components
+import MovieCard from "../MovieCard";
 import SortSelect from "../../filters/sortSelect";
 //utils
 import { sortMovies } from "../../../utils/sortMovies";

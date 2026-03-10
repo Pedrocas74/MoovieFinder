@@ -1,6 +1,8 @@
-import Skeleton from "@mui/material/Skeleton";
-import SkeletonMovieCard from "../MovieCard/SkeletonMovieCard";
 import styles from "./MovieList.module.css";
+//dependencies 
+import Skeleton from "@mui/material/Skeleton";
+//custom components 
+import SkeletonMovieCard from "../MovieCard/SkeletonMovieCard";
 
 export default function SkeletonMovieList({
   title,

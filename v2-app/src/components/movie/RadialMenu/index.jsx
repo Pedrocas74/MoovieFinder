@@ -4,10 +4,8 @@ import { AnimatePresence, motion } from "framer-motion";
 //icons
 import VisibilityIcon from "@mui/icons-material/Visibility"; //watched
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
-
 import PlaylistAddRoundedIcon from "@mui/icons-material/PlaylistAddRounded";
 import PlaylistAddCheckRoundedIcon from "@mui/icons-material/PlaylistAddCheckRounded"; //in watchlist
-
 import FavoriteIcon from "@mui/icons-material/Favorite"; //favorite
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 //hooks

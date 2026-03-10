@@ -1,5 +1,6 @@
-import Skeleton from "@mui/material/Skeleton";
 import styles from "./MovieCard.module.css";
+//dependencies
+import Skeleton from "@mui/material/Skeleton";
 
 export default function SkeletonMovieCard() {
   return (

@@ -1,153 +1,160 @@
 *,
 *::before,
 *::after {
-    box-sizing: border-box;
-    margin: 0;
+  box-sizing: border-box;
+  margin: 0;
 }
 
 :root {
-    /* LIGHT MODE  */
-    --bg-l: hsl(0, 0%, 94%);
-    --bg-ll: #ffffff;
-    --bg-ld: #afafaf;
+  /* LIGHT MODE  */
+  --bg-l: hsl(0, 0%, 94%);
+  --bg-ll: #ffffff;
+  --bg-ld: #afafaf;
 
-    --red: hsl(0, 70%, 33%);
-    --red-light: hsl(0, 82%, 43%);
-    --red-dark: hsl(0, 70%, 25%);
-    --red-border: hsla(0, 70%, 33%, 0.3);
-    --red-border-strong: hsla(0, 70%, 33%, 0.8);
+  --red: hsl(0, 70%, 33%);
+  --red-light: hsl(0, 82%, 43%);
+  --red-dark: hsl(0, 70%, 25%);
+  --red-border: hsla(0, 70%, 33%, 0.3);
+  --red-border-strong: hsla(0, 70%, 33%, 0.8);
 
-    --button-gradient-light-background: 
-    linear-gradient(
+  --button-gradient-light-background: linear-gradient(
     to bottom,
     hsl(0, 70%, 48%) 0%,
     hsl(0, 70%, 40%) 75%,
-    hsl(0, 70%, 38%) 100%);
+    hsl(0, 70%, 38%) 100%
+  );
 
-     --button-gradient-light-background-hover: linear-gradient(
+  --button-gradient-light-background-hover: linear-gradient(
     to bottom,
     hsl(0, 70%, 40%) 0%,
     hsl(0, 70%, 32%) 75%,
-    hsl(0, 70%, 36%) 100%);
+    hsl(0, 70%, 36%) 100%
+  );
 
-      --button-gradient-light-background-active: linear-gradient(
+  --button-gradient-light-background-active: linear-gradient(
     to bottom,
     hsl(0, 70%, 30%) 0%,
     hsl(0, 70%, 20%) 75%,
-    hsl(0, 70%, 34%) 100%);
+    hsl(0, 70%, 34%) 100%
+  );
 
-    --clr-text-l: #1d1814;
-    --muted: #5a5a5a;
+  --clr-text-l: #1d1814;
+  --muted: #5a5a5a;
 
-    --radial-l: rgba(0, 0, 0, 0.4);
-    --hover-d: #b1b1b1;
-    --hover-l: rgba(14, 13, 13, 0.2);
+  --radial-l: rgba(0, 0, 0, 0.4);
+  --hover-d: #b1b1b1;
+  --hover-l: rgba(14, 13, 13, 0.2);
 
-    /* DARK MODE  */
-    --bg-d: hsl(27, 18%, 10%);
-    --bg-dl: hsl(27, 18%, 20%);
-    --bg-dd: hsl(27, 18%, 5%);
+  /* DARK MODE  */
+  --bg-d: hsl(27, 18%, 10%);
+  --bg-dl: hsl(27, 18%, 20%);
+  --bg-dd: hsl(27, 18%, 5%);
 
-    --purple: hsl(281, 82%, 56%);
-    --purple-light: hsl(281, 82%, 66%);
-    --purple-dark: hsl(281, 82%, 46%);
-    --purple-border: hsla(281, 82%, 56%, 0.3);
-    --purple-border-strong: hsla(281, 82%, 56%, 0.5);
+  --purple: hsl(281, 82%, 56%);
+  --purple-light: hsl(281, 82%, 66%);
+  --purple-dark: hsl(281, 82%, 46%);
+  --purple-border: hsla(281, 82%, 56%, 0.3);
+  --purple-border-strong: hsla(281, 82%, 56%, 0.5);
 
-    --button-gradient-dark-background: linear-gradient(
-  to bottom,
-  hsl(281, 82%, 60%) 0%,
-  hsl(281, 82%, 52%) 75%,
-  hsl(281, 82%, 44%) 100%
-);
-    --button-gradient-dark-background-hover: linear-gradient(
-  to bottom,
-  hsl(281, 82%, 50%) 0%,
-  hsl(281, 82%, 42%) 75%,
-  hsl(281, 82%, 42%) 100%
-);
+  --button-gradient-dark-background: linear-gradient(
+    to bottom,
+    hsl(281, 82%, 60%) 0%,
+    hsl(281, 82%, 52%) 75%,
+    hsl(281, 82%, 44%) 100%
+  );
+  --button-gradient-dark-background-hover: linear-gradient(
+    to bottom,
+    hsl(281, 82%, 50%) 0%,
+    hsl(281, 82%, 42%) 75%,
+    hsl(281, 82%, 42%) 100%
+  );
 
-    --button-gradient-dark-background-active: linear-gradient(
-  to bottom,
-  hsl(281, 82%, 40%) 0%,
-  hsl(281, 82%, 32%) 75%,
-  hsl(281, 82%, 40%) 100%
-);
+  --button-gradient-dark-background-active: linear-gradient(
+    to bottom,
+    hsl(281, 82%, 40%) 0%,
+    hsl(281, 82%, 32%) 75%,
+    hsl(281, 82%, 40%) 100%
+  );
 
-    --clr-text-d: hsl(0, 0%, 97%);
-    --muted-d: #9c9c9c;
+  --clr-text-d: hsl(0, 0%, 97%);
+  --muted-d: #9c9c9c;
 
-    --radial-d: rgba(179, 179, 179, 0.26);
-    --hover-d: rgba(255, 255, 255, 0.22);
+  --radial-d: rgba(179, 179, 179, 0.26);
+  --hover-d: rgba(255, 255, 255, 0.22);
 
-    /* background color when searchbar mounts  */
-    --clr-darkOverlay: rgba(0, 0, 0, 0.70); 
+  /* background color when searchbar mounts  */
+  --clr-darkOverlay: rgba(0, 0, 0, 0.7);
 
-    /* --------------------------------------  */
+  /* --------------------------------------  */
 
-    --clr-hover: rgba(121, 121, 121, 0.2);
-    --clr-white-low: rgba(255, 255, 255, 0.158);
+  --clr-hover: rgba(121, 121, 121, 0.2);
+  --clr-white-low: rgba(255, 255, 255, 0.158);
 
-    /* font families */
+  /* font families */
 
-    --ff-body: "Inter", serif;
-    /* font sizes  */
-    --fs-cardIcon: clamp(0.85rem, 2vw, 1rem);
-    --fs-xs: clamp(0.75rem, 1vw, 0.85rem);
-    --fs-sm: clamp(0.85rem, 1.2vw, 1rem);
-    --fs-button: clamp(0.95rem, 1.3vw, 1.1rem);
-    --fs-md: clamp(1rem, 2vw, 1.3rem);
-    --fs-lg: clamp(1.3rem, 3vw, 2rem);
-    --fs-xl: clamp(2.4rem, 4.5vw, 5.5rem);
+  --ff-body: "Inter", serif;
+  /* font sizes  */
+  --fs-cardIcon: clamp(0.85rem, 2vw, 1rem);
+  --fs-xs: clamp(0.75rem, 1vw, 0.85rem);
+  --fs-sm: clamp(0.85rem, 1.2vw, 1rem);
+  --fs-button: clamp(0.95rem, 1.3vw, 1.1rem);
+  --fs-md: clamp(1rem, 2vw, 1.3rem);
+  --fs-lg: clamp(1.3rem, 3vw, 2rem);
+  --fs-xl: clamp(2.4rem, 4.5vw, 5.5rem);
 
-    /* spacing  */
-    --space-xxs: 0.25rem; 
-    --space-xs: 0.5rem;  
-    --space-s: 0.75rem; 
-    --space-m: 1rem;    
-    --space-l: 1.5rem;  
-    --space-xl: 2rem;    
-    --space-xxl: 3rem;    
+  /* spacing  */
+  --space-xxs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-s: 0.75rem;
+  --space-m: 1rem;
+  --space-l: 1.5rem;
+  --space-xl: 2rem;
+  --space-xxl: 3rem;
 
-    /* padding */
-    --pd-button: 0.6rem 0.75rem;
-    --pd-button-circle: 0.5rem;
-    --pd-movieCard: 2px 4px;
-    --pd-title: var(--space-xxl) 0 var(--space-s) 5%;
-    --pd-td: var(--space-xxl) 0 var(--space-s) 0;
-    --pd-normal: 0 5% var(--space-l) 5%;
-    
-    /* line height */
-    --lh-small: 1.5;
-    --lh-big: 1.8;
+  /* padding */
+  --pd-button: 0.6rem 0.75rem;
+  --pd-button-circle: 0.5rem;
+  --pd-movieCard: 2px 4px;
+  --pd-title: var(--space-xxl) 0 var(--space-s) 5%;
+  --pd-td: var(--space-xxl) 0 var(--space-s) 0;
+  --pd-normal: 0 5% var(--space-l) 5%;
 
-    /* border-radius */
-    --radius-small: 4px;
-    --radius-button: 20px;
-    --radius-large: 15px;
-    --radius-full: 999px;
-    --radius-max: 50%;
+  /* line height */
+  --lh-small: 1.5;
+  --lh-big: 1.8;
 
-    /* box shadows */
-    --shadow-button: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
-    --shadow-card: rgba(0, 0, 0, 0.15) 0px 2px 8px;
-    --shadow-card-smooth: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
-    --shadow-inverse: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
-    /* letter spacing  */
-    --ls: 0.5px;
-    --ls-big: 1.5px;
+  /* border-radius */
+  --radius-small: 4px;
+  --radius-button: 20px;
+  --radius-large: 15px;
+  --radius-full: 999px;
+  --radius-max: 50%;
 
-    /* transitions  */
-    --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
-    --transition: 0.3s var(--ease-in-out);
+  /* box shadows */
+  --shadow-button:
+    rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
+    rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  --shadow-card: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+  --shadow-card-smooth:
+    rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+  --shadow-inverse:
+    rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset,
+    rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+  /* letter spacing  */
+  --ls: 0.5px;
+  --ls-big: 1.5px;
 
-    /* zindex */ 
-    --z-back: -1;
-    --z-base: 1;
-    --z-header: 100;
-    --z-menu: 200;
-    --z-nav-button: 300;
-    --z-waves: 400;
+  /* transitions  */
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --transition: 0.3s var(--ease-in-out);
+
+  /* zindex */
+  --z-back: -1;
+  --z-base: 1;
+  --z-header: 100;
+  --z-menu: 200;
+  --z-nav-button: 300;
+  --z-waves: 400;
 }
 
 /* LIGHT MODE (DEFAULT) */
@@ -190,10 +197,9 @@
   --clr-hover: var(--hover-d);
 }
 
-html {  
-  -webkit-tap-highlight-color: var(--clr-hover); 
+html {
+  -webkit-tap-highlight-color: var(--clr-hover);
 }
-
 
 @media (hover: hover) and (pointer: fine) {
   * {
@@ -238,15 +244,14 @@ p:not(.cardInfo) {
   font-size: var(--fs-md);
 }
 
-
 button:not(.actionButton),
 a:not(#navLinks) {
-    transition: var(--transition);
-    font-weight: 600;
-    text-decoration: none;
-    font-size: var(--fs-button);
-    cursor: pointer;
-    width: fit-content;
+  transition: var(--transition);
+  font-weight: 600;
+  text-decoration: none;
+  font-size: var(--fs-button);
+  cursor: pointer;
+  width: fit-content;
 }
 
 .btnPrimary {
@@ -255,8 +260,10 @@ a:not(#navLinks) {
   border: none;
   min-height: 2.5rem;
 }
-.btnPrimary:hover {
-  background: var(--button-background-hover);
+@media (hover: hover) and (pointer: fine) {
+  .btnPrimary:hover {
+    background: var(--button-background-hover);
+  }
 }
 .btnPrimary:active {
   background: var(--button-background-active);
@@ -267,16 +274,17 @@ a:not(#navLinks) {
   outline-offset: 2px;
 }
 
-
 .btnSecondary {
   background: transparent;
   color: var(--clr-primary-light);
   border: 1px solid var(--clr-primary-light);
   min-height: 2.5rem;
 }
-.btnSecondary:hover {
-  border-color: var(--clr-primary-dark);
-  color: var(--clr-text);
+@media (hover: hover) and (pointer: fine) {
+  .btnSecondary:hover {
+    border-color: var(--clr-primary-dark);
+    color: var(--clr-text);
+  }
 }
 .btnSecondary:active {
   box-shadow: var(--shadow-button);
@@ -285,7 +293,6 @@ a:not(#navLinks) {
   outline: 2px solid var(--clr-text);
   outline-offset: 2px;
 }
-
 
 .actionButton {
   padding: 7px;
@@ -302,5 +309,3 @@ a:not(#navLinks) {
   outline: 2px solid var(--clr-primary);
   outline-offset: 2px;
 }
-
-
